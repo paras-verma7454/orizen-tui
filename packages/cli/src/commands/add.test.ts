@@ -54,9 +54,9 @@ describe('install command builders', () => {
   it('builds npm install invocation for npm', () => {
     expect(buildInstallInvocation('npm')).toEqual({
       command: 'npm',
-      args: ['install', 'ink', 'react', '@orizen-tui/core'],
+      args: ['install', 'ink', 'react', 'orizen-tui-core'],
     })
-    expect(buildInstallCommand('npm')).toBe('npm install ink react @orizen-tui/core')
+    expect(buildInstallCommand('npm')).toBe('npm install ink react orizen-tui-core')
   })
 
   it('builds add invocation for non-npm package managers', () => {
@@ -244,10 +244,10 @@ describe('executeAddCommand', () => {
     expect(result.installAttempted).toBe(true)
     expect(result.installSucceeded).toBe(true)
     expect(result.packageManager).toBe('bun')
-    expect(result.manualInstallCommand).toBe('bun add ink react @orizen-tui/core')
+    expect(result.manualInstallCommand).toBe('bun add ink react orizen-tui-core')
     expect(installSpy).toHaveBeenCalledWith(
       'bun',
-      ['add', 'ink', 'react', '@orizen-tui/core'],
+      ['add', 'ink', 'react', 'orizen-tui-core'],
       resolve(projectDir),
     )
   })
@@ -301,6 +301,46 @@ describe('executeAddCommand', () => {
         },
       ),
     ).rejects.toThrow('Unknown component slug')
+  })
+
+  it('falls back to remote registry source when local registry is unavailable', async () => {
+    const projectDir = await createTempDir()
+    await writeFile(join(projectDir, 'package.json'), '{"name":"demo"}')
+
+    const originalFetch = globalThis.fetch
+    globalThis.fetch = mock(async (input: string | URL | Request) => {
+      const url = String(input)
+      if (url.endsWith('/components/spinner/index.tsx')) {
+        return new Response(`import { spinnerFrames } from '../../primitives/symbols.js'\nexport const Spinner = () => null\n`, { status: 200 })
+      }
+      if (url.endsWith('/primitives/symbols.ts')) {
+        return new Response(`export const spinnerFrames = { dots: ['.'] }\n`, { status: 200 })
+      }
+      return new Response('not found', { status: 404 })
+    }) as unknown as typeof fetch
+
+    try {
+      const result = await executeAddCommand(
+        ['spinner'],
+        {
+          cwd: projectDir,
+          path: 'components/ui',
+          install: false,
+          registryDir: join(projectDir, 'missing-registry-src'),
+          registryBaseUrl: 'https://example.com/registry',
+        },
+      )
+
+      const componentPath = join(projectDir, 'components', 'ui', 'orizen', 'spinner.tsx')
+      const symbolsPath = join(projectDir, 'components', 'ui', 'orizen', 'primitives', 'symbols.ts')
+      const componentSource = await readFile(componentPath, 'utf8')
+
+      expect(componentSource).toContain(`from './primitives/symbols'`)
+      expect(await Bun.file(symbolsPath).exists()).toBe(true)
+      expect(result.requiredPrimitives).toEqual(['symbols'])
+    } finally {
+      globalThis.fetch = originalFetch
+    }
   })
 })
 

@@ -1,19 +1,21 @@
 {
   "name": "orizen-tui",
   "type": "module",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Add beautiful terminal UI components to your project",
   "bin": {
     "orizen-tui": "dist/index.mjs"
   },
   "files": [
-    "dist","README.md"
+    "dist",
+    "registry-source",
+    "README.md"
   ],
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && node ./scripts/sync-registry-source.mjs",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit"
   },

@@ -30,7 +30,7 @@ export function HeroTerminal() {
       <div className="space-y-3 text-sm">
         <div className="flex gap-2">
           <span className="text-cyan-400 select-none">$</span>
-          <span className="text-zinc-400">npx orizen-tui add spinner badge progress</span>
+          <span className="text-zinc-400">npx orizen-tui@latest add spinner badge progress</span>
         </div>
         <div className="text-emerald-400">✓ Added 3 components to ./components/ui</div>
         <div className="h-px bg-zinc-800 my-1" />

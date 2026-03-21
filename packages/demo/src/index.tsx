@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Text, render, useApp, useInput, useStdin } from 'ink'
-import { FocusManager, ThemeProvider, useFocus } from '@orizen-tui/core'
+import { FocusManager, ThemeProvider, useFocus } from 'orizen-tui-core'
 import {
   Badge,
   Progress,

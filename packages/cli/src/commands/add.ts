@@ -10,7 +10,8 @@ export type PackageManager = 'bun' | 'pnpm' | 'yarn' | 'npm'
 export type PrimitiveName = 'borders' | 'symbols'
 
 const PRIMITIVE_IMPORT_RE = /from ['"]\.\.\/\.\.\/primitives\/(borders|symbols)\.js['"]/g
-const REQUIRED_DEPENDENCIES = ['ink', 'react', '@orizen-tui/core'] as const
+const REQUIRED_DEPENDENCIES = ['ink', 'react', 'orizen-tui-core'] as const
+const DEFAULT_REGISTRY_BASE_URL = 'https://raw.githubusercontent.com/paras-verma7454/orizen-tui/main/packages/registry/src'
 
 export interface AddCommandOptions {
   path: string
@@ -19,6 +20,7 @@ export interface AddCommandOptions {
   install?: boolean
   overwrite?: boolean
   registryDir?: string
+  registryBaseUrl?: string
 }
 
 export interface PlannedFile {
@@ -94,24 +96,40 @@ async function listAvailableSlugs(registrySourceDir: string): Promise<string[]> 
     .sort()
 }
 
-function resolveRegistrySourceDir(cwd: string): string {
+function isRegistrySourceDir(path: string): boolean {
+  return existsSync(join(path, 'components')) && existsSync(join(path, 'primitives'))
+}
+
+function resolveLocalRegistrySourceDir(cwd: string): string | undefined {
   const currentFileDir = dirname(fileURLToPath(import.meta.url))
   const candidates = [
     process.env.ORIZEN_TUI_REGISTRY_SRC,
+    resolve(currentFileDir, '../registry-source'),
     resolve(currentFileDir, '../../../registry/src'),
     resolve(cwd, 'packages/registry/src'),
     resolve(cwd, 'node_modules/@orizen-tui/registry/src'),
   ].filter(Boolean) as string[]
 
   for (const candidate of candidates) {
-    if (existsSync(join(candidate, 'components')) && existsSync(join(candidate, 'primitives'))) {
+    if (isRegistrySourceDir(candidate)) {
       return candidate
     }
   }
+}
 
-  throw new Error(
-    'Unable to locate registry source directory. Set ORIZEN_TUI_REGISTRY_SRC or run from the monorepo root.',
-  )
+function normalizeRegistryBaseUrl(url: string): string {
+  return url.replace(/\/+$/, '')
+}
+
+async function fetchRemoteSource(url: string): Promise<string | undefined> {
+  const response = await fetch(url)
+  if (response.status === 404) {
+    return undefined
+  }
+  if (!response.ok) {
+    throw new Error(`Failed to fetch remote registry source (${response.status}): ${url}`)
+  }
+  return response.text()
 }
 
 function normalizeRequestedSlugs(slugs: string[]): string[] {
@@ -143,7 +161,6 @@ export async function executeAddCommand(
 ): Promise<AddExecutionResult> {
   const cwd = resolve(options.cwd ?? process.cwd())
   const targetPath = resolve(cwd, options.path || 'components/ui')
-  const registrySourceDir = options.registryDir ?? resolveRegistrySourceDir(cwd)
   const dryRun = Boolean(options.dryRun)
   const overwrite = Boolean(options.overwrite)
   const install = options.install ?? true
@@ -153,64 +170,127 @@ export async function executeAddCommand(
     throw new Error('No component slugs provided. Example: orizen-tui add spinner')
   }
 
-  const availableSlugs = await listAvailableSlugs(registrySourceDir)
-  const invalidSlugs = requestedSlugs.filter(slug => !availableSlugs.includes(slug))
-
-  if (invalidSlugs.length > 0) {
-    const details = invalidSlugs
-      .map((slug) => {
-        const suggestions = suggestSlugs(slug, availableSlugs)
-        if (suggestions.length === 0)
-          return `- ${slug}`
-        return `- ${slug} (did you mean: ${suggestions.join(', ')})`
-      })
-      .join('\n')
-
-    throw new Error(
-      `Unknown component slug(s):\n${details}\nAvailable components: ${availableSlugs.join(', ')}`,
-    )
-  }
+  const localRegistrySourceDir = options.registryDir
+    ? (isRegistrySourceDir(options.registryDir) ? options.registryDir : undefined)
+    : resolveLocalRegistrySourceDir(cwd)
+  const remoteRegistryBaseUrl = normalizeRegistryBaseUrl(
+    options.registryBaseUrl
+    ?? process.env.ORIZEN_TUI_REGISTRY_BASE_URL
+    ?? DEFAULT_REGISTRY_BASE_URL,
+  )
 
   const files: PlannedFile[] = []
   const primitiveNames = new Set<PrimitiveName>()
 
-  for (const slug of requestedSlugs) {
-    const sourcePath = join(registrySourceDir, 'components', slug, 'index.tsx')
-    const originalContent = await readFile(sourcePath, 'utf8')
-    const rewrittenContent = rewriteRegistryImports(originalContent)
-    const requiredPrimitives = findRequiredPrimitives(originalContent)
+  if (localRegistrySourceDir) {
+    const availableSlugs = await listAvailableSlugs(localRegistrySourceDir)
+    const invalidSlugs = requestedSlugs.filter(slug => !availableSlugs.includes(slug))
 
-    for (const primitive of requiredPrimitives) {
-      primitiveNames.add(primitive)
+    if (invalidSlugs.length > 0) {
+      const details = invalidSlugs
+        .map((slug) => {
+          const suggestions = suggestSlugs(slug, availableSlugs)
+          if (suggestions.length === 0)
+            return `- ${slug}`
+          return `- ${slug} (did you mean: ${suggestions.join(', ')})`
+        })
+        .join('\n')
+
+      throw new Error(
+        `Unknown component slug(s):\n${details}\nAvailable components: ${availableSlugs.join(', ')}`,
+      )
     }
 
-    const outputPath = join(targetPath, 'orizen', `${slug}.tsx`)
-    const shouldWrite = overwrite || !existsSync(outputPath)
+    for (const slug of requestedSlugs) {
+      const sourcePath = join(localRegistrySourceDir, 'components', slug, 'index.tsx')
+      const originalContent = await readFile(sourcePath, 'utf8')
+      const rewrittenContent = rewriteRegistryImports(originalContent)
+      const requiredPrimitives = findRequiredPrimitives(originalContent)
 
-    files.push({
-      type: 'component',
-      slug,
-      sourcePath,
-      outputPath,
-      content: rewrittenContent,
-      shouldWrite,
-    })
-  }
+      for (const primitive of requiredPrimitives) {
+        primitiveNames.add(primitive)
+      }
 
-  for (const primitive of [...primitiveNames].sort()) {
-    const sourcePath = join(registrySourceDir, 'primitives', `${primitive}.ts`)
-    const content = await readFile(sourcePath, 'utf8')
-    const outputPath = join(targetPath, 'orizen', 'primitives', `${primitive}.ts`)
-    const shouldWrite = overwrite || !existsSync(outputPath)
+      const outputPath = join(targetPath, 'orizen', `${slug}.tsx`)
+      const shouldWrite = overwrite || !existsSync(outputPath)
 
-    files.push({
-      type: 'primitive',
-      slug: primitive,
-      sourcePath,
-      outputPath,
-      content,
-      shouldWrite,
-    })
+      files.push({
+        type: 'component',
+        slug,
+        sourcePath,
+        outputPath,
+        content: rewrittenContent,
+        shouldWrite,
+      })
+    }
+
+    for (const primitive of [...primitiveNames].sort()) {
+      const sourcePath = join(localRegistrySourceDir, 'primitives', `${primitive}.ts`)
+      const content = await readFile(sourcePath, 'utf8')
+      const outputPath = join(targetPath, 'orizen', 'primitives', `${primitive}.ts`)
+      const shouldWrite = overwrite || !existsSync(outputPath)
+
+      files.push({
+        type: 'primitive',
+        slug: primitive,
+        sourcePath,
+        outputPath,
+        content,
+        shouldWrite,
+      })
+    }
+  } else {
+    const invalidSlugs: string[] = []
+
+    for (const slug of requestedSlugs) {
+      const sourcePath = `${remoteRegistryBaseUrl}/components/${slug}/index.tsx`
+      const originalContent = await fetchRemoteSource(sourcePath)
+      if (!originalContent) {
+        invalidSlugs.push(slug)
+        continue
+      }
+
+      const rewrittenContent = rewriteRegistryImports(originalContent)
+      const requiredPrimitives = findRequiredPrimitives(originalContent)
+      for (const primitive of requiredPrimitives) {
+        primitiveNames.add(primitive)
+      }
+
+      const outputPath = join(targetPath, 'orizen', `${slug}.tsx`)
+      const shouldWrite = overwrite || !existsSync(outputPath)
+      files.push({
+        type: 'component',
+        slug,
+        sourcePath,
+        outputPath,
+        content: rewrittenContent,
+        shouldWrite,
+      })
+    }
+
+    if (invalidSlugs.length > 0) {
+      throw new Error(`Unknown component slug(s): ${invalidSlugs.join(', ')}`)
+    }
+
+    for (const primitive of [...primitiveNames].sort()) {
+      const sourcePath = `${remoteRegistryBaseUrl}/primitives/${primitive}.ts`
+      const content = await fetchRemoteSource(sourcePath)
+      if (!content) {
+        throw new Error(`Missing remote primitive source: ${primitive}`)
+      }
+
+      const outputPath = join(targetPath, 'orizen', 'primitives', `${primitive}.ts`)
+      const shouldWrite = overwrite || !existsSync(outputPath)
+
+      files.push({
+        type: 'primitive',
+        slug: primitive,
+        sourcePath,
+        outputPath,
+        content,
+        shouldWrite,
+      })
+    }
   }
 
   if (!dryRun) {
@@ -278,7 +358,7 @@ function printSummary(result: AddExecutionResult, dryRun: boolean): void {
     console.log(`${pc.green('✔')} Dependencies installed with ${result.packageManager}`)
   } else if (result.installAttempted && !result.installSucceeded) {
     console.log(`${pc.yellow('!')} Dependency install failed. Run manually:`)
-    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink react @orizen-tui/core')}`)
+    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink react orizen-tui-core')}`)
   }
 }
 
@@ -291,8 +371,12 @@ export function createAddCommand(): Command {
     .option('--dry-run', 'print planned changes without writing files')
     .option('--no-install', 'skip dependency installation')
     .option('--overwrite', 'overwrite existing files')
+    .option('--registry <url>', 'remote registry base URL')
     .action(async (slugs: string[], rawOptions: Omit<AddCommandOptions, 'registryDir'>) => {
-      const result = await executeAddCommand(slugs, rawOptions)
+      const result = await executeAddCommand(slugs, {
+        ...rawOptions,
+        registryBaseUrl: (rawOptions as AddCommandOptions & { registry?: string }).registry,
+      })
       printSummary(result, Boolean(rawOptions.dryRun))
     })
 }

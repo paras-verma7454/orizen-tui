@@ -82,7 +82,7 @@ export default async function ComponentPage({ params }: PageProps) {
     // file not found fallback
   }
 
-  const manualInstall = `npm install ink react @orizen-tui/core`
+  const manualInstall = `npm install ink react orizen-tui-core`
   const { importCode, exampleCode } = splitUsage(component.usage)
   const tocItems = [
     { id: 'installation', label: 'Installation' },

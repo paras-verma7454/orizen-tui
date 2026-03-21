@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@orizen-tui/core": "workspace:*",
+    "orizen-tui-core": "workspace:*",
     "@orizen-tui/registry": "workspace:*",
     "next": "latest",
     "react": "^19.0.0",

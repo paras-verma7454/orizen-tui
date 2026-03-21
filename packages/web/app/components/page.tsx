@@ -34,7 +34,7 @@ export default function ComponentsPage() {
       <div>
         <h1 className="text-2xl font-bold mb-2">Components</h1>
         <p className="text-zinc-400 text-sm">
-          {components.length} components. Copy source into your terminal app with <code>orizen-tui add</code>.
+          {components.length} components. Copy source into your terminal app with <code>npx orizen-tui@latest add</code>.
         </p>
         <p className="text-zinc-500 text-xs mt-2">
           Previews below are browser simulations. Runtime behavior comes from Ink in terminal apps.

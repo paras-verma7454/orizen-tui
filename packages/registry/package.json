@@ -31,7 +31,7 @@
     "react": ">=18.0.0"
   },
   "dependencies": {
-    "@orizen-tui/core": "workspace:*"
+    "orizen-tui-core": "workspace:*"
   },
   "devDependencies": {
     "bun-types": "latest",

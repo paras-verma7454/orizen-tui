@@ -27,17 +27,20 @@ orizen-tui add <slug...> [options]
 - `--dry-run` Print planned changes without writing files
 - `--no-install` Skip dependency installation
 - `--overwrite` Overwrite existing files
+- `--registry <url>` Remote registry base URL override
 
 ## What it generates
 
 - Components: `components/ui/orizen/<slug>.tsx`
 - Primitives (on-demand): `components/ui/orizen/primitives/{borders,symbols}.ts`
 
+If local registry files are not available, the CLI falls back to remote registry source from GitHub.
+
 ## Dependencies installed automatically
 
 - `ink`
 - `react`
-- `@orizen-tui/core`
+- `orizen-tui-core`
 
 ## Component usage examples
 
@@ -52,7 +55,7 @@ You can import and use copied components from your app:
 ```tsx
 import React, { useEffect, useState } from 'react'
 import { render, Box } from 'ink'
-import { ThemeProvider } from '@orizen-tui/core'
+import { ThemeProvider } from 'orizen-tui-core'
 import { Spinner } from './components/ui/orizen/spinner'
 import { Badge } from './components/ui/orizen/badge'
 import { Progress } from './components/ui/orizen/progress'

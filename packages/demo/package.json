@@ -8,7 +8,7 @@
     "build": "echo 'demo has no build step'"
   },
   "dependencies": {
-    "@orizen-tui/core": "workspace:*",
+    "orizen-tui-core": "workspace:*",
     "@orizen-tui/registry": "workspace:*",
     "ink": "^5.0.1",
     "react": "^18.3.1"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { render, Box, Text } from 'ink'
-import { ThemeProvider } from '@orizen-tui/core'
+import { ThemeProvider } from 'orizen-tui-core'
 import { Spinner } from './src/components/spinner/index.js'
 import { Progress } from './src/components/progress/index.js'
 import { Badge } from './src/components/badge/index.js'

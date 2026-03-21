@@ -12,7 +12,7 @@ export interface ComponentMeta extends ComponentDocsMeta {
 
 export const components: ComponentMeta[] = componentDocs.map(component => ({
   ...component,
-  install: `npx orizen-tui add ${component.slug}`,
+  install: `npx orizen-tui@latest add ${component.slug}`,
 }))
 
 export function getComponent(slug: string): ComponentMeta | undefined {

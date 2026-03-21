@@ -8,7 +8,7 @@ import { components } from '@/lib/registry'
 // â”€â”€ Hero install command â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function InstallCommand() {
-  const cmd = 'npx orizen-tui add spinner'
+  const cmd = 'npx orizen-tui@latest add spinner'
   return (
     <div className="inline-flex items-center gap-3 bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-full text-sm group hover:border-cyan-500/40 transition-colors">
       <span className="text-cyan-400 select-none">$</span>
@@ -144,6 +144,5 @@ export default function LandingPage() {
     </main>
   )
 }
-
 
 

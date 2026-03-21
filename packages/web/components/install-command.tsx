@@ -9,12 +9,12 @@ type Manager = typeof MANAGERS[number]
 
 function buildCmd(manager: Manager, slug: string) {
   if (manager === 'pnpm')
-    return `pnpm dlx orizen-tui add ${slug}`
+    return `pnpm dlx orizen-tui@latest add ${slug}`
   if (manager === 'npm')
-    return `npx orizen-tui add ${slug}`
+    return `npx orizen-tui@latest add ${slug}`
   if (manager === 'yarn')
-    return `yarn dlx orizen-tui add ${slug}`
-  return `bunx --bun orizen-tui add ${slug}`
+    return `yarn dlx orizen-tui@latest add ${slug}`
+  return `bunx --bun orizen-tui@latest add ${slug}`
 }
 
 interface InstallCommandProps {
