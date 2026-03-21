@@ -1,0 +1,20 @@
+{
+  "name": "@orizen-tui/demo",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/index.tsx",
+    "build": "echo 'demo has no build step'"
+  },
+  "dependencies": {
+    "@orizen-tui/core": "workspace:*",
+    "@orizen-tui/registry": "workspace:*",
+    "ink": "^5.0.1",
+    "react": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.18",
+    "bun-types": "latest"
+  }
+}

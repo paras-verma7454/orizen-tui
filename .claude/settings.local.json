@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/PARAS-VERMA/.agents/skills/arch-tsdown-monorepo/**)",
+      "Read(//c/Users/PARAS-VERMA/.agents/skills/terminal-ui/**)",
+      "Bash(npx skills:*)",
+      "Bash(bun install:*)",
+      "Bash(bun run:*)",
+      "Bash(bun add:*)",
+      "Bash(bun test:*)",
+      "WebSearch",
+      "Read(//c/Users/PARAS-VERMA/.agents/skills/nextjs-best-practices/**)",
+      "Read(//c/Users/PARAS-VERMA/.agents/skills/frontend-design/**)",
+      "Read(//c/Users/PARAS-VERMA/.agents/skills/shadcn/**)",
+      "Read(//c/Users/PARAS-VERMA/.agents/skills/vercel-react-best-practices/**)",
+      "Bash(gemini -p \"@packages/core/src/ @packages/registry/src/ @packages/demo/src/ Give me a complete UI/UX design spec for a documentation website for ''Orizen TUI'' — a terminal UI component library \\(like shadcn/ui but for terminals, using Ink/React\\). The site should have::*)",
+      "Bash(cd:*)",
+      "Bash(bunx next@latest --version)",
+      "Bash(node -e \"import\\(''./postcss.config.js''\\).then\\(m => console.log\\(''ok'', JSON.stringify\\(m.default\\)\\)\\).catch\\(e => console.error\\(''ERROR:'', e.message\\)\\)\")",
+      "Bash(gemini -p \"@packages/web/app/components/[slug]/page.tsx @packages/web/components/ @packages/web/lib/registry.ts Redesign the component detail page for Orizen TUI docs site. It should look like shadcn.com or ui.aceternity.com component pages. Must show::*)",
+      "Bash(gemini:*)"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+[test]
+# Keep default test runs fast/clean; use `bun test --coverage` (or `bun run test:coverage`) when needed.
+coverage = false
+coverageReporter = ["text", "lcov"]
+# Threshold paused: useInput + setInterval callbacks need fake timers (Bun 1.3.x) to reach 80%
+# Re-enable once async timer tests are added in Phase 4.
+# coverageThreshold = 0.80
+# Preload: patches EventEmitter.prototype with ref/unref for ink@5 + ink-testing-library compat
+preload = ["./packages/registry/test-setup.ts"]

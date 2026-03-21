@@ -1,0 +1,46 @@
+{
+  "name": "@orizen-tui/registry",
+  "type": "module",
+  "version": "0.1.0",
+  "description": "Terminal UI components for orizen-tui",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "generate:docs": "bun run ./scripts/generate-web-component-docs.ts",
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.mjs",
+      "./package.json": "./package.json"
+    }
+  },
+  "peerDependencies": {
+    "ink": ">=4.0.0",
+    "react": ">=18.0.0"
+  },
+  "dependencies": {
+    "@orizen-tui/core": "workspace:*"
+  },
+  "devDependencies": {
+    "bun-types": "latest",
+    "@types/node": "^22.10.7",
+    "@types/react": "^18.3.18",
+    "ink": "^5.0.1",
+    "ink-testing-library": "^3.0.0",
+    "react": "^18.3.1",
+    "tsdown": "^0.17.3",
+    "typescript": "^5.9.3"
+  }
+}
