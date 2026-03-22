@@ -27,7 +27,7 @@ export async function CodeBlock({ code, lang = 'tsx', filename }: CodeBlockProps
         </div>
       )}
       <div
-        className="p-4 overflow-auto [&>pre]:!bg-transparent [&>pre]:!p-0"
+        className="p-4 overflow-auto [&>pre]:bg-transparent! [&>pre]:p-0!"
         // shiki output is safe — it generates HTML from trusted code strings
         dangerouslySetInnerHTML={{ __html: html }}
       />

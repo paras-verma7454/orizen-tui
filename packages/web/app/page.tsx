@@ -82,7 +82,7 @@ export default function LandingPage(): JSX.Element {
           </a>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-zinc-50 via-zinc-300 to-zinc-600 bg-clip-text text-transparent leading-none pb-2">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-linear-to-b from-zinc-50 via-zinc-300 to-zinc-600 bg-clip-text text-transparent leading-none pb-2">
           Terminal UIs,
           <br />
           Built with React.
