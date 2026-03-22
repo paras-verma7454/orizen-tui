@@ -54,9 +54,9 @@ describe('install command builders', () => {
   it('builds npm install invocation for npm', () => {
     expect(buildInstallInvocation('npm')).toEqual({
       command: 'npm',
-      args: ['install', 'ink', 'react', 'orizen-tui-core'],
+      args: ['install', 'ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'],
     })
-    expect(buildInstallCommand('npm')).toBe('npm install ink react orizen-tui-core')
+    expect(buildInstallCommand('npm')).toBe('npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')
   })
 
   it('builds add invocation for non-npm package managers', () => {
@@ -108,14 +108,56 @@ describe('executeAddCommand', () => {
     const componentPath = join(projectDir, 'components', 'ui', 'orizen', 'spinner.tsx')
     const symbolsPath = join(projectDir, 'components', 'ui', 'orizen', 'primitives', 'symbols.ts')
     const bordersPath = join(projectDir, 'components', 'ui', 'orizen', 'primitives', 'borders.ts')
+    const barrelPath = join(projectDir, 'components', 'ui', 'orizen', 'index.ts')
+    const manifestPath = join(projectDir, 'components', 'ui', 'orizen', 'components.json')
 
     const componentSource = await readFile(componentPath, 'utf8')
+    const barrelSource = await readFile(barrelPath, 'utf8')
+    const manifestSource = await readFile(manifestPath, 'utf8')
+    const manifest = JSON.parse(manifestSource) as { components: string[] }
 
     expect(componentSource).toContain(`from './primitives/symbols'`)
     expect(componentSource).not.toContain(`../../primitives/symbols.js`)
+    expect(barrelSource).toContain(`export { Spinner } from './spinner'`)
+    expect(manifest.components).toEqual(['spinner'])
     expect(result.requiredPrimitives).toEqual(['symbols'])
     expect(await Bun.file(symbolsPath).exists()).toBe(true)
     expect(await Bun.file(bordersPath).exists()).toBe(false)
+  })
+
+  it('updates index.ts and components.json when multiple components are added', async () => {
+    const projectDir = await createTempDir()
+    await writeFile(join(projectDir, 'package.json'), '{"name":"demo"}')
+
+    await executeAddCommand(
+      ['spinner'],
+      {
+        cwd: projectDir,
+        path: 'components/ui',
+        install: false,
+        registryDir,
+      },
+    )
+
+    await executeAddCommand(
+      ['confirm-input'],
+      {
+        cwd: projectDir,
+        path: 'components/ui',
+        install: false,
+        registryDir,
+      },
+    )
+
+    const barrelPath = join(projectDir, 'components', 'ui', 'orizen', 'index.ts')
+    const manifestPath = join(projectDir, 'components', 'ui', 'orizen', 'components.json')
+    const barrelSource = await readFile(barrelPath, 'utf8')
+    const manifestSource = await readFile(manifestPath, 'utf8')
+    const manifest = JSON.parse(manifestSource) as { components: string[] }
+
+    expect(barrelSource).toContain(`export { ConfirmInput } from './confirm-input'`)
+    expect(barrelSource).toContain(`export { Spinner } from './spinner'`)
+    expect(manifest.components).toEqual(['confirm-input', 'spinner'])
   })
 
   it('does not write files when dry-run is enabled', async () => {
@@ -244,10 +286,10 @@ describe('executeAddCommand', () => {
     expect(result.installAttempted).toBe(true)
     expect(result.installSucceeded).toBe(true)
     expect(result.packageManager).toBe('bun')
-    expect(result.manualInstallCommand).toBe('bun add ink react orizen-tui-core')
+    expect(result.manualInstallCommand).toBe('bun add ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')
     expect(installSpy).toHaveBeenCalledWith(
       'bun',
-      ['add', 'ink', 'react', 'orizen-tui-core'],
+      ['add', 'ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'],
       resolve(projectDir),
     )
   })

@@ -33,6 +33,8 @@ orizen-tui add <slug...> [options]
 
 - Components: `components/ui/orizen/<slug>.tsx`
 - Primitives (on-demand): `components/ui/orizen/primitives/{borders,symbols}.ts`
+- Barrel exports: `components/ui/orizen/index.ts`
+- Installed manifest: `components/ui/orizen/components.json`
 
 If local registry files are not available, the CLI falls back to remote registry source from GitHub.
 
@@ -40,6 +42,7 @@ If local registry files are not available, the CLI falls back to remote registry
 
 - `ink`
 - `react`
+- `@types/react`
 - `orizen-tui-core`
 
 ## Component usage examples

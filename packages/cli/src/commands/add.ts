@@ -10,7 +10,7 @@ export type PackageManager = 'bun' | 'pnpm' | 'yarn' | 'npm'
 export type PrimitiveName = 'borders' | 'symbols'
 
 const PRIMITIVE_IMPORT_RE = /from ['"]\.\.\/\.\.\/primitives\/(borders|symbols)\.js['"]/g
-const REQUIRED_DEPENDENCIES = ['ink', 'react', 'orizen-tui-core'] as const
+const REQUIRED_DEPENDENCIES = ['ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'] as const
 const DEFAULT_REGISTRY_BASE_URL = 'https://raw.githubusercontent.com/paras-verma7454/orizen-tui/main/packages/registry/src'
 
 export interface AddCommandOptions {
@@ -24,7 +24,7 @@ export interface AddCommandOptions {
 }
 
 export interface PlannedFile {
-  type: 'component' | 'primitive'
+  type: 'component' | 'primitive' | 'manifest' | 'barrel'
   slug: string
   sourcePath: string
   outputPath: string
@@ -45,6 +45,47 @@ export interface AddExecutionResult {
 }
 
 type InstallRunner = (command: string, args: string[], cwd: string) => Promise<void>
+
+interface InstalledComponentsManifest {
+  components: string[]
+}
+
+function toComponentSymbol(slug: string): string {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map(part => part[0].toUpperCase() + part.slice(1))
+    .join('')
+}
+
+async function readInstalledComponents(manifestPath: string): Promise<string[]> {
+  if (!existsSync(manifestPath))
+    return []
+
+  try {
+    const raw = await readFile(manifestPath, 'utf8')
+    const parsed = JSON.parse(raw) as Partial<InstalledComponentsManifest>
+    if (!Array.isArray(parsed.components))
+      return []
+    return parsed.components.filter(Boolean).map(component => component.trim()).filter(Boolean)
+  } catch {
+    return []
+  }
+}
+
+function buildComponentsManifestContent(slugs: string[]): string {
+  const manifest: InstalledComponentsManifest = { components: [...new Set(slugs)].sort() }
+  return `${JSON.stringify(manifest, null, 2)}\n`
+}
+
+function buildBarrelContent(slugs: string[]): string {
+  const uniqueSorted = [...new Set(slugs)].sort()
+  const lines = uniqueSorted.map((slug) => {
+    const symbol = toComponentSymbol(slug)
+    return `export { ${symbol} } from './${slug}'`
+  })
+  return `${lines.join('\n')}\n`
+}
 
 export function rewriteRegistryImports(source: string): string {
   return source.replace(PRIMITIVE_IMPORT_RE, (_full, primitive: PrimitiveName) => {
@@ -303,6 +344,45 @@ export async function executeAddCommand(
     }
   }
 
+  const manifestPath = join(targetPath, 'orizen', 'components.json')
+  const existingSlugs = await readInstalledComponents(manifestPath)
+  const mergedSlugs = [...new Set([...existingSlugs, ...requestedSlugs])].sort()
+
+  const manifestContent = buildComponentsManifestContent(mergedSlugs)
+  const manifestShouldWrite = overwrite || !existsSync(manifestPath) || (await readFile(manifestPath, 'utf8').catch(() => '')) !== manifestContent
+  files.push({
+    type: 'manifest',
+    slug: 'components',
+    sourcePath: '[generated]',
+    outputPath: manifestPath,
+    content: manifestContent,
+    shouldWrite: manifestShouldWrite,
+  })
+
+  const barrelPath = join(targetPath, 'orizen', 'index.ts')
+  const barrelContent = buildBarrelContent(mergedSlugs)
+  const barrelShouldWrite = overwrite || !existsSync(barrelPath) || (await readFile(barrelPath, 'utf8').catch(() => '')) !== barrelContent
+  files.push({
+    type: 'barrel',
+    slug: 'index',
+    sourcePath: '[generated]',
+    outputPath: barrelPath,
+    content: barrelContent,
+    shouldWrite: barrelShouldWrite,
+  })
+
+  if (!dryRun) {
+    for (const file of files) {
+      if (!file.shouldWrite)
+        continue
+      if (file.type !== 'manifest' && file.type !== 'barrel')
+        continue
+
+      await mkdir(dirname(file.outputPath), { recursive: true })
+      await writeFile(file.outputPath, file.content, 'utf8')
+    }
+  }
+
   let installAttempted = false
   let installSucceeded = false
   let packageManager: PackageManager | undefined
@@ -358,7 +438,7 @@ function printSummary(result: AddExecutionResult, dryRun: boolean): void {
     console.log(`${pc.green('✔')} Dependencies installed with ${result.packageManager}`)
   } else if (result.installAttempted && !result.installSucceeded) {
     console.log(`${pc.yellow('!')} Dependency install failed. Run manually:`)
-    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink react orizen-tui-core')}`)
+    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')}`)
   }
 }
 

@@ -10,9 +10,9 @@ import { components } from '@/lib/registry'
 function InstallCommand() {
   const cmd = 'npx orizen-tui@latest add spinner'
   return (
-    <div className="inline-flex items-center gap-3 bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-full text-sm group hover:border-cyan-500/40 transition-colors">
-      <span className="text-cyan-400 select-none">$</span>
-      <span className="text-zinc-200">{cmd}</span>
+    <div className="inline-flex items-center gap-3 bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-full text-sm group hover:border-cyan-500/40 transition-colors max-w-full">
+      <span className="text-cyan-400 select-none shrink-0">$</span>
+      <span className="text-zinc-200 truncate">{cmd}</span>
       <CopyButton text={cmd} />
     </div>
   )
@@ -66,7 +66,7 @@ export default function LandingPage() {
   return (
     <main className="bg-background">
       {/* Hero */}
-      <section className="pt-28 pb-16 px-6 max-w-5xl mx-auto text-center">
+      <section className="pt-16 sm:pt-28 pb-16 px-4 sm:px-6 max-w-5xl mx-auto text-center">
         <div className="mb-8 inline-flex flex-col items-center">
           <a
             href="https://github.com/orizen-tui/orizen-tui"

@@ -18,7 +18,8 @@ export function generateStaticParams() {
 function PropsTable({ props }: { props: Array<{ name: string; type: string; default: string; description: string }> }) {
   return (
     <div className="rounded-lg border border-zinc-800 overflow-hidden font-mono text-xs">
-      <div className="grid grid-cols-4 gap-4 px-4 py-2.5 bg-zinc-900/60 border-b border-zinc-800 text-zinc-500 uppercase tracking-widest text-[10px]">
+      {/* Desktop header */}
+      <div className="hidden sm:grid grid-cols-4 gap-4 px-4 py-2.5 bg-zinc-900/60 border-b border-zinc-800 text-zinc-500 uppercase tracking-widest text-[10px]">
         <span>Prop</span>
         <span>Type</span>
         <span>Default</span>
@@ -27,14 +28,24 @@ function PropsTable({ props }: { props: Array<{ name: string; type: string; defa
       {props.map((prop, i) => (
         <div
           key={prop.name}
-          className={`grid grid-cols-4 gap-4 px-4 py-3 border-b border-zinc-800/50 last:border-0 ${
-            i % 2 === 0 ? 'bg-transparent' : 'bg-zinc-950/40'
-          }`}
+          className={`border-b border-zinc-800/50 last:border-0 ${i % 2 === 0 ? 'bg-transparent' : 'bg-zinc-950/40'}`}
         >
-          <span className="text-cyan-400">{prop.name}</span>
-          <span className="text-zinc-300 truncate">{prop.type}</span>
-          <span className="text-zinc-500">{prop.default}</span>
-          <span className="text-zinc-400">{prop.description}</span>
+          {/* Desktop row */}
+          <div className="hidden sm:grid grid-cols-4 gap-4 px-4 py-3">
+            <span className="text-cyan-400">{prop.name}</span>
+            <span className="text-zinc-300 truncate">{prop.type}</span>
+            <span className="text-zinc-500">{prop.default}</span>
+            <span className="text-zinc-400">{prop.description}</span>
+          </div>
+          {/* Mobile card */}
+          <div className="sm:hidden px-4 py-3 space-y-1.5">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-cyan-400 font-semibold">{prop.name}</span>
+              <span className="text-zinc-500 shrink-0">{prop.default}</span>
+            </div>
+            <span className="block text-zinc-300 text-[11px]">{prop.type}</span>
+            <p className="text-zinc-400 text-[11px] leading-relaxed">{prop.description}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -82,7 +93,7 @@ export default async function ComponentPage({ params }: PageProps) {
     // file not found fallback
   }
 
-  const manualInstall = `npm install ink react orizen-tui-core`
+  const manualInstall = `npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest`
   const { importCode, exampleCode } = splitUsage(component.usage)
   const tocItems = [
     { id: 'installation', label: 'Installation' },

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { components, categories, type ComponentCategory } from '@/lib/registry'
 
-export function Sidebar() {
+export function SidebarContent({ onNavigate, className }: { onNavigate?: () => void; className?: string }) {
   const pathname = usePathname()
 
   const grouped = Object.entries(categories).map(([key, label]) => ({
@@ -14,11 +14,11 @@ export function Sidebar() {
   }))
 
   return (
-    <aside className="w-56 shrink-0 py-8 pr-4 font-mono sticky top-14 self-start max-h-[calc(100vh-3.5rem)] overflow-y-auto">
-      {/* Overview */}
+    <div className={className ?? 'py-8 pr-4 font-mono'}>
       <div className="mb-6">
         <Link
           href="/components"
+          onClick={onNavigate}
           className={`block px-3 py-1.5 text-sm rounded transition-colors ${
             pathname === '/components'
               ? 'text-cyan-400 bg-cyan-500/10 border-l-2 border-cyan-400'
@@ -41,6 +41,7 @@ export function Sidebar() {
                 <li key={item.slug}>
                   <Link
                     href={`/components/${item.slug}`}
+                    onClick={onNavigate}
                     className={`block px-3 py-1.5 text-sm rounded transition-colors ${
                       isActive
                         ? 'text-cyan-400 bg-cyan-500/10 border-l-2 border-cyan-400'
@@ -55,6 +56,14 @@ export function Sidebar() {
           </ul>
         </div>
       ))}
+    </div>
+  )
+}
+
+export function Sidebar() {
+  return (
+    <aside className="w-56 shrink-0 sticky top-14 self-start max-h-[calc(100vh-3.5rem)] overflow-y-auto">
+      <SidebarContent />
     </aside>
   )
 }
