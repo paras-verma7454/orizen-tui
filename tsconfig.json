@@ -13,7 +13,7 @@
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "types": ["bun-types"]
+    "types": ["bun"]
   },
   "include": ["packages/*/src", "packages/*/test", "test"]
 }
