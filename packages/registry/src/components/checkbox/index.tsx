@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React, { useState } from 'react'
 
 export interface CheckboxItem<T = string> {
   label: string
@@ -53,7 +53,7 @@ export function Checkbox<T = string>({
   onChange,
   label,
   focus = true,
-}: CheckboxProps<T>) {
+}: CheckboxProps<T>): JSX.Element {
   const { colors } = useTheme()
   const [cursorIndex, setCursorIndex] = useState(0)
 

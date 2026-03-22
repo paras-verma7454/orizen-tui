@@ -1,15 +1,17 @@
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join, relative, resolve } from 'node:path'
+import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+import { Command } from 'commander'
 import { execa } from 'execa'
 import pc from 'picocolors'
-import { Command } from 'commander'
 
 export type PackageManager = 'bun' | 'pnpm' | 'yarn' | 'npm'
 export type PrimitiveName = 'borders' | 'symbols'
 
 const PRIMITIVE_IMPORT_RE = /from ['"]\.\.\/\.\.\/primitives\/(borders|symbols)\.js['"]/g
+const TRAILING_SLASH_RE = /\/+$/
 const REQUIRED_DEPENDENCIES = ['ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'] as const
 const DEFAULT_REGISTRY_BASE_URL = 'https://raw.githubusercontent.com/paras-verma7454/orizen-tui/main/packages/registry/src'
 
@@ -68,7 +70,8 @@ async function readInstalledComponents(manifestPath: string): Promise<string[]> 
     if (!Array.isArray(parsed.components))
       return []
     return parsed.components.filter(Boolean).map(component => component.trim()).filter(Boolean)
-  } catch {
+  }
+  catch {
     return []
   }
 }
@@ -159,7 +162,7 @@ function resolveLocalRegistrySourceDir(cwd: string): string | undefined {
 }
 
 function normalizeRegistryBaseUrl(url: string): string {
-  return url.replace(/\/+$/, '')
+  return url.replace(TRAILING_SLASH_RE, '')
 }
 
 async function fetchRemoteSource(url: string): Promise<string | undefined> {
@@ -280,7 +283,8 @@ export async function executeAddCommand(
         shouldWrite,
       })
     }
-  } else {
+  }
+  else {
     const invalidSlugs: string[] = []
 
     for (const slug of requestedSlugs) {
@@ -397,7 +401,8 @@ export async function executeAddCommand(
     try {
       await installRunner(command, args, cwd)
       installSucceeded = true
-    } catch {
+    }
+    catch {
       installSucceeded = false
     }
   }
@@ -424,7 +429,8 @@ function printSummary(result: AddExecutionResult, dryRun: boolean): void {
     const rel = relative(result.cwd, file.outputPath)
     if (file.shouldWrite) {
       console.log(`${pc.green('✔')} ${verb}: ${rel}`)
-    } else {
+    }
+    else {
       console.log(`${pc.yellow('•')} Skipped (exists): ${rel}`)
     }
   }
@@ -436,7 +442,8 @@ function printSummary(result: AddExecutionResult, dryRun: boolean): void {
 
   if (result.installAttempted && result.installSucceeded) {
     console.log(`${pc.green('✔')} Dependencies installed with ${result.packageManager}`)
-  } else if (result.installAttempted && !result.installSucceeded) {
+  }
+  else if (result.installAttempted && !result.installSucceeded) {
     console.log(`${pc.yellow('!')} Dependency install failed. Run manually:`)
     console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')}`)
   }

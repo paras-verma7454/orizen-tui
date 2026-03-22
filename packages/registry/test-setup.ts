@@ -13,8 +13,12 @@ import { EventEmitter } from 'node:events'
 const proto = EventEmitter.prototype as EventEmitter & { ref?: () => void, unref?: () => void }
 
 if (!proto.ref) {
-  proto.ref = function () { return this }
+  proto.ref = function () {
+    return this
+  }
 }
 if (!proto.unref) {
-  proto.unref = function () { return this }
+  proto.unref = function () {
+    return this
+  }
 }

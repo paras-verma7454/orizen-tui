@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test'
-import React, { useState } from 'react'
 import { render } from 'ink-testing-library'
-import { TextInput, processTextInput } from './index.js'
+import React, { useState } from 'react'
+import { processTextInput, TextInput } from './index.js'
 
 // ── Pure logic tests (fast, no Ink rendering needed) ─────────────────────────
 describe('processTextInput', () => {

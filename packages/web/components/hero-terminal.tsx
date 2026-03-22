@@ -6,7 +6,7 @@ import { TerminalWindow } from './terminal-window'
 const SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
 const TOTAL = 30
 
-function useFrames(frames: string[], ms = 80) {
+function useFrames(frames: string[], ms = 80): string {
   const [i, setI] = useState(0)
   useEffect(() => {
     const t = setInterval(() => setI(n => (n + 1) % frames.length), ms)
@@ -15,7 +15,7 @@ function useFrames(frames: string[], ms = 80) {
   return frames[i]
 }
 
-export function HeroTerminal() {
+export function HeroTerminal(): JSX.Element {
   const spin = useFrames(SPINNER_FRAMES, 80)
   const [pct, setPct] = useState(34)
   useEffect(() => {
@@ -43,7 +43,10 @@ export function HeroTerminal() {
             <span className="text-zinc-400 w-20 text-right shrink-0">Progress:</span>
             <span className="text-cyan-400">{'█'.repeat(filled)}</span>
             <span className="text-zinc-700">{'░'.repeat(TOTAL - filled)}</span>
-            <span className="text-zinc-500 text-xs ml-1">{pct}%</span>
+            <span className="text-zinc-500 text-xs ml-1">
+              {pct}
+              %
+            </span>
           </div>
         </div>
         <div className="h-px bg-zinc-800 my-1" />

@@ -1,20 +1,20 @@
 'use client'
 
+import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
-import { Copy, Check } from 'lucide-react'
 
 interface CopyButtonProps {
   text: string
   className?: string
 }
 
-export function CopyButton({ text, className = '' }: CopyButtonProps) {
+export function CopyButton({ text, className = '' }: CopyButtonProps): JSX.Element {
   const [copied, setCopied] = useState(false)
 
-  const handleCopy = async () => {
+  const handleCopy = async (): Promise<void> => {
     await navigator.clipboard.writeText(text)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    setTimeout(setCopied, 2000, false)
   }
 
   return (

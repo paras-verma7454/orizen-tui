@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'bun:test'
-import { spinnerFrames, statusSymbols, asciiStatusSymbols, getStatusSymbol, DEFAULT_SPINNER_INTERVAL_MS } from './symbols.js'
+import { asciiStatusSymbols, DEFAULT_SPINNER_INTERVAL_MS, getStatusSymbol, spinnerFrames, statusSymbols } from './symbols.js'
 
 describe('spinnerFrames', () => {
   it('has dots frames', () => {

@@ -18,7 +18,8 @@
       "Bash(bunx next@latest --version)",
       "Bash(node -e \"import\\(''./postcss.config.js''\\).then\\(m => console.log\\(''ok'', JSON.stringify\\(m.default\\)\\)\\).catch\\(e => console.error\\(''ERROR:'', e.message\\)\\)\")",
       "Bash(gemini -p \"@packages/web/app/components/[slug]/page.tsx @packages/web/components/ @packages/web/lib/registry.ts Redesign the component detail page for Orizen TUI docs site. It should look like shadcn.com or ui.aceternity.com component pages. Must show::*)",
-      "Bash(gemini:*)"
+      "Bash(gemini:*)",
+      "Bash(grep -v \"^$\")"
     ]
   }
 }

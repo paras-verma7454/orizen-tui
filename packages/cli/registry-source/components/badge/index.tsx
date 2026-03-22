@@ -1,6 +1,6 @@
-import React from 'react'
 import { Box, Text } from 'ink'
 import { tv, useTheme } from 'orizen-tui-core'
+import React from 'react'
 
 export type BadgeVariant = 'default' | 'success' | 'warning' | 'error' | 'info'
 
@@ -16,7 +16,7 @@ export interface BadgeProps {
  * First component to use tv() — the terminal variant system.
  * Variant styles are resolved at render time from the theme's color tokens.
  */
-export function Badge({ variant = 'default', children }: BadgeProps) {
+export function Badge({ variant = 'default', children }: BadgeProps): JSX.Element {
   const { colors } = useTheme()
 
   // tv() — terminal variants (orizen-tui's equivalent of cva())
@@ -36,9 +36,9 @@ export function Badge({ variant = 'default', children }: BadgeProps) {
   return (
     <Box>
       <Text bold={style.bold} color={style.color}>
-        {'['}
+        [
         {children}
-        {']'}
+        ]
       </Text>
     </Box>
   )

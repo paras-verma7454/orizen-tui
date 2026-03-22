@@ -38,12 +38,12 @@ npx orizen-tui add spinner badge progress text-input
 You can import and use copied components from your app:
 
 ```tsx
-import React, { useEffect, useState } from 'react'
-import { render, Box } from 'ink'
+import { Box, render } from 'ink'
 import { ThemeProvider } from 'orizen-tui-core'
-import { Spinner } from './components/ui/orizen/spinner'
+import React, { useEffect, useState } from 'react'
 import { Badge } from './components/ui/orizen/badge'
 import { Progress } from './components/ui/orizen/progress'
+import { Spinner } from './components/ui/orizen/spinner'
 import { TextInput } from './components/ui/orizen/text-input'
 
 function App() {
@@ -73,10 +73,12 @@ render(<App />)
 Single component quick examples:
 
 ```tsx
-<Spinner label="Installing..." preset="dots" />
-<Badge variant="warning">BETA</Badge>
-<Progress value={42} max={100} label="Upload" />
-<TextInput value={text} onChange={setText} placeholder="Type here..." />
+<>
+  <Spinner label="Installing..." preset="dots" />
+  <Badge variant="warning">BETA</Badge>
+  <Progress value={42} max={100} label="Upload" />
+  <TextInput value={text} onChange={setText} placeholder="Type here..." />
+</>
 ```
 
 ## Command

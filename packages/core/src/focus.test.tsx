@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test'
-import React, { useEffect } from 'react'
 import { Text } from 'ink'
 import { render } from 'ink-testing-library'
+import React, { useEffect } from 'react'
 import { FocusManager, useFocus, useFocusManager } from './focus.js'
 
 async function tick() {

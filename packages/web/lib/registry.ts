@@ -1,7 +1,8 @@
+import type { ComponentCategory, ComponentDocsMeta } from './generated/components'
 import {
+
   componentDocs,
-  type ComponentCategory,
-  type ComponentDocsMeta,
+
 } from './generated/components'
 
 export type { ComponentCategory }

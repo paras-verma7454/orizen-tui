@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { render, Box, Text } from 'ink'
+import { Box, render, Text } from 'ink'
 import { ThemeProvider } from 'orizen-tui-core'
-import { Spinner } from './src/components/spinner/index.js'
-import { Progress } from './src/components/progress/index.js'
+import React, { useEffect, useState } from 'react'
 import { Badge } from './src/components/badge/index.js'
+import { Progress } from './src/components/progress/index.js'
+import { Spinner } from './src/components/spinner/index.js'
 
-function Main() {
+function Main(): JSX.Element {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -26,21 +26,23 @@ function Main() {
 
       <Box flexDirection="column" paddingX={1} gap={1} width="100%">
         <Box gap={2} alignItems="center">
-           <Badge variant="info">STATUS</Badge>
-           {progress < 100 ? (
-             <Box gap={1}>
-               <Spinner />
-               <Text>Running builds...</Text>
-             </Box>
-           ) : (
-             <Text color="green">Builds completed!</Text>
-           )}
+          <Badge variant="info">STATUS</Badge>
+          {progress < 100
+            ? (
+                <Box gap={1}>
+                  <Spinner />
+                  <Text>Running builds...</Text>
+                </Box>
+              )
+            : (
+                <Text color="green">Builds completed!</Text>
+              )}
         </Box>
 
         <Box flexDirection="column">
           <Box gap={1}>
-             <Badge variant="warning">BUILDING</Badge>
-             <Text>@orizen-tui/registry</Text>
+            <Badge variant="warning">BUILDING</Badge>
+            <Text>@orizen-tui/registry</Text>
           </Box>
           <Progress value={progress} label="Compilation:" width={30} />
         </Box>
@@ -51,7 +53,7 @@ function Main() {
           <Badge variant="default">TUI: 0.1.0</Badge>
         </Box>
       </Box>
-      
+
       <Box marginTop={1} justifyContent="center" width="100%">
         <Text italic color="gray">Ctrl+C to stop demo</Text>
       </Box>
@@ -59,7 +61,7 @@ function Main() {
   )
 }
 
-function Demo() {
+function Demo(): JSX.Element {
   return (
     <ThemeProvider>
       <Main />

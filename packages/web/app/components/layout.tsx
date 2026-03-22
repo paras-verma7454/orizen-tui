@@ -1,6 +1,6 @@
 import { Sidebar } from '@/components/sidebar'
 
-export default function ComponentsLayout({ children }: { children: React.ReactNode }) {
+export default function ComponentsLayout({ children }: { children: React.ReactNode }): JSX.Element {
   return (
     <div className="max-w-7xl mx-auto px-6 flex gap-8 min-h-[calc(100vh-3.5rem)]">
       <div className="hidden md:block">

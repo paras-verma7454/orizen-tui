@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
-import React from 'react'
 import { render } from 'ink-testing-library'
+import React from 'react'
 import { Badge } from './index.js'
 
 describe('Badge', () => {

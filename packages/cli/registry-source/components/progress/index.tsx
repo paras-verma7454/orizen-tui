@@ -1,6 +1,7 @@
-import React from 'react'
+import process from 'node:process'
 import { Box, Text } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React from 'react'
 
 export interface ProgressProps {
   /** Current value (0 to max). Omit for indeterminate mode. */
@@ -26,7 +27,7 @@ const EMPTY = '░'
  * - tuicomp-percentage-widths: bar width respects terminal width
  * - ux-progress-indicators: show for operations over 1 second
  */
-export function Progress({ value, max = 100, width, label, showPercent = true }: ProgressProps) {
+export function Progress({ value, max = 100, width, label, showPercent = true }: ProgressProps): JSX.Element {
   const { colors } = useTheme()
   // robust-tty-detection: fallback to 40 if stdout.columns is 0 (piped/CI)
   const termWidth = process.stdout.columns || 80

@@ -21,393 +21,393 @@ export interface ComponentDocsMeta {
 
 export const componentDocs: ComponentDocsMeta[] = [
   {
-    "slug": "badge",
-    "name": "Badge",
-    "description": "Inline colored label with semantic variants driven by the theme.",
-    "category": "display",
-    "usage": "import { Badge } from '@/components/ui/orizen/badge'\n\n<Badge variant=\"default\">v1.0.0</Badge>\n<Badge variant=\"success\">Deployed</Badge>\n<Badge variant=\"error\">Failed</Badge>",
-    "props": [
+    slug: 'badge',
+    name: 'Badge',
+    description: 'Inline colored label with semantic variants driven by the theme.',
+    category: 'display',
+    usage: 'import { Badge } from \'@/components/ui/orizen/badge\'\n\n<Badge variant="default">v1.0.0</Badge>\n<Badge variant="success">Deployed</Badge>\n<Badge variant="error">Failed</Badge>',
+    props: [
       {
-        "name": "variant",
-        "type": "'default' | 'success' | 'warning' | 'error' | 'info'",
-        "default": "'default'",
-        "description": "Visual variant"
+        name: 'variant',
+        type: '\'default\' | \'success\' | \'warning\' | \'error\' | \'info\'',
+        default: '\'default\'',
+        description: 'Visual variant',
       },
       {
-        "name": "children",
-        "type": "React.ReactNode",
-        "default": "-",
-        "description": "Badge content"
-      }
-    ]
+        name: 'children',
+        type: 'React.ReactNode',
+        default: '-',
+        description: 'Badge content',
+      },
+    ],
   },
   {
-    "slug": "checkbox",
-    "name": "Checkbox",
-    "description": "Arrow-key navigable list of toggleable boolean items.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { Checkbox } from '@/components/ui/orizen/checkbox'\n\nconst [selected, setSelected] = useState<string[]>(['typescript'])\n\n<Checkbox\n  label=\"Select features:\"\n  items={[\n    { label: 'TypeScript', value: 'typescript' },\n    { label: 'ESLint', value: 'eslint' },\n    { label: 'Prettier', value: 'prettier' },\n  ]}\n  value={selected}\n  onChange={setSelected}\n/>",
-    "props": [
+    slug: 'checkbox',
+    name: 'Checkbox',
+    description: 'Arrow-key navigable list of toggleable boolean items.',
+    category: 'input',
+    usage: 'import { useState } from \'react\'\nimport { Checkbox } from \'@/components/ui/orizen/checkbox\'\n\nconst [selected, setSelected] = useState<string[]>([\'typescript\'])\n\n<Checkbox\n  label="Select features:"\n  items={[\n    { label: \'TypeScript\', value: \'typescript\' },\n    { label: \'ESLint\', value: \'eslint\' },\n    { label: \'Prettier\', value: \'prettier\' },\n  ]}\n  value={selected}\n  onChange={setSelected}\n/>',
+    props: [
       {
-        "name": "items",
-        "type": "Array<{ label: string; value: string }>",
-        "default": "-",
-        "description": "List of toggleable items"
+        name: 'items',
+        type: 'Array<{ label: string; value: string }>',
+        default: '-',
+        description: 'List of toggleable items',
       },
       {
-        "name": "value",
-        "type": "string[]",
-        "default": "[]",
-        "description": "Array of selected values"
+        name: 'value',
+        type: 'string[]',
+        default: '[]',
+        description: 'Array of selected values',
       },
       {
-        "name": "onChange",
-        "type": "(values: string[]) => void",
-        "default": "-",
-        "description": "Called when an item is toggled"
+        name: 'onChange',
+        type: '(values: string[]) => void',
+        default: '-',
+        description: 'Called when an item is toggled',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Heading above the list"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Heading above the list',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether list accepts keyboard events"
-      }
-    ]
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether list accepts keyboard events',
+      },
+    ],
   },
   {
-    "slug": "confirm-input",
-    "name": "ConfirmInput",
-    "description": "Inline y/n confirmation prompt with configurable default answer.",
-    "category": "input",
-    "usage": "import { ConfirmInput } from '@/components/ui/orizen/confirm-input'\n\n<ConfirmInput\n  message=\"Overwrite existing file?\"\n  defaultAnswer=\"yes\"\n  onConfirm={(answer) => {\n    if (answer) overwriteFile()\n  }}\n/>",
-    "props": [
+    slug: 'confirm-input',
+    name: 'ConfirmInput',
+    description: 'Inline y/n confirmation prompt with configurable default answer.',
+    category: 'input',
+    usage: 'import { ConfirmInput } from \'@/components/ui/orizen/confirm-input\'\n\n<ConfirmInput\n  message="Overwrite existing file?"\n  defaultAnswer="yes"\n  onConfirm={(answer) => {\n    if (answer) overwriteFile()\n  }}\n/>',
+    props: [
       {
-        "name": "message",
-        "type": "string",
-        "default": "-",
-        "description": "Question shown to the user"
+        name: 'message',
+        type: 'string',
+        default: '-',
+        description: 'Question shown to the user',
       },
       {
-        "name": "defaultAnswer",
-        "type": "'yes' | 'no'",
-        "default": "'yes'",
-        "description": "Pre-selected answer (shown capitalized)"
+        name: 'defaultAnswer',
+        type: '\'yes\' | \'no\'',
+        default: '\'yes\'',
+        description: 'Pre-selected answer (shown capitalized)',
       },
       {
-        "name": "onConfirm",
-        "type": "(answer: boolean) => void",
-        "default": "-",
-        "description": "Called when Enter is pressed"
+        name: 'onConfirm',
+        type: '(answer: boolean) => void',
+        default: '-',
+        description: 'Called when Enter is pressed',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      }
-    ]
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether input accepts keyboard events',
+      },
+    ],
   },
   {
-    "slug": "multi-select",
-    "name": "MultiSelect",
-    "description": "Arrow-key list with space-to-toggle multi-choice selection.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { MultiSelect } from '@/components/ui/orizen/multi-select'\n\nconst [chosen, setChosen] = useState<string[]>([])\n\n<MultiSelect\n  label=\"Pick frameworks:\"\n  items={[\n    { label: 'React', value: 'react' },\n    { label: 'Vue', value: 'vue' },\n    { label: 'Svelte', value: 'svelte' },\n    { label: 'Solid', value: 'solid' },\n  ]}\n  value={chosen}\n  onChange={setChosen}\n  onSubmit={(values) => console.log(values)}\n/>",
-    "props": [
+    slug: 'multi-select',
+    name: 'MultiSelect',
+    description: 'Arrow-key list with space-to-toggle multi-choice selection.',
+    category: 'input',
+    usage: 'import { useState } from \'react\'\nimport { MultiSelect } from \'@/components/ui/orizen/multi-select\'\n\nconst [chosen, setChosen] = useState<string[]>([])\n\n<MultiSelect\n  label="Pick frameworks:"\n  items={[\n    { label: \'React\', value: \'react\' },\n    { label: \'Vue\', value: \'vue\' },\n    { label: \'Svelte\', value: \'svelte\' },\n    { label: \'Solid\', value: \'solid\' },\n  ]}\n  value={chosen}\n  onChange={setChosen}\n  onSubmit={(values) => console.log(values)}\n/>',
+    props: [
       {
-        "name": "items",
-        "type": "Array<{ label: string; value: string }>",
-        "default": "-",
-        "description": "List of selectable items"
+        name: 'items',
+        type: 'Array<{ label: string; value: string }>',
+        default: '-',
+        description: 'List of selectable items',
       },
       {
-        "name": "value",
-        "type": "string[]",
-        "default": "[]",
-        "description": "Currently selected values"
+        name: 'value',
+        type: 'string[]',
+        default: '[]',
+        description: 'Currently selected values',
       },
       {
-        "name": "onChange",
-        "type": "(values: string[]) => void",
-        "default": "-",
-        "description": "Called when selection changes"
+        name: 'onChange',
+        type: '(values: string[]) => void',
+        default: '-',
+        description: 'Called when selection changes',
       },
       {
-        "name": "onSubmit",
-        "type": "(values: string[]) => void",
-        "default": "undefined",
-        "description": "Called when Enter is pressed"
+        name: 'onSubmit',
+        type: '(values: string[]) => void',
+        default: 'undefined',
+        description: 'Called when Enter is pressed',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Heading above the list"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Heading above the list',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether list accepts keyboard events"
-      }
-    ]
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether list accepts keyboard events',
+      },
+    ],
   },
   {
-    "slug": "number-input",
-    "name": "NumberInput",
-    "description": "Numeric input with up/down arrow key increment and configurable step.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { NumberInput } from '@/components/ui/orizen/number-input'\n\nconst [port, setPort] = useState(3000)\n\n<NumberInput\n  label=\"Port:\"\n  value={port}\n  onChange={setPort}\n  min={1024}\n  max={65535}\n  step={1}\n/>",
-    "props": [
+    slug: 'number-input',
+    name: 'NumberInput',
+    description: 'Numeric input with up/down arrow key increment and configurable step.',
+    category: 'input',
+    usage: 'import { useState } from \'react\'\nimport { NumberInput } from \'@/components/ui/orizen/number-input\'\n\nconst [port, setPort] = useState(3000)\n\n<NumberInput\n  label="Port:"\n  value={port}\n  onChange={setPort}\n  min={1024}\n  max={65535}\n  step={1}\n/>',
+    props: [
       {
-        "name": "value",
-        "type": "number",
-        "default": "0",
-        "description": "Current numeric value"
+        name: 'value',
+        type: 'number',
+        default: '0',
+        description: 'Current numeric value',
       },
       {
-        "name": "onChange",
-        "type": "(value: number) => void",
-        "default": "-",
-        "description": "Called when value changes"
+        name: 'onChange',
+        type: '(value: number) => void',
+        default: '-',
+        description: 'Called when value changes',
       },
       {
-        "name": "min",
-        "type": "number",
-        "default": "-Infinity",
-        "description": "Minimum allowed value"
+        name: 'min',
+        type: 'number',
+        default: '-Infinity',
+        description: 'Minimum allowed value',
       },
       {
-        "name": "max",
-        "type": "number",
-        "default": "Infinity",
-        "description": "Maximum allowed value"
+        name: 'max',
+        type: 'number',
+        default: 'Infinity',
+        description: 'Maximum allowed value',
       },
       {
-        "name": "step",
-        "type": "number",
-        "default": "1",
-        "description": "Increment/decrement amount per keypress"
+        name: 'step',
+        type: 'number',
+        default: '1',
+        description: 'Increment/decrement amount per keypress',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label above the input"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Label above the input',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      }
-    ]
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether input accepts keyboard events',
+      },
+    ],
   },
   {
-    "slug": "progress",
-    "name": "Progress",
-    "description": "Horizontal progress bar with determinate and indeterminate modes.",
-    "category": "feedback",
-    "usage": "import { Progress } from '@/components/ui/orizen/progress'\n\n<Progress value={75} label=\"Uploading:\" />\n<Progress value={100} label=\"Done:\" />\n<Progress /> // indeterminate",
-    "props": [
+    slug: 'progress',
+    name: 'Progress',
+    description: 'Horizontal progress bar with determinate and indeterminate modes.',
+    category: 'feedback',
+    usage: 'import { Progress } from \'@/components/ui/orizen/progress\'\n\n<Progress value={75} label="Uploading:" />\n<Progress value={100} label="Done:" />\n<Progress /> // indeterminate',
+    props: [
       {
-        "name": "value",
-        "type": "number",
-        "default": "undefined",
-        "description": "Current value (omit for indeterminate)"
+        name: 'value',
+        type: 'number',
+        default: 'undefined',
+        description: 'Current value (omit for indeterminate)',
       },
       {
-        "name": "max",
-        "type": "number",
-        "default": "100",
-        "description": "Maximum value"
+        name: 'max',
+        type: 'number',
+        default: '100',
+        description: 'Maximum value',
       },
       {
-        "name": "width",
-        "type": "number",
-        "default": "40",
-        "description": "Bar width in columns"
+        name: 'width',
+        type: 'number',
+        default: '40',
+        description: 'Bar width in columns',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label before the bar"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Label before the bar',
       },
       {
-        "name": "showPercent",
-        "type": "boolean",
-        "default": "true",
-        "description": "Show percentage after bar"
-      }
-    ]
+        name: 'showPercent',
+        type: 'boolean',
+        default: 'true',
+        description: 'Show percentage after bar',
+      },
+    ],
   },
   {
-    "slug": "select",
-    "name": "Select",
-    "description": "Arrow-key navigable single-choice list with full keyboard support.",
-    "category": "input",
-    "usage": "import { Select } from '@/components/ui/orizen/select'\n\n<Select\n  label=\"Pick a framework:\"\n  items={[\n    { label: 'React', value: 'react' },\n    { label: 'Vue', value: 'vue' },\n  ]}\n  onSelect={(item) => {\n    // item.value => \"react\" | \"vue\"\n  }}\n/>",
-    "props": [
+    slug: 'select',
+    name: 'Select',
+    description: 'Arrow-key navigable single-choice list with full keyboard support.',
+    category: 'input',
+    usage: 'import { Select } from \'@/components/ui/orizen/select\'\n\n<Select\n  label="Pick a framework:"\n  items={[\n    { label: \'React\', value: \'react\' },\n    { label: \'Vue\', value: \'vue\' },\n  ]}\n  onSelect={(item) => {\n    // item.value => "react" | "vue"\n  }}\n/>',
+    props: [
       {
-        "name": "items",
-        "type": "ReadonlyArray<{ label: string; value: T }>",
-        "default": "-",
-        "description": "List items"
+        name: 'items',
+        type: 'ReadonlyArray<{ label: string; value: T }>',
+        default: '-',
+        description: 'List items',
       },
       {
-        "name": "onSelect",
-        "type": "(item) => void",
-        "default": "-",
-        "description": "Called when Enter is pressed"
+        name: 'onSelect',
+        type: '(item) => void',
+        default: '-',
+        description: 'Called when Enter is pressed',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Heading above the list"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Heading above the list',
       },
       {
-        "name": "initialIndex",
-        "type": "number",
-        "default": "0",
-        "description": "Initially highlighted item"
+        name: 'initialIndex',
+        type: 'number',
+        default: '0',
+        description: 'Initially highlighted item',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether list accepts keyboard events"
-      }
-    ]
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether list accepts keyboard events',
+      },
+    ],
   },
   {
-    "slug": "spinner",
-    "name": "Spinner",
-    "description": "Animated terminal spinner with named presets and customizable frames.",
-    "category": "feedback",
-    "usage": "import { Spinner } from '@/components/ui/orizen/spinner'\n\n// Named presets\n<Spinner preset=\"dots\" label=\"Loading...\" />\n<Spinner preset=\"circle\" label=\"Processing\" />\n<Spinner preset=\"bar\" label=\"Building\" />\n\n// Custom frames (advanced)\n<Spinner frames={['-', '\\\\', '|', '/']} label=\"Processing\" />",
-    "props": [
+    slug: 'spinner',
+    name: 'Spinner',
+    description: 'Animated terminal spinner with named presets and customizable frames.',
+    category: 'feedback',
+    usage: 'import { Spinner } from \'@/components/ui/orizen/spinner\'\n\n// Named presets\n<Spinner preset="dots" label="Loading..." />\n<Spinner preset="circle" label="Processing" />\n<Spinner preset="bar" label="Building" />\n\n// Custom frames (advanced)\n<Spinner frames={[\'-\', \'\\\\\', \'|\', \'/\']} label="Processing" />',
+    props: [
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Text shown after the spinner frame"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Text shown after the spinner frame',
       },
       {
-        "name": "preset",
-        "type": "\"dots\" | \"circle\" | \"bar\"",
-        "default": "undefined",
-        "description": "Named spinner style for common presets"
+        name: 'preset',
+        type: '"dots" | "circle" | "bar"',
+        default: 'undefined',
+        description: 'Named spinner style for common presets',
       },
       {
-        "name": "frames",
-        "type": "string[]",
-        "default": "theme spinner",
-        "description": "Custom animation frames (overrides preset/theme)"
+        name: 'frames',
+        type: 'string[]',
+        default: 'theme spinner',
+        description: 'Custom animation frames (overrides preset/theme)',
       },
       {
-        "name": "intervalMs",
-        "type": "number",
-        "default": "80",
-        "description": "Frame advance interval in ms"
-      }
-    ]
+        name: 'intervalMs',
+        type: 'number',
+        default: '80',
+        description: 'Frame advance interval in ms',
+      },
+    ],
   },
   {
-    "slug": "text-input",
-    "name": "TextInput",
-    "description": "Single-line keyboard-driven text input with focus management.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nconst [value, setValue] = useState('')\n\n<TextInput\n  label=\"Component name:\"\n  value={value}\n  onChange={setValue}\n  placeholder=\"e.g. button...\"\n/>",
-    "props": [
+    slug: 'text-input',
+    name: 'TextInput',
+    description: 'Single-line keyboard-driven text input with focus management.',
+    category: 'input',
+    usage: 'import { useState } from \'react\'\nimport { TextInput } from \'@/components/ui/orizen/text-input\'\n\nconst [value, setValue] = useState(\'\')\n\n<TextInput\n  label="Component name:"\n  value={value}\n  onChange={setValue}\n  placeholder="e.g. button..."\n/>',
+    props: [
       {
-        "name": "value",
-        "type": "string",
-        "default": "-",
-        "description": "Current input value"
+        name: 'value',
+        type: 'string',
+        default: '-',
+        description: 'Current input value',
       },
       {
-        "name": "onChange",
-        "type": "(value: string) => void",
-        "default": "-",
-        "description": "Called on every keypress"
+        name: 'onChange',
+        type: '(value: string) => void',
+        default: '-',
+        description: 'Called on every keypress',
       },
       {
-        "name": "placeholder",
-        "type": "string",
-        "default": "''",
-        "description": "Shown when value is empty"
+        name: 'placeholder',
+        type: 'string',
+        default: '\'\'',
+        description: 'Shown when value is empty',
       },
       {
-        "name": "mask",
-        "type": "string",
-        "default": "undefined",
-        "description": "Mask character (e.g. '*' for passwords)"
+        name: 'mask',
+        type: 'string',
+        default: 'undefined',
+        description: 'Mask character (e.g. \'*\' for passwords)',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label above the input"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Label above the input',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      }
-    ]
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether input accepts keyboard events',
+      },
+    ],
   },
   {
-    "slug": "textarea",
-    "name": "Textarea",
-    "description": "Multi-line text input with cursor management and configurable row height.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nconst [value, setValue] = useState('')\n\n<Textarea\n  label=\"Description:\"\n  value={value}\n  onChange={setValue}\n  rows={4}\n  placeholder=\"Enter description...\"\n/>",
-    "props": [
+    slug: 'textarea',
+    name: 'Textarea',
+    description: 'Multi-line text input with cursor management and configurable row height.',
+    category: 'input',
+    usage: 'import { useState } from \'react\'\nimport { Textarea } from \'@/components/ui/orizen/textarea\'\n\nconst [value, setValue] = useState(\'\')\n\n<Textarea\n  label="Description:"\n  value={value}\n  onChange={setValue}\n  rows={4}\n  placeholder="Enter description..."\n/>',
+    props: [
       {
-        "name": "value",
-        "type": "string",
-        "default": "-",
-        "description": "Current text value"
+        name: 'value',
+        type: 'string',
+        default: '-',
+        description: 'Current text value',
       },
       {
-        "name": "onChange",
-        "type": "(value: string) => void",
-        "default": "-",
-        "description": "Called on every keypress"
+        name: 'onChange',
+        type: '(value: string) => void',
+        default: '-',
+        description: 'Called on every keypress',
       },
       {
-        "name": "rows",
-        "type": "number",
-        "default": "3",
-        "description": "Visible row height"
+        name: 'rows',
+        type: 'number',
+        default: '3',
+        description: 'Visible row height',
       },
       {
-        "name": "placeholder",
-        "type": "string",
-        "default": "''",
-        "description": "Shown when value is empty"
+        name: 'placeholder',
+        type: 'string',
+        default: '\'\'',
+        description: 'Shown when value is empty',
       },
       {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label above the textarea"
+        name: 'label',
+        type: 'string',
+        default: 'undefined',
+        description: 'Label above the textarea',
       },
       {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      }
-    ]
-  }
+        name: 'focus',
+        type: 'boolean',
+        default: 'true',
+        description: 'Whether input accepts keyboard events',
+      },
+    ],
+  },
 ]

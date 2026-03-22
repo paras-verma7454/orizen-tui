@@ -1,6 +1,6 @@
-import React from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React from 'react'
 import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
 /**
@@ -9,7 +9,7 @@ import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 export function processNumberKey(
   value: number,
   input: string,
-  key: { upArrow?: boolean; downArrow?: boolean; ctrl?: boolean; meta?: boolean },
+  key: { upArrow?: boolean, downArrow?: boolean, ctrl?: boolean, meta?: boolean },
   min: number,
   max: number,
   step: number,
@@ -53,7 +53,7 @@ export function NumberInput({
   max = Infinity,
   step = 1,
   focus = true,
-}: NumberInputProps) {
+}: NumberInputProps): JSX.Element {
   const { colors, borders } = useTheme()
 
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5

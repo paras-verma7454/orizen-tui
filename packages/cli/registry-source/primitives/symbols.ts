@@ -1,10 +1,11 @@
 import type { SpinnerType } from 'orizen-tui-core'
+import process from 'node:process'
 
 // Spinner frame sets chosen for visual smoothness at 60fps.
 export const spinnerFrames: Record<SpinnerType, string[]> = {
-  dots: ['\u280b', '\u2819', '\u2839', '\u2838', '\u283c', '\u2834', '\u2826', '\u2827', '\u2807', '\u280f'],
+  dots: ['\u280B', '\u2819', '\u2839', '\u2838', '\u283C', '\u2834', '\u2826', '\u2827', '\u2807', '\u280F'],
   line: ['-', '\\', '|', '/'],
-  arc: ['\u25dc', '\u25e0', '\u25dd', '\u25de', '\u25e1', '\u25df'],
+  arc: ['\u25DC', '\u25E0', '\u25DD', '\u25DE', '\u25E1', '\u25DF'],
   bounce: ['\u2801', '\u2802', '\u2804', '\u2802'],
 }
 
@@ -12,8 +13,8 @@ export type SpinnerPreset = 'dots' | 'circle' | 'bar'
 
 // Named presets for ergonomic Spinner usage.
 export const spinnerPresetFrames: Record<SpinnerPreset, string[]> = {
-  dots: ['\u280b', '\u2819', '\u2839', '\u2838', '\u283c', '\u2834', '\u2826', '\u2827', '\u2807', '\u280f'],
-  circle: ['\u25d0', '\u25d3', '\u25d1', '\u25d2'],
+  dots: ['\u280B', '\u2819', '\u2839', '\u2838', '\u283C', '\u2834', '\u2826', '\u2827', '\u2807', '\u280F'],
+  circle: ['\u25D0', '\u25D3', '\u25D1', '\u25D2'],
   bar: ['\u2581', '\u2583', '\u2584', '\u2585', '\u2586', '\u2587', '\u2586', '\u2585', '\u2584', '\u2583'],
 }
 
@@ -23,10 +24,10 @@ export const DEFAULT_SPINNER_INTERVAL_MS = 80
 export const statusSymbols = {
   success: '\u2713',
   error: '\u2717',
-  warning: '\u26a0',
+  warning: '\u26A0',
   info: '\u2139',
-  pending: '\u25cb',
-  running: '\u25cf',
+  pending: '\u25CB',
+  running: '\u25CF',
 } as const
 
 // ASCII fallback for limited terminals.
@@ -44,8 +45,8 @@ export type StatusType = keyof typeof statusSymbols
 export function getStatusSymbol(type: StatusType): string {
   const isLimitedTerminal
     = process.platform === 'win32'
-    && !process.env.WT_SESSION
-    && !process.env.TERM_PROGRAM
+      && !process.env.WT_SESSION
+      && !process.env.TERM_PROGRAM
 
   return isLimitedTerminal ? asciiStatusSymbols[type] : statusSymbols[type]
 }

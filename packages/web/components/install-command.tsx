@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
 import { Terminal } from 'lucide-react'
+import { useState } from 'react'
 import { CopyButton } from './copy-button'
 
 const MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const
 type Manager = typeof MANAGERS[number]
 
-function buildCmd(manager: Manager, slug: string) {
+function buildCmd(manager: Manager, slug: string): string {
   if (manager === 'pnpm')
     return `pnpm dlx orizen-tui@latest add ${slug}`
   if (manager === 'npm')
@@ -21,7 +21,7 @@ interface InstallCommandProps {
   slug: string
 }
 
-export function InstallCommand({ slug }: InstallCommandProps) {
+export function InstallCommand({ slug }: InstallCommandProps): JSX.Element {
   const [manager, setManager] = useState<Manager>('pnpm')
   const cmd = buildCmd(manager, slug)
 

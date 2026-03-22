@@ -1,10 +1,11 @@
 'use client'
 
+import type { ComponentCategory } from '@/lib/registry'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { components, categories, type ComponentCategory } from '@/lib/registry'
+import { categories, components } from '@/lib/registry'
 
-export function SidebarContent({ onNavigate, className }: { onNavigate?: () => void; className?: string }) {
+export function SidebarContent({ onNavigate, className }: { onNavigate?: () => void, className?: string }): JSX.Element {
   const pathname = usePathname()
 
   const grouped = Object.entries(categories).map(([key, label]) => ({
@@ -35,7 +36,7 @@ export function SidebarContent({ onNavigate, className }: { onNavigate?: () => v
             {group.label}
           </p>
           <ul className="space-y-0.5">
-            {group.items.map(item => {
+            {group.items.map((item) => {
               const isActive = pathname === `/components/${item.slug}`
               return (
                 <li key={item.slug}>
@@ -60,7 +61,7 @@ export function SidebarContent({ onNavigate, className }: { onNavigate?: () => v
   )
 }
 
-export function Sidebar() {
+export function Sidebar(): JSX.Element {
   return (
     <aside className="w-56 shrink-0 sticky top-14 self-start max-h-[calc(100vh-3.5rem)] overflow-y-auto">
       <SidebarContent />

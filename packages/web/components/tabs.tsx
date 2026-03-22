@@ -1,6 +1,7 @@
 'use client'
 
-import { useState, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
+import { useState } from 'react'
 
 interface TabItem {
   label: string
@@ -12,7 +13,7 @@ interface TabsProps {
   className?: string
 }
 
-export function Tabs({ tabs, className = '' }: TabsProps) {
+export function Tabs({ tabs, className = '' }: TabsProps): JSX.Element {
   const [active, setActive] = useState(0)
 
   return (

@@ -1,13 +1,13 @@
-﻿import Link from 'next/link'
-import { ArrowRight, Zap, Palette, Focus, Github } from 'lucide-react'
+import { ArrowRight, Focus, Github, Palette, Zap } from 'lucide-react'
+import Link from 'next/link'
+import { ComponentPreview } from '@/components/component-preview'
 import { CopyButton } from '@/components/copy-button'
 import { HeroTerminal } from '@/components/hero-terminal'
-import { ComponentPreview } from '@/components/component-preview'
 import { components } from '@/lib/registry'
 
 // â”€â”€ Hero install command â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-function InstallCommand() {
+function InstallCommand(): JSX.Element {
   const cmd = 'npx orizen-tui@latest add spinner'
   return (
     <div className="inline-flex items-center gap-3 bg-zinc-900 border border-zinc-800 px-5 py-3 rounded-full text-sm group hover:border-cyan-500/40 transition-colors max-w-full">
@@ -38,10 +38,9 @@ const features = [
   },
 ]
 
-
 // â”€â”€ Component grid preview â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-function ComponentCard({ slug, name, description }: { slug: string; name: string; description: string }) {
+function ComponentCard({ slug, name, description }: { slug: string, name: string, description: string }): JSX.Element {
   return (
     <Link
       href={`/components/${slug}`}
@@ -62,7 +61,7 @@ function ComponentCard({ slug, name, description }: { slug: string; name: string
 
 // â”€â”€ Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-export default function LandingPage() {
+export default function LandingPage(): JSX.Element {
   return (
     <main className="bg-background">
       {/* Hero */}
@@ -90,7 +89,10 @@ export default function LandingPage() {
         </h1>
 
         <p className="text-zinc-400 max-w-xl mx-auto mb-10 text-base leading-relaxed">
-          Open-source terminal UI components for <span className="text-zinc-200">Ink</span>.
+          Open-source terminal UI components for
+          {' '}
+          <span className="text-zinc-200">Ink</span>
+          .
           Copy the source, own every line, and ship fast with accessible, themeable primitives.
         </p>
 
@@ -129,7 +131,9 @@ export default function LandingPage() {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-lg font-semibold">Components</h2>
           <Link href="/components" className="text-xs text-zinc-500 hover:text-zinc-100 transition-colors flex items-center gap-1">
-            View all <ArrowRight className="w-3 h-3" />
+            View all
+            {' '}
+            <ArrowRight className="w-3 h-3" />
           </Link>
         </div>
         <p className="text-xs text-zinc-500 mb-4">
@@ -144,5 +148,3 @@ export default function LandingPage() {
     </main>
   )
 }
-
-

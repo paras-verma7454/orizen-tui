@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { Menu, Terminal, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Terminal, Menu, X } from 'lucide-react'
-import { ThemeToggle } from './theme-toggle'
+import { useState } from 'react'
 import { SidebarContent } from './sidebar'
+import { ThemeToggle } from './theme-toggle'
 
-export function Nav() {
+export function Nav(): JSX.Element {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const inComponents = pathname.startsWith('/components')

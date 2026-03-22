@@ -1,8 +1,8 @@
-import { describe, expect, it } from 'bun:test'
-import React from 'react'
-import { render } from 'ink-testing-library'
 import type { CheckboxItem } from './index.js'
-import { Checkbox, toggleCheckboxItem, navigateCheckbox } from './index.js'
+import { describe, expect, it } from 'bun:test'
+import { render } from 'ink-testing-library'
+import React from 'react'
+import { Checkbox, navigateCheckbox, toggleCheckboxItem } from './index.js'
 
 // ── Pure logic tests ──────────────────────────────────────────────────────────
 describe('toggleCheckboxItem', () => {

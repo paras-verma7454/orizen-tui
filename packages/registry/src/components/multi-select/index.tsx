@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React, { useState } from 'react'
 
 export interface MultiSelectItem<T = string> {
   label: string
@@ -56,7 +56,7 @@ export function MultiSelect<T = string>({
   onSubmit,
   label,
   focus = true,
-}: MultiSelectProps<T>) {
+}: MultiSelectProps<T>): JSX.Element {
   const { colors } = useTheme()
   const [cursorIndex, setCursorIndex] = useState(0)
 

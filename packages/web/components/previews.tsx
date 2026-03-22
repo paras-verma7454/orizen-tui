@@ -18,11 +18,11 @@ function useFrames(frames: string[], intervalMs = 80): string {
 
 // ── Spinner preview ───────────────────────────────────────────────────────────
 
-const DOTS   = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+const DOTS = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
 const CIRCLE = ['◐', '◓', '◑', '◒']
-const BAR    = ['▁', '▃', '▄', '▅', '▆', '▇', '▆', '▅', '▄', '▃']
+const BAR = ['▁', '▃', '▄', '▅', '▆', '▇', '▆', '▅', '▄', '▃']
 
-function SpinnerFrame({ frames, label }: { frames: string[]; label: string }) {
+function SpinnerFrame({ frames, label }: { frames: string[], label: string }): JSX.Element {
   const frame = useFrames(frames)
   return (
     <span className="flex items-center gap-2">
@@ -32,19 +32,19 @@ function SpinnerFrame({ frames, label }: { frames: string[]; label: string }) {
   )
 }
 
-export function SpinnerPreview() {
+export function SpinnerPreview(): JSX.Element {
   return (
     <div className="flex flex-wrap gap-6 items-center">
-      <SpinnerFrame frames={DOTS}   label="Loading…" />
+      <SpinnerFrame frames={DOTS} label="Loading…" />
       <SpinnerFrame frames={CIRCLE} label="Processing" />
-      <SpinnerFrame frames={BAR}    label="Building" />
+      <SpinnerFrame frames={BAR} label="Building" />
     </div>
   )
 }
 
 // ── Badge preview ─────────────────────────────────────────────────────────────
 
-export function BadgePreview() {
+export function BadgePreview(): JSX.Element {
   return (
     <div className="flex flex-wrap gap-3">
       <span className="text-cyan-400   font-bold">[default]</span>
@@ -60,7 +60,7 @@ export function BadgePreview() {
 
 const TOTAL = 30
 
-function AnimatedBar() {
+function AnimatedBar(): JSX.Element {
   const [pct, setPct] = useState(0)
   useEffect(() => {
     const timer = setInterval(() => setPct(p => (p >= 100 ? 0 : p + 2)), 80)
@@ -71,23 +71,29 @@ function AnimatedBar() {
     <span>
       <span className="text-cyan-400">{'█'.repeat(filled)}</span>
       <span className="text-zinc-700">{'░'.repeat(TOTAL - filled)}</span>
-      <span className="text-zinc-500 text-xs ml-2">{pct}%</span>
+      <span className="text-zinc-500 text-xs ml-2">
+        {pct}
+        %
+      </span>
     </span>
   )
 }
 
-function StaticBar({ pct }: { pct: number }) {
+function StaticBar({ pct }: { pct: number }): JSX.Element {
   const filled = Math.round((pct / 100) * TOTAL)
   return (
     <span>
       <span className="text-cyan-400">{'█'.repeat(filled)}</span>
       <span className="text-zinc-700">{'░'.repeat(TOTAL - filled)}</span>
-      <span className="text-zinc-500 text-xs ml-2">{pct}%</span>
+      <span className="text-zinc-500 text-xs ml-2">
+        {pct}
+        %
+      </span>
     </span>
   )
 }
 
-export function ProgressPreview() {
+export function ProgressPreview(): JSX.Element {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-2">
@@ -106,7 +112,7 @@ export function ProgressPreview() {
   )
 }
 
-export function ProgressPreviewCompact() {
+export function ProgressPreviewCompact(): JSX.Element {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center">
@@ -126,7 +132,7 @@ export function ProgressPreviewCompact() {
 
 const CURSOR_FRAMES = ['█', ' ']
 
-export function TextInputPreview() {
+export function TextInputPreview(): JSX.Element {
   const cursor = useFrames(CURSOR_FRAMES, 530)
   return (
     <div className="space-y-1">
@@ -143,7 +149,7 @@ export function TextInputPreview() {
 
 const SELECT_ITEMS = ['React', 'Vue', 'Svelte', 'Solid']
 
-export function SelectPreview() {
+export function SelectPreview(): JSX.Element {
   const [active, setActive] = useState(0)
   useEffect(() => {
     const timer = setInterval(() => setActive(i => (i + 1) % SELECT_ITEMS.length), 900)
@@ -165,7 +171,7 @@ export function SelectPreview() {
 
 // ── Textarea preview ──────────────────────────────────────────────────────────
 
-export function TextareaPreview() {
+export function TextareaPreview(): JSX.Element {
   const cursor = useFrames(['█', ' '], 530)
   const lines = ['Building a terminal UI', 'with React and Ink…']
   return (
@@ -187,17 +193,17 @@ export function TextareaPreview() {
 
 const CHECKBOX_ITEMS = [
   { label: 'TypeScript', checked: true },
-  { label: 'ESLint',     checked: true },
-  { label: 'Prettier',   checked: false },
-  { label: 'Husky',      checked: false },
+  { label: 'ESLint', checked: true },
+  { label: 'Prettier', checked: false },
+  { label: 'Husky', checked: false },
 ]
 
-export function CheckboxPreview() {
+export function CheckboxPreview(): JSX.Element {
   const [active, setActive] = useState(2)
   const [items, setItems] = useState(CHECKBOX_ITEMS)
   useEffect(() => {
     const timer = setInterval(() => {
-      setActive(prev => {
+      setActive((prev) => {
         const next = (prev + 1) % CHECKBOX_ITEMS.length
         setItems(it => it.map((item, i) => i === next ? { ...item, checked: !item.checked } : item))
         return next
@@ -224,14 +230,14 @@ export function CheckboxPreview() {
 const MULTI_ITEMS = ['React', 'Vue', 'Svelte', 'Solid']
 const INITIAL_SELECTED = new Set([0, 2])
 
-export function MultiSelectPreview() {
+export function MultiSelectPreview(): JSX.Element {
   const [active, setActive] = useState(1)
   const [selected, setSelected] = useState(INITIAL_SELECTED)
   useEffect(() => {
     const timer = setInterval(() => {
-      setActive(prev => {
+      setActive((prev) => {
         const next = (prev + 1) % MULTI_ITEMS.length
-        setSelected(s => {
+        setSelected((s) => {
           const updated = new Set(s)
           updated.has(next) ? updated.delete(next) : updated.add(next)
           return updated
@@ -243,7 +249,10 @@ export function MultiSelectPreview() {
   }, [])
   return (
     <div className="space-y-0.5">
-      <span className="text-cyan-400 font-bold text-xs block mb-1.5">Pick frameworks: <span className="text-zinc-600">(space to toggle)</span></span>
+      <span className="text-cyan-400 font-bold text-xs block mb-1.5">
+        Pick frameworks:
+        <span className="text-zinc-600">(space to toggle)</span>
+      </span>
       {MULTI_ITEMS.map((label, i) => (
         <div key={label} className="flex items-center gap-2">
           <span className={i === active ? 'text-cyan-400' : 'text-transparent select-none'}>❯</span>
@@ -257,7 +266,7 @@ export function MultiSelectPreview() {
 
 // ── ConfirmInput preview ──────────────────────────────────────────────────────
 
-export function ConfirmInputPreview() {
+export function ConfirmInputPreview(): JSX.Element {
   const [isYes, setIsYes] = useState(true)
   useEffect(() => {
     const timer = setInterval(() => setIsYes(v => !v), 1200)
@@ -279,13 +288,16 @@ export function ConfirmInputPreview() {
 
 // ── NumberInput preview ───────────────────────────────────────────────────────
 
-export function NumberInputPreview() {
+export function NumberInputPreview(): JSX.Element {
   const [port, setPort] = useState(3000)
   const [workers, setWorkers] = useState(4)
   useEffect(() => {
     const portTimer = setInterval(() => setPort(p => p >= 3005 ? 3000 : p + 1), 600)
     const workersTimer = setInterval(() => setWorkers(w => w >= 8 ? 1 : w + 1), 900)
-    return () => { clearInterval(portTimer); clearInterval(workersTimer) }
+    return () => {
+      clearInterval(portTimer)
+      clearInterval(workersTimer)
+    }
   }, [])
   return (
     <div className="space-y-2">
@@ -314,13 +326,13 @@ export function NumberInputPreview() {
 // ── Slug → preview map ────────────────────────────────────────────────────────
 
 export const previewMap: Record<string, React.FC> = {
-  spinner:        SpinnerPreview,
-  badge:          BadgePreview,
-  progress:       ProgressPreview,
-  'text-input':   TextInputPreview,
-  select:         SelectPreview,
-  textarea:       TextareaPreview,
-  checkbox:       CheckboxPreview,
+  'spinner': SpinnerPreview,
+  'badge': BadgePreview,
+  'progress': ProgressPreview,
+  'text-input': TextInputPreview,
+  'select': SelectPreview,
+  'textarea': TextareaPreview,
+  'checkbox': CheckboxPreview,
   'multi-select': MultiSelectPreview,
   'confirm-input': ConfirmInputPreview,
   'number-input': NumberInputPreview,

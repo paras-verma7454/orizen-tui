@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React, { useState } from 'react'
 import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
 /**
@@ -51,9 +51,9 @@ export function TextInput({
   mask,
   label,
   focus = true,
-}: TextInputProps) {
+}: TextInputProps): JSX.Element {
   const { colors, borders } = useTheme()
-  const [cursorVisible, setCursorVisible] = useState(true)
+  const [cursorVisible, _setCursorVisible] = useState(true)
 
   // input-isactive-focus: only receive input events when focused
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5

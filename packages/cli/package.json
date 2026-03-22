@@ -7,9 +7,9 @@
     "orizen-tui": "dist/index.mjs"
   },
   "files": [
+    "README.md",
     "dist",
-    "registry-source",
-    "README.md"
+    "registry-source"
   ],
   "publishConfig": {
     "access": "public"

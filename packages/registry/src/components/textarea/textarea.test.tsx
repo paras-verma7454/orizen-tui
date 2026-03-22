@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'bun:test'
-import React from 'react'
 import { render } from 'ink-testing-library'
-import { Textarea, processTextarea } from './index.js'
+import React from 'react'
+import { processTextarea, Textarea } from './index.js'
 
 // ── Pure logic tests ──────────────────────────────────────────────────────────
 describe('processTextarea', () => {

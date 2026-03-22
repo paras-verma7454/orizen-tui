@@ -1,9 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, mock } from 'bun:test'
-import React from 'react'
 import { render } from 'ink-testing-library'
+import React from 'react'
 import { Spinner } from './index.js'
 
-function stripAnsi(value: string) {
+function stripAnsi(value: string): string {
+  // eslint-disable-next-line no-control-regex
   return value.replace(/\x1B\[[0-9;]*m/g, '')
 }
 
@@ -18,7 +19,7 @@ describe('Spinner', () => {
 
   it('renders the first frame on initial render', () => {
     const { lastFrame } = render(<Spinner />)
-    expect(lastFrame()).toContain('\u280b')
+    expect(lastFrame()).toContain('\u280B')
   })
 
   it('renders a label when provided', () => {
@@ -28,7 +29,7 @@ describe('Spinner', () => {
 
   it('uses named preset frames when provided', () => {
     const { lastFrame } = render(<Spinner preset="circle" />)
-    expect(lastFrame()).toContain('\u25d0')
+    expect(lastFrame()).toContain('\u25D0')
   })
 
   it('uses custom frames when provided', () => {

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'bun:test'
-import React from 'react'
-import { render } from 'ink-testing-library'
 import { Text } from 'ink'
-import { ThemeProvider, useTheme, defaultTheme } from './index.js'
+import { render } from 'ink-testing-library'
+import React from 'react'
+import { defaultTheme, ThemeProvider, useTheme } from './index.js'
 
 function ThemeConsumer() {
   const theme = useTheme()

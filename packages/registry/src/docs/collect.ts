@@ -1,8 +1,8 @@
+import type { ComponentDocsMeta } from './types.js'
 import { existsSync } from 'node:fs'
 import { readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import type { ComponentDocsMeta } from './types.js'
 
 function assertValidMeta(meta: ComponentDocsMeta, expectedSlug: string): void {
   if (meta.slug !== expectedSlug) {

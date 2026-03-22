@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { Moon, Sun } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -20,12 +20,12 @@ function resolveTheme(): Theme {
   return getSystemTheme()
 }
 
-function applyTheme(theme: Theme) {
+function applyTheme(theme: Theme): void {
   document.documentElement.dataset.theme = theme
   window.localStorage.setItem('orizen-theme', theme)
 }
 
-export function ThemeToggle() {
+export function ThemeToggle(): JSX.Element {
   const [theme, setTheme] = useState<Theme>('dark')
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export function ThemeToggle() {
     applyTheme(initial)
   }, [])
 
-  const toggle = () => {
+  const toggle = (): void => {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
     setTheme(next)
     applyTheme(next)

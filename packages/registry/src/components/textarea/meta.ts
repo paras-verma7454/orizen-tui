@@ -21,7 +21,7 @@ const [value, setValue] = useState('')
     { name: 'value', type: 'string', default: '-', description: 'Current text value' },
     { name: 'onChange', type: '(value: string) => void', default: '-', description: 'Called on every keypress' },
     { name: 'rows', type: 'number', default: '3', description: 'Visible row height' },
-    { name: 'placeholder', type: 'string', default: "''", description: 'Shown when value is empty' },
+    { name: 'placeholder', type: 'string', default: '\'\'', description: 'Shown when value is empty' },
     { name: 'label', type: 'string', default: 'undefined', description: 'Label above the textarea' },
     { name: 'focus', type: 'boolean', default: 'true', description: 'Whether input accepts keyboard events' },
   ],

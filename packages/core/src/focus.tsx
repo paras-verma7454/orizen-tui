@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useInput, useStdin } from 'ink'
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 
 // ── Context ───────────────────────────────────────────────────────────────────
 
@@ -36,7 +36,7 @@ interface TabHandlerProps {
   focusPrev: () => void
 }
 
-function TabHandler({ cycleFocus, focusNext, focusPrev }: TabHandlerProps) {
+function TabHandler({ cycleFocus, focusNext, focusPrev }: TabHandlerProps): null {
   useInput((_input, key) => {
     if (!cycleFocus)
       return
@@ -70,7 +70,7 @@ export interface FocusManagerProps {
  *     <Select ... focus={isFocused} />      ← via useFocus('menu')
  *   </FocusManager>
  */
-export function FocusManager({ children, defaultId, cycleFocus = true }: FocusManagerProps) {
+export function FocusManager({ children, defaultId, cycleFocus = true }: FocusManagerProps): JSX.Element {
   // Use a ref for ids so focusNext/focusPrev have a stable closure over it
   const idsRef = useRef<string[]>([])
   const [activeId, setActiveId] = useState<string | null>(defaultId ?? null)
@@ -139,7 +139,7 @@ export function useFocus(id: string): { isFocused: boolean, focus: () => void } 
     ctx.register(id)
     // tuistate-cleanup-effects: unregister on unmount
     return () => ctx.unregister(id)
-  }, [id]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [id])
 
   return {
     isFocused: ctx.isFocused(id),
@@ -148,6 +148,6 @@ export function useFocus(id: string): { isFocused: boolean, focus: () => void } 
 }
 
 /** Access the full FocusManager context (for advanced use cases) */
-export function useFocusManager() {
+export function useFocusManager(): FocusContextValue {
   return useContext(FocusContext)
 }

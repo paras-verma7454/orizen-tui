@@ -1,21 +1,22 @@
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { readFile } from 'fs/promises'
-import { join } from 'path'
+import { readFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import process from 'node:process'
 import { ChevronRight, ExternalLink } from 'lucide-react'
-import { TerminalWindow } from '@/components/terminal-window'
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { CodeBlock } from '@/components/code-block'
 import { ComponentPreview } from '@/components/component-preview'
-import { Tabs } from '@/components/tabs'
 import { InstallCommand } from '@/components/install-command'
-import { getComponent, components } from '@/lib/registry'
+import { Tabs } from '@/components/tabs'
+import { TerminalWindow } from '@/components/terminal-window'
+import { components, getComponent } from '@/lib/registry'
 
 // Static params for all component slugs
-export function generateStaticParams() {
+export function generateStaticParams(): Array<{ slug: string }> {
   return components.map(c => ({ slug: c.slug }))
 }
 
-function PropsTable({ props }: { props: Array<{ name: string; type: string; default: string; description: string }> }) {
+function PropsTable({ props }: { props: Array<{ name: string, type: string, default: string, description: string }> }): JSX.Element {
   return (
     <div className="rounded-lg border border-zinc-800 overflow-hidden font-mono text-xs">
       {/* Desktop header */}
@@ -52,7 +53,7 @@ function PropsTable({ props }: { props: Array<{ name: string; type: string; defa
   )
 }
 
-function splitUsage(usage: string) {
+function splitUsage(usage: string): { importCode: string, exampleCode: string } {
   const lines = usage.trim().split('\n')
   const importLines: string[] = []
   let index = 0
@@ -78,7 +79,7 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-export default async function ComponentPage({ params }: PageProps) {
+export default async function ComponentPage({ params }: PageProps): Promise<JSX.Element> {
   const { slug } = await params
   const component = getComponent(slug)
   if (!component)
@@ -157,7 +158,8 @@ export default async function ComponentPage({ params }: PageProps) {
                   <div className="space-y-3">
                     <InstallCommand slug={slug} />
                     <p className="text-xs text-zinc-600 font-mono">
-                      if dependency install fails, run:{' '}
+                      if dependency install fails, run:
+                      {' '}
                       <code className="text-zinc-400">{manualInstall}</code>
                     </p>
                   </div>

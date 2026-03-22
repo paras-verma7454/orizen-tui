@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import process from 'node:process'
 import { Command } from 'commander'
 import pc from 'picocolors'
 import { createAddCommand } from './commands/add.js'

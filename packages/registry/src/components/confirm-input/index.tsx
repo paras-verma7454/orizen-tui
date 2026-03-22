@@ -1,6 +1,6 @@
-import React from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React from 'react'
 
 /**
  * Pure key resolution logic — extracted for direct unit testing
@@ -8,7 +8,7 @@ import { useTheme } from 'orizen-tui-core'
  */
 export function resolveConfirmKey(
   input: string,
-  key: { return?: boolean; escape?: boolean; ctrl?: boolean; meta?: boolean },
+  key: { return?: boolean, escape?: boolean, ctrl?: boolean, meta?: boolean },
   defaultAnswer: 'yes' | 'no',
 ): boolean | null {
   if (key.return)
@@ -49,7 +49,7 @@ export function ConfirmInput({
   defaultAnswer = 'yes',
   onConfirm,
   focus = true,
-}: ConfirmInputProps) {
+}: ConfirmInputProps): JSX.Element {
   const { colors } = useTheme()
 
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
@@ -70,7 +70,7 @@ export function ConfirmInput({
     <Box flexDirection="row" gap={1}>
       <Text color={focus ? colors.primary : colors.muted}>{message}</Text>
       <Text color={colors.muted}>{hint}</Text>
-      <Text color={focus ? colors.primary : colors.muted}>{'█'}</Text>
+      <Text color={focus ? colors.primary : colors.muted}>█</Text>
     </Box>
   )
 }

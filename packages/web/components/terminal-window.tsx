@@ -6,7 +6,7 @@ interface TerminalWindowProps {
   className?: string
 }
 
-export function TerminalWindow({ title = 'bash', children, className = '' }: TerminalWindowProps) {
+export function TerminalWindow({ title = 'bash', children, className = '' }: TerminalWindowProps): JSX.Element {
   return (
     <div className={`rounded-lg border border-zinc-800 bg-zinc-950 shadow-2xl overflow-hidden font-mono ${className}`}>
       {/* Title bar */}

@@ -1,8 +1,8 @@
-import { afterEach, describe, expect, it, mock } from 'bun:test'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { afterEach, describe, expect, it, mock } from 'bun:test'
 import {
   buildInstallCommand,
   buildInstallInvocation,
@@ -31,8 +31,7 @@ afterEach(async () => {
 describe('detectPackageManager', () => {
   it('prefers bun over pnpm/yarn/npm locks', () => {
     const manager = detectPackageManager('C:\\demo', path =>
-      path.endsWith('bun.lock') || path.endsWith('pnpm-lock.yaml') || path.endsWith('yarn.lock'),
-    )
+      path.endsWith('bun.lock') || path.endsWith('pnpm-lock.yaml') || path.endsWith('yarn.lock'))
     expect(manager).toBe('bun')
   })
 
@@ -380,7 +379,8 @@ describe('executeAddCommand', () => {
       expect(componentSource).toContain(`from './primitives/symbols'`)
       expect(await Bun.file(symbolsPath).exists()).toBe(true)
       expect(result.requiredPrimitives).toEqual(['symbols'])
-    } finally {
+    }
+    finally {
       globalThis.fetch = originalFetch
     }
   })
@@ -406,7 +406,8 @@ describe('createAddCommand', () => {
         '--dry-run',
         '--no-install',
       ])
-    } finally {
+    }
+    finally {
       console.log = originalLog
     }
 

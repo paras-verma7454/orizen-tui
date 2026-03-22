@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Text, render, useApp, useInput, useStdin } from 'ink'
-import { FocusManager, ThemeProvider, useFocus } from 'orizen-tui-core'
+import process from 'node:process'
 import {
   Badge,
   Progress,
@@ -8,6 +6,9 @@ import {
   Spinner,
   TextInput,
 } from '@orizen-tui/registry'
+import { Box, render, Text, useApp, useInput, useStdin } from 'ink'
+import { FocusManager, ThemeProvider, useFocus } from 'orizen-tui-core'
+import React, { useEffect, useState } from 'react'
 
 // ── Static data (module-level — not recreated on re-render) ───────────────────
 
@@ -29,7 +30,7 @@ const BADGE_VARIANTS = ['default', 'success', 'warning', 'error', 'info'] as con
 
 // ── Animated progress ─────────────────────────────────────────────────────────
 
-function AnimatedProgress() {
+function AnimatedProgress(): JSX.Element {
   const [value, setValue] = useState(0)
 
   useEffect(() => {
@@ -50,7 +51,7 @@ function AnimatedProgress() {
 
 // ── Theme-picking Select ───────────────────────────────────────────────────────
 
-function FocusedSelect({ onThemeChange }: { onThemeChange: (color: string) => void }) {
+function FocusedSelect({ onThemeChange }: { onThemeChange: (color: string) => void }): JSX.Element {
   const { isFocused } = useFocus('select')
 
   return (
@@ -65,7 +66,7 @@ function FocusedSelect({ onThemeChange }: { onThemeChange: (color: string) => vo
 
 // ── Text input ────────────────────────────────────────────────────────────────
 
-function FocusedInput() {
+function FocusedInput(): JSX.Element {
   const { isFocused } = useFocus('input')
   const [value, setValue] = useState('')
 
@@ -82,15 +83,18 @@ function FocusedInput() {
 
 // ── Quit handler (only mounted when stdin supports raw mode) ──────────────────
 
-function QuitHandler() {
+function QuitHandler(): null {
   const { exit } = useApp()
-  useInput((input) => { if (input === 'q') exit() })
+  useInput((input) => {
+    if (input === 'q')
+      exit()
+  })
   return null
 }
 
 // ── App (receives onThemeChange from Demo wrapper) ────────────────────────────
 
-function App({ onThemeChange }: { onThemeChange: (c: string) => void }) {
+function App({ onThemeChange }: { onThemeChange: (c: string) => void }): JSX.Element {
   const cols = Math.min(process.stdout.columns || 60, 60)
   const { isRawModeSupported } = useStdin()
   const div = <Text dimColor>{'─'.repeat(cols)}</Text>
@@ -154,7 +158,7 @@ function App({ onThemeChange }: { onThemeChange: (c: string) => void }) {
 
 // ── Demo root — holds live theme state ────────────────────────────────────────
 
-function Demo() {
+function Demo(): JSX.Element {
   const [primary, setPrimary] = useState('cyan')
 
   return (

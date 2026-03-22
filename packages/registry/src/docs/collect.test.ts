@@ -1,8 +1,8 @@
-import { afterEach, describe, expect, it } from 'bun:test'
-import { mkdtemp, mkdir, rm, writeFile } from 'node:fs/promises'
+import { mkdir, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { afterEach, describe, expect, it } from 'bun:test'
 import { collectComponentDocs, renderWebComponentDocsModule } from './collect.js'
 
 const currentDir = dirname(fileURLToPath(import.meta.url))

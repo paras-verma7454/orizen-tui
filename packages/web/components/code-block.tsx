@@ -7,7 +7,7 @@ interface CodeBlockProps {
   filename?: string
 }
 
-export async function CodeBlock({ code, lang = 'tsx', filename }: CodeBlockProps) {
+export async function CodeBlock({ code, lang = 'tsx', filename }: CodeBlockProps): Promise<JSX.Element> {
   const html = await codeToHtml(code, {
     lang,
     theme: 'tokyo-night',
@@ -29,7 +29,6 @@ export async function CodeBlock({ code, lang = 'tsx', filename }: CodeBlockProps
       <div
         className="p-4 overflow-auto [&>pre]:!bg-transparent [&>pre]:!p-0"
         // shiki output is safe — it generates HTML from trusted code strings
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: html }}
       />
     </div>

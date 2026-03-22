@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React, { useState } from 'react'
 import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
 /**
@@ -9,14 +9,14 @@ import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 export function processTextarea(
   value: string,
   input: string,
-  key: { backspace?: boolean; delete?: boolean; escape?: boolean; return?: boolean; ctrl?: boolean; meta?: boolean },
+  key: { backspace?: boolean, delete?: boolean, escape?: boolean, return?: boolean, ctrl?: boolean, meta?: boolean },
 ): string {
   if (key.backspace || key.delete)
     return value.slice(0, -1)
   if (key.escape)
     return ''
   if (key.return)
-    return value + '\n'
+    return `${value}\n`
   if (!key.ctrl && !key.meta && input.length === 1)
     return value + input
   return value
@@ -52,7 +52,7 @@ export function Textarea({
   label,
   rows = 3,
   focus = true,
-}: TextareaProps) {
+}: TextareaProps): JSX.Element {
   const { colors, borders } = useTheme()
   const [cursorVisible] = useState(true)
 

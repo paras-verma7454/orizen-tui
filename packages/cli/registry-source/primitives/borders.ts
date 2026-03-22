@@ -1,4 +1,5 @@
 import type { BorderStyle } from 'orizen-tui-core'
+import process from 'node:process'
 
 // terminal-ui skill (tuicomp-border-styles): use Ink's native Box borderStyle prop,
 // not manual ASCII string concatenation.
@@ -22,8 +23,8 @@ export const borderStyleMap: Record<BorderStyle, InkBorderStyle> = {
 export function getEffectiveBorderStyle(style: BorderStyle): InkBorderStyle {
   const isLimitedTerminal
     = process.platform === 'win32'
-    && !process.env.WT_SESSION // not Windows Terminal
-    && !process.env.TERM_PROGRAM // not VS Code / Windows Terminal via TERM_PROGRAM
+      && !process.env.WT_SESSION // not Windows Terminal
+      && !process.env.TERM_PROGRAM // not VS Code / Windows Terminal via TERM_PROGRAM
 
   if (isLimitedTerminal)
     return 'classic'

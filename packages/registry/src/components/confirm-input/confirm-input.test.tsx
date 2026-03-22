@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'bun:test'
-import React from 'react'
 import { render } from 'ink-testing-library'
+import React from 'react'
 import { ConfirmInput, resolveConfirmKey } from './index.js'
 
 // ── Pure logic tests ──────────────────────────────────────────────────────────

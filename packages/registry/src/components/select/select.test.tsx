@@ -1,8 +1,8 @@
-import { describe, expect, it, mock } from 'bun:test'
-import React from 'react'
-import { render } from 'ink-testing-library'
 import type { SelectItem } from './index.js'
-import { Select, navigateSelect } from './index.js'
+import { describe, expect, it } from 'bun:test'
+import { render } from 'ink-testing-library'
+import React from 'react'
+import { navigateSelect, Select } from './index.js'
 
 // ── Pure logic tests ──────────────────────────────────────────────────────────
 describe('navigateSelect', () => {

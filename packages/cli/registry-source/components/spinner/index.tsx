@@ -1,11 +1,12 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import type { SpinnerPreset } from '../../primitives/symbols.js'
 import { Text } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React, { useEffect, useMemo, useState } from 'react'
 import {
   DEFAULT_SPINNER_INTERVAL_MS,
   spinnerFrames,
+
   spinnerPresetFrames,
-  type SpinnerPreset,
 } from '../../primitives/symbols.js'
 
 export interface SpinnerProps {
@@ -22,11 +23,13 @@ export interface SpinnerProps {
 /**
  * Animated terminal spinner.
  */
-export function Spinner({ label, preset, frames, intervalMs }: SpinnerProps) {
+export function Spinner({ label, preset, frames, intervalMs }: SpinnerProps): JSX.Element {
   const { colors, spinner } = useTheme()
   const activeFrames = useMemo(() => {
-    if (frames && frames.length > 0) return frames
-    if (preset) return spinnerPresetFrames[preset]
+    if (frames && frames.length > 0)
+      return frames
+    if (preset)
+      return spinnerPresetFrames[preset]
     return spinnerFrames[spinner]
   }, [frames, preset, spinner])
   const interval = useMemo(() => intervalMs ?? DEFAULT_SPINNER_INTERVAL_MS, [intervalMs])

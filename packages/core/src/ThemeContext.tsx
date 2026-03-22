@@ -13,7 +13,7 @@ export interface ThemeProviderProps {
   children: React.ReactNode
 }
 
-export function ThemeProvider({ theme, children }: ThemeProviderProps) {
+export function ThemeProvider({ theme, children }: ThemeProviderProps): JSX.Element {
   const merged: TuiTheme = useMemo(() => ({
     ...defaultTheme,
     ...theme,

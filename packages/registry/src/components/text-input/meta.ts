@@ -19,8 +19,8 @@ const [value, setValue] = useState('')
   props: [
     { name: 'value', type: 'string', default: '-', description: 'Current input value' },
     { name: 'onChange', type: '(value: string) => void', default: '-', description: 'Called on every keypress' },
-    { name: 'placeholder', type: 'string', default: "''", description: 'Shown when value is empty' },
-    { name: 'mask', type: 'string', default: 'undefined', description: "Mask character (e.g. '*' for passwords)" },
+    { name: 'placeholder', type: 'string', default: '\'\'', description: 'Shown when value is empty' },
+    { name: 'mask', type: 'string', default: 'undefined', description: 'Mask character (e.g. \'*\' for passwords)' },
     { name: 'label', type: 'string', default: 'undefined', description: 'Label above the input' },
     { name: 'focus', type: 'boolean', default: 'true', description: 'Whether input accepts keyboard events' },
   ],

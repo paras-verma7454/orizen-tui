@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
+import React, { useState } from 'react'
 
 /**
  * Pure navigation logic — extracted for direct unit testing
@@ -46,7 +46,7 @@ export function Select<T = string>({
   initialIndex = 0,
   label,
   focus = true,
-}: SelectProps<T>) {
+}: SelectProps<T>): JSX.Element {
   const { colors } = useTheme()
   const [index, setIndex] = useState(initialIndex)
 

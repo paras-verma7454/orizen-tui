@@ -1,9 +1,10 @@
+import type { ComponentCategory } from '@/lib/registry'
 import Link from 'next/link'
-import { TerminalWindow } from '@/components/terminal-window'
 import { ComponentPreview } from '@/components/component-preview'
-import { components, categories, type ComponentCategory } from '@/lib/registry'
+import { TerminalWindow } from '@/components/terminal-window'
+import { categories, components } from '@/lib/registry'
 
-function ComponentCard({ slug, name, description }: { slug: string; name: string; description: string }) {
+function ComponentCard({ slug, name, description }: { slug: string, name: string, description: string }): JSX.Element {
   return (
     <Link
       href={`/components/${slug}`}
@@ -22,7 +23,7 @@ function ComponentCard({ slug, name, description }: { slug: string; name: string
   )
 }
 
-export default function ComponentsPage() {
+export default function ComponentsPage(): JSX.Element {
   const grouped = Object.entries(categories).map(([key, label]) => ({
     key: key as ComponentCategory,
     label,
@@ -34,7 +35,11 @@ export default function ComponentsPage() {
       <div>
         <h1 className="text-2xl font-bold mb-2">Components</h1>
         <p className="text-zinc-400 text-sm">
-          {components.length} components. Copy source into your terminal app with <code>npx orizen-tui@latest add</code>.
+          {components.length}
+          {' '}
+          components. Copy source into your terminal app with
+          <code>npx orizen-tui@latest add</code>
+          .
         </p>
         <p className="text-zinc-500 text-xs mt-2">
           Previews below are browser simulations. Runtime behavior comes from Ink in terminal apps.
