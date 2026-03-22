@@ -2,6 +2,19 @@
 
 Add beautiful terminal UI components to your project (shadcn-style source copy flow).
 
+**GitHub:** https://github.com/paras-verma7454/orizen-tui
+
+## About this package
+
+`orizen-tui` is an npm CLI package for adding ready-to-use terminal UI components to your Ink app.
+
+Use it when you want a shadcn-style workflow:
+- install components with a command
+- copy component source code into your own project
+- customize the copied files freely
+
+This package is for scaffolding component code, not for rendering UI by itself. Your app still runs with Ink + React, while this CLI helps you set up component files quickly.
+
 ## Usage
 
 ```bash
@@ -13,37 +26,6 @@ Add multiple components:
 ```bash
 npx orizen-tui add spinner badge progress
 ```
-
-## Command
-
-```bash
-orizen-tui add <slug...> [options]
-```
-
-## Options
-
-- `--path <dir>` Output directory (default: `components/ui`)
-- `--cwd <dir>` Project root to run in
-- `--dry-run` Print planned changes without writing files
-- `--no-install` Skip dependency installation
-- `--overwrite` Overwrite existing files
-- `--registry <url>` Remote registry base URL override
-
-## What it generates
-
-- Components: `components/ui/orizen/<slug>.tsx`
-- Primitives (on-demand): `components/ui/orizen/primitives/{borders,symbols}.ts`
-- Barrel exports: `components/ui/orizen/index.ts`
-- Installed manifest: `components/ui/orizen/components.json`
-
-If local registry files are not available, the CLI falls back to remote registry source from GitHub.
-
-## Dependencies installed automatically
-
-- `ink`
-- `react`
-- `@types/react`
-- `orizen-tui-core`
 
 ## Component usage examples
 
@@ -96,3 +78,35 @@ Single component quick examples:
 <Progress value={42} max={100} label="Upload" />
 <TextInput value={text} onChange={setText} placeholder="Type here..." />
 ```
+
+## Command
+
+```bash
+orizen-tui add <slug...> [options]
+```
+
+## Options
+
+- `--path <dir>` Output directory (default: `components/ui`)
+- `--cwd <dir>` Project root to run in
+- `--dry-run` Print planned changes without writing files
+- `--no-install` Skip dependency installation
+- `--overwrite` Overwrite existing files
+- `--registry <url>` Remote registry base URL override
+
+## What it generates
+
+- Components: `components/ui/orizen/<slug>.tsx`
+- Primitives (on-demand): `components/ui/orizen/primitives/{borders,symbols}.ts`
+- Barrel exports: `components/ui/orizen/index.ts`
+- Installed manifest: `components/ui/orizen/components.json`
+
+If local registry files are not available, the CLI falls back to remote registry source from GitHub.
+
+## Dependencies installed automatically
+
+- `ink`
+- `react`
+- `@types/react`
+- `orizen-tui-core`
+

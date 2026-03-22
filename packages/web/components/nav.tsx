@@ -32,7 +32,7 @@ export function Nav() {
             Components
           </Link>
           <Link
-            href="https://github.com"
+            href="https://github.com/paras-verma7454/orizen-tui"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-zinc-100 transition-colors"
@@ -74,7 +74,7 @@ export function Nav() {
                 Components
               </Link>
               <Link
-                href="https://github.com"
+                href="https://github.com/paras-verma7454/orizen-tui"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-zinc-400 hover:text-zinc-100 transition-colors px-3 py-2.5 rounded hover:bg-zinc-900"
