@@ -5,12 +5,13 @@ interface CodeBlockProps {
   code: string
   lang?: string
   filename?: string
+  theme?: 'dark' | 'light'
 }
 
-export async function CodeBlock({ code, lang = 'tsx', filename }: CodeBlockProps): Promise<JSX.Element> {
+export async function CodeBlock({ code, lang = 'tsx', filename, theme = 'dark' }: CodeBlockProps): Promise<JSX.Element> {
   const html = await codeToHtml(code, {
     lang,
-    theme: 'tokyo-night',
+    theme: theme === 'light' ? 'github-light' : 'tokyo-night',
   })
 
   return (

@@ -30,9 +30,9 @@ export function SidebarContent({ onNavigate, className }: { onNavigate?: () => v
         </Link>
       </div>
 
-      {grouped.map(group => (
-        <div key={group.key} className="mb-6">
-          <p className="text-[10px] uppercase tracking-widest text-zinc-600 px-3 mb-2">
+      {grouped.map((group, i) => (
+        <div key={group.key} className={`mb-6 ${i > 0 ? 'pt-4 border-t border-zinc-800/60' : ''}`}>
+          <p className="text-[10px] uppercase tracking-widest text-zinc-400 px-3 mb-2 font-bold">
             {group.label}
           </p>
           <ul className="space-y-0.5">

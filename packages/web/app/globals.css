@@ -21,7 +21,7 @@
   --color-success: #059669;
   --color-muted: #52525b;
 
-  /* Invert zinc scale so existing dark-first utility classes adapt to light UI. */
+  /* Light mode specific overrides */
   --color-zinc-50: #09090b;
   --color-zinc-100: #18181b;
   --color-zinc-200: #27272a;
@@ -33,6 +33,24 @@
   --color-zinc-800: #e4e4e7;
   --color-zinc-900: #f4f4f5;
   --color-zinc-950: #fafafa;
+
+  /* Accent colors for light mode */
+  --color-cyan-300: #155e75;
+  --color-cyan-400: #0e7490;
+  --color-cyan-500: #0891b2;
+  --color-emerald-300: #047857;
+  --color-emerald-400: #059669;
+  --color-yellow-300: #a16207;
+  --color-yellow-400: #ca8a04;
+  --color-rose-300: #be123c;
+  --color-rose-400: #e11d48;
+  --color-blue-300: #0369a1;
+  --color-blue-400: #0284c7;
+  --color-fuchsia-300: #a21caf;
+  --color-fuchsia-400: #c026d3;
+  --color-violet-300: #6d28d9;
+  --color-violet-400: #7c3aed;
+  --color-violet-600: #7c3aed;
 }
 
 * {
@@ -51,3 +69,37 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--color-zinc-600); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-zinc-500); }
+
+/* Scrolling animations for component grid */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 30s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}

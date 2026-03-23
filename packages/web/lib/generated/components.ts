@@ -114,6 +114,129 @@ export const componentDocs: ComponentDocsMeta[] = [
     ]
   },
   {
+    "slug": "file-picker",
+    "name": "FilePicker",
+    "description": "Directory navigator with extension filtering and keyboard navigation.",
+    "category": "input",
+    "usage": "import { FilePicker } from '@/components/ui/orizen/file-picker'\n\n// Basic file picker starting in current directory\n<FilePicker onSelect={(entry) => console.log(entry.path)} />\n\n// Filtered to TypeScript files only\n<FilePicker\n  initialDir=\"/src\"\n  extensions={['.ts', '.tsx']}\n  onSelect={(entry) => console.log(entry.path)}\n  onCancel={() => process.exit(0)}\n/>",
+    "props": [
+      {
+        "name": "initialDir",
+        "type": "string",
+        "default": "\".\"",
+        "description": "Directory to open on mount"
+      },
+      {
+        "name": "extensions",
+        "type": "string[]",
+        "default": "undefined",
+        "description": "File extension filter e.g. [\".ts\", \".tsx\"]"
+      },
+      {
+        "name": "onSelect",
+        "type": "(entry: FileEntry) => void",
+        "default": "undefined",
+        "description": "Called when a file is selected"
+      },
+      {
+        "name": "onCancel",
+        "type": "() => void",
+        "default": "undefined",
+        "description": "Called when Escape is pressed"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "10",
+        "description": "Number of visible directory entries"
+      },
+      {
+        "name": "readDir",
+        "type": "(dir: string) => Promise<FileEntry[]>",
+        "default": "undefined",
+        "description": "Custom directory reader (useful for testing)"
+      },
+      {
+        "name": "joinPath",
+        "type": "(base: string, name: string) => string",
+        "default": "undefined",
+        "description": "Custom path join function"
+      },
+      {
+        "name": "focus",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to accept keyboard input"
+      }
+    ]
+  },
+  {
+    "slug": "help",
+    "name": "Help",
+    "description": "Auto-generated keybinding help panel for terminal UIs.",
+    "category": "display",
+    "usage": "import { Help } from '@/components/ui/orizen/help'\n\nconst bindings = [\n  { key: '↑↓', description: 'Navigate' },\n  { key: 'Enter', description: 'Select' },\n  { key: 'Esc', description: 'Cancel' },\n  { key: 'q', description: 'Quit' },\n]\n\n// Horizontal layout (default)\n<Help bindings={bindings} />\n\n// Vertical layout\n<Help bindings={bindings} direction=\"column\" />",
+    "props": [
+      {
+        "name": "bindings",
+        "type": "KeyBinding[]",
+        "default": "—",
+        "description": "Array of { key, description } pairs"
+      },
+      {
+        "name": "direction",
+        "type": "\"row\" | \"column\"",
+        "default": "\"row\"",
+        "description": "Layout direction for the binding list"
+      }
+    ]
+  },
+  {
+    "slug": "list",
+    "name": "List",
+    "description": "Filterable, paginated scrollable list with an integrated loading spinner.",
+    "category": "display",
+    "usage": "import { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Apple', value: 'apple' },\n  { label: 'Banana', value: 'banana' },\n  { label: 'Cherry', value: 'cherry' },\n]\n\n// Basic list\n<List items={items} onSelect={(item) => console.log(item.value)} />\n\n// With filter and custom height\n<List items={items} filter=\"an\" height={5} />\n\n// Loading state\n<List items={[]} isLoading />",
+    "props": [
+      {
+        "name": "items",
+        "type": "ListItem[]",
+        "default": "—",
+        "description": "Items to display"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "8",
+        "description": "Number of visible items"
+      },
+      {
+        "name": "filter",
+        "type": "string",
+        "default": "\"\"",
+        "description": "Case-insensitive filter string"
+      },
+      {
+        "name": "onSelect",
+        "type": "(item: ListItem) => void",
+        "default": "undefined",
+        "description": "Called when Enter is pressed on an item"
+      },
+      {
+        "name": "isLoading",
+        "type": "boolean",
+        "default": "false",
+        "description": "Show loading spinner instead of items"
+      },
+      {
+        "name": "focus",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to accept keyboard input"
+      }
+    ]
+  },
+  {
     "slug": "multi-select",
     "name": "MultiSelect",
     "description": "Arrow-key list with space-to-toggle multi-choice selection.",
@@ -206,6 +329,45 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "boolean",
         "default": "true",
         "description": "Whether input accepts keyboard events"
+      }
+    ]
+  },
+  {
+    "slug": "paginator",
+    "name": "Paginator",
+    "description": "Dot-style or numeric page navigation indicator.",
+    "category": "display",
+    "usage": "import { Paginator } from '@/components/ui/orizen/paginator'\n\n// Dot style (default)\n<Paginator total={5} current={2} />\n\n// Numeric style\n<Paginator total={10} current={3} variant=\"numeric\" />\n\n// Custom dots\n<Paginator total={4} current={1} activeDot=\"◆\" inactiveDot=\"◇\" />",
+    "props": [
+      {
+        "name": "total",
+        "type": "number",
+        "default": "—",
+        "description": "Total number of pages"
+      },
+      {
+        "name": "current",
+        "type": "number",
+        "default": "—",
+        "description": "Current page (1-based)"
+      },
+      {
+        "name": "variant",
+        "type": "\"dots\" | \"numeric\"",
+        "default": "\"dots\"",
+        "description": "Visual style"
+      },
+      {
+        "name": "activeDot",
+        "type": "string",
+        "default": "\"●\"",
+        "description": "Character for the active page dot"
+      },
+      {
+        "name": "inactiveDot",
+        "type": "string",
+        "default": "\"○\"",
+        "description": "Character for inactive page dots"
       }
     ]
   },
@@ -321,6 +483,60 @@ export const componentDocs: ComponentDocsMeta[] = [
     ]
   },
   {
+    "slug": "stopwatch",
+    "name": "Stopwatch",
+    "description": "Count-up elapsed time tracker with pause support.",
+    "category": "feedback",
+    "usage": "import { Stopwatch } from '@/components/ui/orizen/stopwatch'\n\n// Running stopwatch\n<Stopwatch />\n\n// Paused stopwatch with label\n<Stopwatch running={false} label=\"Elapsed:\" />",
+    "props": [
+      {
+        "name": "running",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether the stopwatch is counting up"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "undefined",
+        "description": "Text shown before the elapsed time"
+      }
+    ]
+  },
+  {
+    "slug": "table",
+    "name": "Table",
+    "description": "Navigable data table with column alignment and scroll.",
+    "category": "display",
+    "usage": "import { Table } from '@/components/ui/orizen/table'\n\nconst columns = [\n  { key: 'name', label: 'Name' },\n  { key: 'version', label: 'Version', align: 'right' },\n  { key: 'license', label: 'License' },\n]\n\nconst data = [\n  { name: 'react', version: '18.3.0', license: 'MIT' },\n  { name: 'ink', version: '5.0.1', license: 'MIT' },\n  { name: 'typescript', version: '5.4.5', license: 'Apache-2.0' },\n]\n\n<Table columns={columns} data={data} height={5} />",
+    "props": [
+      {
+        "name": "columns",
+        "type": "TableColumn[]",
+        "default": "—",
+        "description": "Column definitions (key, label, width, align)"
+      },
+      {
+        "name": "data",
+        "type": "Record<string, string>[]",
+        "default": "—",
+        "description": "Row data array"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "10",
+        "description": "Number of visible data rows"
+      },
+      {
+        "name": "focus",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to accept keyboard navigation"
+      }
+    ]
+  },
+  {
     "slug": "text-input",
     "name": "TextInput",
     "description": "Single-line keyboard-driven text input with focus management.",
@@ -407,6 +623,72 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "boolean",
         "default": "true",
         "description": "Whether input accepts keyboard events"
+      }
+    ]
+  },
+  {
+    "slug": "timer",
+    "name": "Timer",
+    "description": "Countdown timer with configurable duration and expiry callback.",
+    "category": "feedback",
+    "usage": "import { Timer } from '@/components/ui/orizen/timer'\n\n// Basic countdown from 60 seconds\n<Timer durationMs={60000} />\n\n// With label and expiry callback\n<Timer\n  durationMs={30000}\n  label=\"Time remaining:\"\n  onExpire={() => console.log('Time is up!')}\n/>",
+    "props": [
+      {
+        "name": "durationMs",
+        "type": "number",
+        "default": "—",
+        "description": "Countdown duration in milliseconds"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "undefined",
+        "description": "Text shown before the time display"
+      },
+      {
+        "name": "onExpire",
+        "type": "() => void",
+        "default": "undefined",
+        "description": "Callback fired when countdown reaches zero"
+      }
+    ]
+  },
+  {
+    "slug": "viewport",
+    "name": "Viewport",
+    "description": "Scrollable content area with overflow indicators and keyboard navigation.",
+    "category": "display",
+    "usage": "import { Viewport } from '@/components/ui/orizen/viewport'\n\nconst lines = Array.from({ length: 50 }, (_, i) => `Line ${i + 1}`)\n\n// Basic scrollable viewport\n<Viewport lines={lines} height={10} />\n\n// Fixed width, no indicators\n<Viewport lines={lines} height={8} width={60} showScrollIndicator={false} />",
+    "props": [
+      {
+        "name": "lines",
+        "type": "string[]",
+        "default": "—",
+        "description": "Lines of text to render"
+      },
+      {
+        "name": "height",
+        "type": "number",
+        "default": "—",
+        "description": "Number of visible lines"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "undefined",
+        "description": "Fixed column width (optional)"
+      },
+      {
+        "name": "showScrollIndicator",
+        "type": "boolean",
+        "default": "true",
+        "description": "Show ↑/↓ overflow indicators"
+      },
+      {
+        "name": "focus",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether to accept keyboard scroll input"
       }
     ]
   }

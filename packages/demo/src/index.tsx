@@ -1,10 +1,23 @@
 import process from 'node:process'
 import {
   Badge,
+  Checkbox,
+  ConfirmInput,
+  FilePicker,
+  Help,
+  List,
+  MultiSelect,
+  NumberInput,
+  Paginator,
   Progress,
   Select,
   Spinner,
+  Stopwatch,
+  Table,
+  Textarea,
   TextInput,
+  Timer,
+  Viewport,
 } from '@orizen-tui/registry'
 import { Box, render, Text, useApp, useInput, useStdin } from 'ink'
 import { FocusManager, ThemeProvider, useFocus } from 'orizen-tui-core'
@@ -12,7 +25,6 @@ import React, { useEffect, useState } from 'react'
 
 // ── Static data (module-level — not recreated on re-render) ───────────────────
 
-// Each value is a valid Ink/terminal color name
 const THEME_OPTIONS = [
   { label: 'Cyan     (default)', value: 'cyan' },
   { label: 'Magenta', value: 'magenta' },
@@ -27,6 +39,76 @@ const SPINNER_VARIANTS = [
 ]
 
 const BADGE_VARIANTS = ['default', 'success', 'warning', 'error', 'info'] as const
+
+const CHECKBOX_ITEMS = [
+  { label: 'TypeScript', value: 'ts' },
+  { label: 'React', value: 'react' },
+  { label: 'Ink', value: 'ink' },
+]
+
+const MULTI_SELECT_ITEMS = [
+  { label: 'Linting', value: 'lint' },
+  { label: 'Formatting', value: 'fmt' },
+  { label: 'Testing', value: 'test' },
+  { label: 'Build', value: 'build' },
+]
+
+const LIST_ITEMS = [
+  { label: 'Components', value: 'components' },
+  { label: 'Hooks', value: 'hooks' },
+  { label: 'Primitives', value: 'primitives' },
+  { label: 'Themes', value: 'themes' },
+  { label: 'Registry', value: 'registry' },
+  { label: 'Demo', value: 'demo' },
+]
+
+const TABLE_COLUMNS = [
+  { key: 'name', label: 'Component', width: 14 },
+  { key: 'type', label: 'Type', width: 12 },
+  { key: 'status', label: 'Status', width: 8 },
+]
+
+const TABLE_DATA = [
+  { name: 'Badge', type: 'Display', status: 'stable' },
+  { name: 'Progress', type: 'Display', status: 'stable' },
+  { name: 'Spinner', type: 'Animated', status: 'stable' },
+  { name: 'TextInput', type: 'Input', status: 'stable' },
+  { name: 'Select', type: 'Input', status: 'stable' },
+  { name: 'Checkbox', type: 'Input', status: 'stable' },
+  { name: 'MultiSelect', type: 'Input', status: 'stable' },
+  { name: 'NumberInput', type: 'Input', status: 'stable' },
+  { name: 'Textarea', type: 'Input', status: 'stable' },
+  { name: 'Timer', type: 'Animated', status: 'stable' },
+  { name: 'Stopwatch', type: 'Animated', status: 'stable' },
+  { name: 'Paginator', type: 'Display', status: 'stable' },
+  { name: 'Viewport', type: 'Layout', status: 'stable' },
+  { name: 'List', type: 'Input', status: 'stable' },
+  { name: 'Help', type: 'Display', status: 'stable' },
+  { name: 'FilePicker', type: 'Input', status: 'stable' },
+  { name: 'Table', type: 'Layout', status: 'stable' },
+]
+
+const VIEWPORT_LINES = [
+  'This is a scrollable viewport.',
+  'Use ↑↓ or PageUp/PageDown to scroll.',
+  'Line 3: orizen-tui component library',
+  'Line 4: built on top of Ink + React',
+  'Line 5: fully themeable via ThemeProvider',
+  'Line 6: composable & accessible',
+  'Line 7: keyboard-first navigation',
+  'Line 8: zero external UI dependencies',
+  'Line 9: small focused components',
+  'Line 10: end of content',
+]
+
+const HELP_BINDINGS = [
+  { key: 'Tab', description: 'switch focus' },
+  { key: '↑↓', description: 'navigate' },
+  { key: 'Space', description: 'toggle' },
+  { key: 'Enter', description: 'select' },
+  { key: 'Esc', description: 'cancel' },
+  { key: 'q', description: 'quit' },
+]
 
 // ── Animated progress ─────────────────────────────────────────────────────────
 
@@ -81,7 +163,193 @@ function FocusedInput(): JSX.Element {
   )
 }
 
-// ── Quit handler (only mounted when stdin supports raw mode) ──────────────────
+// ── Checkbox ──────────────────────────────────────────────────────────────────
+
+function FocusedCheckbox(): JSX.Element {
+  const { isFocused } = useFocus('checkbox')
+  const [selected, setSelected] = useState<string[]>([])
+
+  return (
+    <Box flexDirection="column">
+      <Text dimColor>{isFocused ? '❯ Checkbox:' : '  Checkbox:'}</Text>
+      <Checkbox
+        label=""
+        items={CHECKBOX_ITEMS}
+        value={selected}
+        onChange={setSelected}
+        focus={isFocused}
+      />
+    </Box>
+  )
+}
+
+// ── MultiSelect ───────────────────────────────────────────────────────────────
+
+function FocusedMultiSelect(): JSX.Element {
+  const { isFocused } = useFocus('multiselect')
+  const [selected, setSelected] = useState<string[]>([])
+
+  return (
+    <Box flexDirection="column">
+      <Text dimColor>{isFocused ? '❯ MultiSelect:' : '  MultiSelect:'}</Text>
+      <MultiSelect
+        label=""
+        items={MULTI_SELECT_ITEMS}
+        value={selected}
+        onChange={setSelected}
+        focus={isFocused}
+      />
+    </Box>
+  )
+}
+
+// ── NumberInput ───────────────────────────────────────────────────────────────
+
+function FocusedNumberInput(): JSX.Element {
+  const { isFocused } = useFocus('number')
+  const [value, setValue] = useState(42)
+
+  return (
+    <NumberInput
+      label={isFocused ? '❯ Port number:' : '  Port number:'}
+      value={value}
+      onChange={setValue}
+      min={0}
+      max={9999}
+      step={1}
+      focus={isFocused}
+    />
+  )
+}
+
+// ── Textarea ──────────────────────────────────────────────────────────────────
+
+function FocusedTextarea(): JSX.Element {
+  const { isFocused } = useFocus('textarea')
+  const [value, setValue] = useState('')
+
+  return (
+    <Textarea
+      label={isFocused ? '❯ Notes:' : '  Notes:'}
+      value={value}
+      onChange={setValue}
+      placeholder="Type something…"
+      rows={3}
+      focus={isFocused}
+    />
+  )
+}
+
+// ── ConfirmInput ──────────────────────────────────────────────────────────────
+
+function FocusedConfirm(): JSX.Element {
+  const { isFocused } = useFocus('confirm')
+  const [answer, setAnswer] = useState<boolean | null>(null)
+
+  return (
+    <Box flexDirection="column">
+      {answer === null
+        ? (
+            <ConfirmInput
+              message="Publish to npm?"
+              defaultAnswer="yes"
+              onConfirm={setAnswer}
+              focus={isFocused}
+            />
+          )
+        : (
+            <Text>
+              Answer:
+              {' '}
+              <Text color={answer ? 'green' : 'red'}>{answer ? 'yes' : 'no'}</Text>
+              <Text dimColor>  (reset on re-focus)</Text>
+            </Text>
+          )}
+    </Box>
+  )
+}
+
+// ── Viewport ──────────────────────────────────────────────────────────────────
+
+function FocusedViewport(): JSX.Element {
+  const { isFocused } = useFocus('viewport')
+
+  return (
+    <Box flexDirection="column">
+      <Text dimColor>{isFocused ? '❯ Viewport  (↑↓ · PageUp/Down)' : '  Viewport:'}</Text>
+      <Viewport
+        lines={VIEWPORT_LINES}
+        height={4}
+        width={50}
+        focus={isFocused}
+      />
+    </Box>
+  )
+}
+
+// ── List ──────────────────────────────────────────────────────────────────────
+
+function FocusedList(): JSX.Element {
+  const { isFocused } = useFocus('list')
+
+  return (
+    <Box flexDirection="column">
+      <Text dimColor>{isFocused ? '❯ List:' : '  List:'}</Text>
+      <List
+        items={LIST_ITEMS}
+        height={4}
+        focus={isFocused}
+      />
+    </Box>
+  )
+}
+
+// ── Table ─────────────────────────────────────────────────────────────────────
+
+function FocusedTable(): JSX.Element {
+  const { isFocused } = useFocus('table')
+
+  return (
+    <Box flexDirection="column">
+      <Text dimColor>{isFocused ? '❯ Table  (↑↓ · scroll rows):' : '  Table:'}</Text>
+      <Table
+        columns={TABLE_COLUMNS}
+        data={TABLE_DATA}
+        height={5}
+        focus={isFocused}
+      />
+    </Box>
+  )
+}
+
+// ── FilePicker ────────────────────────────────────────────────────────────────
+
+function FocusedFilePicker(): JSX.Element {
+  const { isFocused } = useFocus('filepicker')
+  const [selected, setSelected] = useState<string | null>(null)
+
+  return (
+    <Box flexDirection="column">
+      <Text dimColor>{isFocused ? '❯ FilePicker:' : '  FilePicker:'}</Text>
+      {selected
+        ? (
+            <Text dimColor>
+              Selected:
+              <Text color="cyan">{selected}</Text>
+            </Text>
+          )
+        : null}
+      <FilePicker
+        initialDir="."
+        height={5}
+        onSelect={entry => setSelected(entry.path)}
+        focus={isFocused}
+      />
+    </Box>
+  )
+}
+
+// ── Quit handler ──────────────────────────────────────────────────────────────
 
 function QuitHandler(): null {
   const { exit } = useApp()
@@ -92,12 +360,18 @@ function QuitHandler(): null {
   return null
 }
 
-// ── App (receives onThemeChange from Demo wrapper) ────────────────────────────
+// ── App ───────────────────────────────────────────────────────────────────────
 
 function App({ onThemeChange }: { onThemeChange: (c: string) => void }): JSX.Element {
-  const cols = Math.min(process.stdout.columns || 60, 60)
+  const cols = Math.min(process.stdout.columns || 80, 80)
   const { isRawModeSupported } = useStdin()
+  const [paginatorPage, setPaginatorPage] = useState(1)
   const div = <Text dimColor>{'─'.repeat(cols)}</Text>
+
+  useEffect(() => {
+    const t = setInterval(() => setPaginatorPage(p => (p % 5) + 1), 1200)
+    return () => clearInterval(t)
+  }, [])
 
   return (
     <Box flexDirection="column" paddingX={1}>
@@ -138,25 +412,81 @@ function App({ onThemeChange }: { onThemeChange: (c: string) => void }): JSX.Ele
 
       {div}
 
-      {/* Interactive */}
-      <Text dimColor>── Interactive  (Tab · switch focus)</Text>
-      <Box paddingLeft={2}>
-        <FocusManager defaultId="select">
-          <Box gap={6}>
-            <FocusedSelect onThemeChange={onThemeChange} />
-            <FocusedInput />
-          </Box>
-        </FocusManager>
+      {/* Paginator */}
+      <Text dimColor>── Paginator</Text>
+      <Box gap={6} paddingLeft={2}>
+        <Paginator total={5} current={paginatorPage} variant="dots" />
+        <Paginator total={5} current={paginatorPage} variant="numeric" />
       </Box>
 
       {div}
 
-      <Text dimColor>Tab · switch    ↑↓ · navigate    Enter · apply theme    q · quit</Text>
+      {/* Timer & Stopwatch */}
+      <Text dimColor>── Timer · Stopwatch</Text>
+      <Box gap={6} paddingLeft={2}>
+        <Timer durationMs={30000} label="Countdown:" />
+        <Stopwatch running label="Elapsed:" />
+        <Stopwatch running={false} label="Paused:" />
+      </Box>
+
+      {div}
+
+      {/* Help */}
+      <Text dimColor>── Help</Text>
+      <Box paddingLeft={2}>
+        <Help bindings={HELP_BINDINGS} direction="row" />
+      </Box>
+
+      {div}
+
+      {/* Interactive — Row 1: Select, TextInput */}
+      <Text dimColor>── Interactive  (Tab · switch focus)</Text>
+      <FocusManager defaultId="select">
+        <Box flexDirection="column" gap={1} paddingLeft={2}>
+
+          <Box gap={6}>
+            <FocusedSelect onThemeChange={onThemeChange} />
+            <FocusedInput />
+            <FocusedNumberInput />
+          </Box>
+
+          {div}
+
+          <Box gap={4} alignItems="flex-start">
+            <FocusedCheckbox />
+            <FocusedMultiSelect />
+            <FocusedConfirm />
+          </Box>
+
+          {div}
+
+          <Box gap={4} alignItems="flex-start">
+            <FocusedTextarea />
+            <FocusedViewport />
+          </Box>
+
+          {div}
+
+          <Box gap={4} alignItems="flex-start">
+            <FocusedList />
+            <FocusedTable />
+          </Box>
+
+          {div}
+
+          <FocusedFilePicker />
+
+        </Box>
+      </FocusManager>
+
+      {div}
+
+      <Help bindings={HELP_BINDINGS} direction="row" />
     </Box>
   )
 }
 
-// ── Demo root — holds live theme state ────────────────────────────────────────
+// ── Demo root ─────────────────────────────────────────────────────────────────
 
 function Demo(): JSX.Element {
   const [primary, setPrimary] = useState('cyan')

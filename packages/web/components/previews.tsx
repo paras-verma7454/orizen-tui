@@ -32,7 +32,8 @@ function SpinnerFrame({ frames, label }: { frames: string[], label: string }): J
   )
 }
 
-export function SpinnerPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function SpinnerPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   return (
     <div className="flex flex-wrap gap-6 items-center">
       <SpinnerFrame frames={DOTS} label="Loading…" />
@@ -44,7 +45,8 @@ export function SpinnerPreview(): JSX.Element {
 
 // ── Badge preview ─────────────────────────────────────────────────────────────
 
-export function BadgePreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function BadgePreview({ compact = false }: { compact?: boolean }): JSX.Element {
   return (
     <div className="flex flex-wrap gap-3">
       <span className="text-cyan-400   font-bold">[default]</span>
@@ -93,7 +95,8 @@ function StaticBar({ pct }: { pct: number }): JSX.Element {
   )
 }
 
-export function ProgressPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function ProgressPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   return (
     <div className="space-y-1.5">
       <div className="flex items-center gap-2">
@@ -132,7 +135,8 @@ export function ProgressPreviewCompact(): JSX.Element {
 
 const CURSOR_FRAMES = ['█', ' ']
 
-export function TextInputPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function TextInputPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const cursor = useFrames(CURSOR_FRAMES, 530)
   return (
     <div className="space-y-1">
@@ -149,7 +153,8 @@ export function TextInputPreview(): JSX.Element {
 
 const SELECT_ITEMS = ['React', 'Vue', 'Svelte', 'Solid']
 
-export function SelectPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function SelectPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [active, setActive] = useState(0)
   useEffect(() => {
     const timer = setInterval(() => setActive(i => (i + 1) % SELECT_ITEMS.length), 900)
@@ -171,7 +176,8 @@ export function SelectPreview(): JSX.Element {
 
 // ── Textarea preview ──────────────────────────────────────────────────────────
 
-export function TextareaPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function TextareaPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const cursor = useFrames(['█', ' '], 530)
   const lines = ['Building a terminal UI', 'with React and Ink…']
   return (
@@ -198,7 +204,8 @@ const CHECKBOX_ITEMS = [
   { label: 'Husky', checked: false },
 ]
 
-export function CheckboxPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function CheckboxPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [active, setActive] = useState(2)
   const [items, setItems] = useState(CHECKBOX_ITEMS)
   useEffect(() => {
@@ -230,7 +237,8 @@ export function CheckboxPreview(): JSX.Element {
 const MULTI_ITEMS = ['React', 'Vue', 'Svelte', 'Solid']
 const INITIAL_SELECTED = new Set([0, 2])
 
-export function MultiSelectPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function MultiSelectPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [active, setActive] = useState(1)
   const [selected, setSelected] = useState(INITIAL_SELECTED)
   useEffect(() => {
@@ -266,7 +274,8 @@ export function MultiSelectPreview(): JSX.Element {
 
 // ── ConfirmInput preview ──────────────────────────────────────────────────────
 
-export function ConfirmInputPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function ConfirmInputPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [isYes, setIsYes] = useState(true)
   useEffect(() => {
     const timer = setInterval(() => setIsYes(v => !v), 1200)
@@ -288,7 +297,8 @@ export function ConfirmInputPreview(): JSX.Element {
 
 // ── NumberInput preview ───────────────────────────────────────────────────────
 
-export function NumberInputPreview(): JSX.Element {
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function NumberInputPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [port, setPort] = useState(3000)
   const [workers, setWorkers] = useState(4)
   useEffect(() => {
@@ -323,9 +333,510 @@ export function NumberInputPreview(): JSX.Element {
   )
 }
 
+// ── Paginator preview ─────────────────────────────────────────────────────────
+
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function PaginatorPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [page, setPage] = useState(1)
+  const total = 7
+  useEffect(() => {
+    const timer = setInterval(() => setPage(p => p >= total ? 1 : p + 1), 700)
+    return () => clearInterval(timer)
+  }, [])
+  return (
+    <div className="font-mono space-y-4">
+      <div className="space-y-1">
+        <div className="text-zinc-500 text-xs">Dots</div>
+        <div className="flex gap-1">
+          {Array.from({ length: total }, (_, i) => (
+            <span key={i} className={`text-sm ${i + 1 === page ? 'text-cyan-400' : 'text-zinc-700'}`}>
+              {i + 1 === page ? '●' : '●'}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="space-y-1">
+        <div className="text-zinc-500 text-xs">Numeric</div>
+        <div className="text-zinc-300">
+          <span className="text-cyan-400">{page}</span>
+          <span className="text-zinc-600">
+            {' '}
+            /
+            {total}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Timer preview ─────────────────────────────────────────────────────────────
+
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function TimerPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [ms, setMs] = useState(5320)
+  useEffect(() => {
+    const timer = setInterval(() => setMs(r => r <= 0 ? 9999 : r - 37), 37)
+    return () => clearInterval(timer)
+  }, [])
+  const isWarning = ms <= 3000
+  const display = ms > 0 ? `${ms}ms` : '0ms'
+  return (
+    <div className="font-mono space-y-4">
+      <div className="space-y-1">
+        <div className={`text-lg ${isWarning ? 'text-yellow-400' : 'text-zinc-200'}`}>
+          Exiting in
+          {' '}
+          <span className={isWarning ? 'text-yellow-400' : 'text-cyan-400'}>{display}</span>
+        </div>
+      </div>
+      <div className="flex gap-2 text-zinc-600 text-xs">
+        <span>
+          <span className="text-zinc-400">s</span>
+          {' '}
+          stop
+        </span>
+        <span className="text-zinc-700">•</span>
+        <span>
+          <span className="text-zinc-400">r</span>
+          {' '}
+          reset
+        </span>
+        <span className="text-zinc-700">•</span>
+        <span>
+          <span className="text-zinc-400">q</span>
+          {' '}
+          quit
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// ── Stopwatch preview ─────────────────────────────────────────────────────────
+
+// eslint-disable-next-line unused-imports/no-unused-vars
+export function StopwatchPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [ms, setMs] = useState(0)
+  const [running, setRunning] = useState(true)
+  useEffect(() => {
+    const toggle = setInterval(() => setRunning(r => !r), 4000)
+    return () => clearInterval(toggle)
+  }, [])
+  useEffect(() => {
+    if (!running)
+      return
+    const timer = setInterval(() => setMs(e => e + 37), 37)
+    return () => clearInterval(timer)
+  }, [running])
+  const secs = (ms / 1000).toFixed(2)
+  return (
+    <div className="font-mono space-y-4">
+      <div className="space-y-1">
+        <div className="text-lg text-zinc-200">
+          Elapsed:
+          {' '}
+          <span className={running ? 'text-cyan-400' : 'text-zinc-500'}>
+            {secs}
+            s
+          </span>
+        </div>
+      </div>
+      <div className="flex gap-2 text-zinc-600 text-xs">
+        <span>
+          <span className="text-zinc-400">s</span>
+          {' '}
+          {running ? 'stop' : 'start'}
+        </span>
+        <span className="text-zinc-700">•</span>
+        <span>
+          <span className="text-zinc-400">r</span>
+          {' '}
+          reset
+        </span>
+        <span className="text-zinc-700">•</span>
+        <span>
+          <span className="text-zinc-400">q</span>
+          {' '}
+          quit
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// ── Viewport preview ──────────────────────────────────────────────────────────
+
+const VIEWPORT_CONTENT = [
+  '> He holds him with a skinny hand,',
+  '  \'There was a ship,\' quoth he.',
+  '  \'Hold off! unhand me, grey-beard loon!\'',
+  '  An artichoke, dropt he.',
+  '',
+  '--Samuel Taylor Coleridge',
+  '',
+  '## Other foods worth mentioning',
+  '',
+  '1. Carrots',
+  '1. Celery',
+  '1. Tacos',
+  '      * Soft',
+  '      * Hard',
+  '1. Cucumber',
+  '',
+  '## Things to eat today',
+  '',
+  '* [x] Carrots',
+  '* [x] Ramen',
+  '* [ ] Currywurst',
+]
+
+export function ViewportPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [offset, setOffset] = useState(0)
+  const height = compact ? 6 : 10
+  const total = VIEWPORT_CONTENT.length
+  const maxOffset = total - height
+  useEffect(() => {
+    const timer = setInterval(() => setOffset(o => o >= maxOffset ? 0 : o + 1), 600)
+    return () => clearInterval(timer)
+  }, [maxOffset])
+  const visible = VIEWPORT_CONTENT.slice(offset, offset + height)
+
+  const thumbSize = Math.max(1, Math.round((height / total) * height))
+  const maxThumbOffset = height - thumbSize
+  const thumbOffset = maxOffset > 0 ? Math.round((offset / maxOffset) * maxThumbOffset) : 0
+
+  return (
+    <div className={`font-mono text-xs border border-zinc-700 rounded overflow-hidden ${compact ? 'w-full max-w-[16rem]' : ''}`} style={compact ? {} : { width: '28rem' }}>
+      <div className="flex items-center border-b border-zinc-700 px-3 py-1.5">
+        <span className="text-zinc-400 text-xs">viewport</span>
+        {!compact && <span className="ml-2 text-zinc-600 text-[10px]">↑↓ · PgUp/PgDn</span>}
+      </div>
+      <div className="flex px-3 py-2 gap-2">
+        <div className="flex-1 min-w-0">
+          {visible.map((line, i) => (
+            <div key={i} className="text-zinc-300 whitespace-pre leading-5 truncate">{line || '\u00A0'}</div>
+          ))}
+        </div>
+        <div className="flex flex-col shrink-0">
+          {Array.from({ length: height }, (_, i) => {
+            const isThumb = i >= thumbOffset && i < thumbOffset + thumbSize
+            return (
+              <span key={i} className={`leading-5 select-none ${isThumb ? 'text-cyan-400' : 'text-zinc-700'}`}>
+                {isThumb ? '█' : '░'}
+              </span>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── List preview ──────────────────────────────────────────────────────────────
+
+const LIST_DATA = [
+  { label: 'Pocky', desc: 'Expensive' },
+  { label: 'Ginger', desc: 'Exquisite' },
+  { label: 'Plantains', desc: 'Questionable' },
+  { label: 'Honey Dew', desc: 'Delectable' },
+  { label: 'Pineapple', desc: 'Kind of spicy' },
+]
+
+export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [active, setActive] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setActive(i => (i + 1) % LIST_DATA.length), 900)
+    return () => clearInterval(timer)
+  }, [])
+  const paginationDots = Array.from({ length: LIST_DATA.length }, (_, i) => i)
+
+  if (compact) {
+    return (
+      <div className="font-mono text-xs w-full max-w-[16rem]">
+        <div className="space-y-1">
+          {LIST_DATA.slice(0, 4).map((item, i) => {
+            const isActive = i === active
+            return (
+              <div
+                key={item.label}
+                className={`pl-2 border-l-2 ${isActive ? 'border-fuchsia-400' : 'border-transparent'}`}
+              >
+                <div className={`font-semibold ${isActive ? 'text-fuchsia-400' : 'text-zinc-300'}`}>
+                  {item.label}
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="font-mono text-xs min-w-56">
+      <div className="mb-1.5">
+        <span className="bg-emerald-500 text-black text-xs font-bold px-2 py-0.5 rounded">Groceries</span>
+      </div>
+      <div className="text-zinc-500 text-xs mb-2">72 items</div>
+      <div className="space-y-1.5 mb-2">
+        {LIST_DATA.map((item, i) => {
+          const isActive = i === active
+          return (
+            <div
+              key={item.label}
+              className={`pl-2 border-l-2 ${isActive ? 'border-fuchsia-400' : 'border-transparent'}`}
+            >
+              <div className={`font-semibold ${isActive ? 'text-fuchsia-400' : 'text-zinc-300'}`}>
+                {item.label}
+              </div>
+              <div className={isActive ? 'text-fuchsia-500/70' : 'text-zinc-600'}>{item.desc}</div>
+            </div>
+          )
+        })}
+      </div>
+      <div className="flex gap-0.5 mb-2">
+        {paginationDots.map(i => (
+          <span key={i} className={`text-[8px] ${i === active ? 'text-zinc-300' : 'text-zinc-700'}`}>●</span>
+        ))}
+      </div>
+      <div className="flex flex-wrap gap-x-2 gap-y-0.5 text-zinc-600 text-[10px]">
+        <span>
+          <span className="text-zinc-500">↑/k</span>
+          {' '}
+          up
+        </span>
+        <span className="text-zinc-800">•</span>
+        <span>
+          <span className="text-zinc-500">↓/j</span>
+          {' '}
+          down
+        </span>
+        <span className="text-zinc-800">•</span>
+        <span>
+          <span className="text-zinc-500">enter</span>
+          {' '}
+          choose
+        </span>
+        <span className="text-zinc-800">•</span>
+        <span>
+          <span className="text-zinc-500">/</span>
+          {' '}
+          filter
+        </span>
+        <span className="text-zinc-800">•</span>
+        <span>
+          <span className="text-zinc-500">q</span>
+          {' '}
+          quit
+        </span>
+      </div>
+    </div>
+  )
+}
+
+// ── Table preview ─────────────────────────────────────────────────────────────
+
+const TABLE_ROWS = [
+  { rank: '6', city: 'Mexico Ci…', country: 'Mexico', pop: '22,085,140' },
+  { rank: '7', city: 'Cairo', country: 'Egypt', pop: '21,750,020' },
+  { rank: '8', city: 'Beijing', country: 'China', pop: '21,333,332' },
+  { rank: '9', city: 'Mumbai', country: 'India', pop: '20,961,472' },
+  { rank: '10', city: 'Osaka', country: 'Japan', pop: '19,059,856' },
+  { rank: '11', city: 'Chongqing', country: 'China', pop: '16,874,740' },
+  { rank: '12', city: 'Karachi', country: 'Pakistan', pop: '16,839,950' },
+]
+
+export function TablePreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [selected, setSelected] = useState(1)
+  useEffect(() => {
+    const timer = setInterval(() => setSelected(i => (i + 1) % TABLE_ROWS.length), 900)
+    return () => clearInterval(timer)
+  }, [])
+
+  if (compact) {
+    return (
+      <div className="font-mono text-xs border border-zinc-600 rounded w-full max-w-[16rem]">
+        <div className="flex gap-2 text-cyan-400 font-semibold px-2 pt-2 pb-1 text-[10px]">
+          <span className="w-5 text-right">#</span>
+          <span className="flex-1">City</span>
+          <span className="w-16 text-right">Pop</span>
+        </div>
+        <div className="text-zinc-700 px-2 mb-1">{'─'.repeat(30)}</div>
+        {TABLE_ROWS.slice(0, 4).map((row, i) => {
+          const isActive = i === selected
+          return (
+            <div
+              key={row.rank}
+              className={`flex gap-2 px-2 py-px text-[10px] ${isActive ? 'bg-violet-600 text-white font-bold' : 'text-zinc-400'}`}
+            >
+              <span className="w-5 text-right">{row.rank}</span>
+              <span className="flex-1 truncate">{row.city}</span>
+              <span className="w-16 text-right">{row.pop}</span>
+            </div>
+          )
+        })}
+        <div className="h-1" />
+      </div>
+    )
+  }
+
+  return (
+    <div className="font-mono text-xs border border-zinc-600 rounded min-w-72">
+      <div className="flex gap-3 text-cyan-400 font-semibold px-3 pt-2 pb-1">
+        <span className="w-6 text-right">Rank</span>
+        <span className="w-20">City</span>
+        <span className="w-16">Country</span>
+        <span className="w-20 text-right">Population</span>
+      </div>
+      <div className="text-zinc-700 px-3 mb-1">{'─'.repeat(40)}</div>
+      {TABLE_ROWS.map((row, i) => {
+        const isActive = i === selected
+        return (
+          <div
+            key={row.rank}
+            className={`flex gap-3 px-3 py-px ${isActive ? 'bg-violet-600 text-white font-bold' : 'text-zinc-400'}`}
+          >
+            <span className="w-6 text-right">{row.rank}</span>
+            <span className="w-20">{row.city}</span>
+            <span className="w-16">{row.country}</span>
+            <span className="w-20 text-right">{row.pop}</span>
+          </div>
+        )
+      })}
+      <div className="h-2" />
+    </div>
+  )
+}
+
+// ── FilePicker preview ────────────────────────────────────────────────────────
+
+const FP_ENTRIES = [
+  { perms: 'drwxr-xr-x', size: '128 B', name: 'bin', isDir: true },
+  { perms: 'drwxr-xr-x', size: ' 64 B', name: 'books', isDir: true },
+  { perms: 'drwxr-xr-x', size: ' 96 B', name: 'movies', isDir: true },
+  { perms: 'drwxr-xr-x', size: '288 B', name: 'projects', isDir: true },
+]
+
+export function FilePickerPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [active, setActive] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setActive(i => (i + 1) % FP_ENTRIES.length), 800)
+    return () => clearInterval(timer)
+  }, [])
+
+  if (compact) {
+    return (
+      <div className="font-mono text-xs w-full max-w-[16rem]">
+        <div className="text-zinc-500 mb-1 text-[10px]">Pick a file:</div>
+        <div className="space-y-0.5">
+          {FP_ENTRIES.slice(0, 3).map((entry, i) => {
+            const isActive = i === active
+            return (
+              <div key={entry.name} className="flex items-center gap-2 text-[10px]">
+                <span className={`w-3 ${isActive ? 'text-cyan-400' : 'text-transparent'}`}>{'>'}</span>
+                <span className={`${isActive ? 'font-bold text-zinc-200' : 'text-zinc-600'}`}>
+                  {entry.perms}
+                </span>
+                <span className={`w-8 text-right ${isActive ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                  {entry.size}
+                </span>
+                <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-violet-400'}>
+                  {entry.name}
+                </span>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="font-mono text-xs min-w-64">
+      <div className="text-zinc-300 mb-1">
+        <span className="text-cyan-400">{'>'}</span>
+        {' '}
+        <span className="text-zinc-400">./bin/file</span>
+      </div>
+      <div className="text-zinc-500 mb-2 pl-2">Pick a file:</div>
+      <div className="space-y-0.5">
+        {FP_ENTRIES.map((entry, i) => {
+          const isActive = i === active
+          return (
+            <div key={entry.name} className="flex items-center gap-2">
+              <span className={`w-3 ${isActive ? 'text-cyan-400' : 'text-transparent'}`}>{'>'}</span>
+              <span className={`${isActive ? 'font-bold text-zinc-200' : 'text-zinc-600'}`}>
+                {entry.perms}
+              </span>
+              <span className={`w-10 text-right ${isActive ? 'text-zinc-300' : 'text-zinc-600'}`}>
+                {entry.size}
+              </span>
+              <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-violet-400'}>
+                {entry.name}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// ── Help preview ──────────────────────────────────────────────────────────────
+
+export function HelpPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const cols = [
+    [
+      { key: '↑/k', desc: 'move up' },
+      { key: '↓/j', desc: 'move down' },
+      { key: '←/h', desc: 'move left' },
+      { key: '→/l', desc: 'move right' },
+    ],
+    [
+      { key: '?', desc: 'toggle help' },
+      { key: 'q', desc: 'quit' },
+    ],
+  ]
+
+  if (compact) {
+    return (
+      <div className="font-mono text-xs w-full max-w-[16rem]">
+        <div className="space-y-0.5">
+          {cols[0].slice(0, 3).map(({ key, desc }) => (
+            <div key={key} className="flex gap-2 text-[10px]">
+              <span className="text-zinc-400 w-8">{key}</span>
+              <span className="text-zinc-600">{desc}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="font-mono text-xs">
+      <div className="flex gap-8">
+        {cols.map((col, ci) => (
+          <div key={ci} className="space-y-0.5">
+            {col.map(({ key, desc }) => (
+              <div key={key} className="flex gap-2">
+                <span className="text-zinc-400 w-10">{key}</span>
+                <span className="text-zinc-600">{desc}</span>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Slug → preview map ────────────────────────────────────────────────────────
 
-export const previewMap: Record<string, React.FC> = {
+interface PreviewComponent extends React.FC<{ compact?: boolean }> {}
+
+export const previewMap: Record<string, PreviewComponent> = {
   'spinner': SpinnerPreview,
   'badge': BadgePreview,
   'progress': ProgressPreview,
@@ -336,6 +847,14 @@ export const previewMap: Record<string, React.FC> = {
   'multi-select': MultiSelectPreview,
   'confirm-input': ConfirmInputPreview,
   'number-input': NumberInputPreview,
+  'paginator': PaginatorPreview,
+  'timer': TimerPreview,
+  'stopwatch': StopwatchPreview,
+  'viewport': ViewportPreview,
+  'list': ListPreview,
+  'table': TablePreview,
+  'file-picker': FilePickerPreview,
+  'help': HelpPreview,
 }
 
 export const compactPreviewMap: Partial<Record<string, React.FC>> = {

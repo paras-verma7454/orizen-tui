@@ -1,12 +1,14 @@
 # Orizen TUI
 
-Open-source terminal UI components for [Ink](https://github.com/vadimdemedes/ink) with a shadcn-style copy workflow.
+Open-source **terminal UI components** for Node.js CLI applications. Build beautiful terminal interfaces with a shadcn-style copy workflow.
 
-## Why Orizen TUI
+## What is Orizen TUI?
 
-- Copy component source into your app, own every line.
-- Build terminal-first interfaces with React + Ink.
-- Themeable primitives and reusable component patterns.
+A component library for terminal applications. Copy components into your Node.js CLI project and own every line.
+
+- **For Terminal Apps** — Runs in Node.js, renders to any terminal
+- **Familiar Patterns** — Build CLI interfaces with component-based architecture
+- **Copy & Customize** — Source code lives in your project, fully editable
 
 ## Install CLI
 

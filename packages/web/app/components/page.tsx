@@ -42,13 +42,13 @@ export default function ComponentsPage(): JSX.Element {
           .
         </p>
         <p className="text-zinc-500 text-xs mt-2">
-          Previews below are browser simulations. Runtime behavior comes from Ink in terminal apps.
+          Previews below are browser simulations. Real components render in actual terminal apps.
         </p>
       </div>
 
       {grouped.map(group => (
         <section key={group.key}>
-          <h2 className="text-xs uppercase tracking-widest text-zinc-500 mb-4 font-medium">
+          <h2 className="text-[11px] uppercase tracking-widest text-zinc-300 mb-6 font-bold flex items-center gap-3 after:content-[''] after:h-px after:flex-1 after:bg-zinc-800">
             {group.label}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

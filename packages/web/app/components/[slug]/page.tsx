@@ -4,7 +4,7 @@ import process from 'node:process'
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { CodeBlock } from '@/components/code-block'
+import { CodeBlock } from '@/components/code-block-client'
 import { ComponentPreview } from '@/components/component-preview'
 import { InstallCommand } from '@/components/install-command'
 import { Tabs } from '@/components/tabs'
@@ -124,7 +124,7 @@ export default async function ComponentPage({ params }: PageProps): Promise<JSX.
 
         <section className="space-y-3">
           <p className="text-xs text-zinc-500">
-            Browser preview is a simulation. The copied component runs in Ink inside terminal apps.
+            Browser preview is a simulation. The copied component runs in actual terminal apps.
           </p>
           <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-6">
             <Tabs

@@ -5,7 +5,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Orizen TUI - Terminal UI Components',
-  description: 'A headless component library for Ink. Themeable, accessible, and optimized for 60fps terminal rendering.',
+  description: 'A component library for building terminal user interfaces. Themeable, accessible, and optimized for 60fps rendering in Node.js CLI apps.',
   icons: {
     icon: '/icon.svg',
     shortcut: '/icon.svg',
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     card: 'summary',
     title: 'Orizen TUI - Terminal UI Components',
     description:
-      'A headless component library for Ink. Themeable, accessible, and optimized for 60fps terminal rendering.',
+      'A component library for building terminal user interfaces. Themeable, accessible, and optimized for 60fps rendering in Node.js CLI apps.',
     images: ['/icon.svg'],
   },
 }

@@ -43,7 +43,7 @@ export function ThemeToggle(): JSX.Element {
   return (
     <button
       onClick={toggle}
-      className="inline-flex items-center justify-center rounded-md border border-zinc-800 bg-zinc-900/60 p-1.5 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-colors"
+      className="inline-flex items-center justify-center rounded-md border border-[var(--color-border-subtle)] bg-[var(--color-surface)] p-1.5 text-[var(--color-muted)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors cursor-pointer"
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
       type="button"

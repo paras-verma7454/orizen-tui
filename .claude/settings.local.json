@@ -20,7 +20,9 @@
       "Bash(gemini -p \"@packages/web/app/components/[slug]/page.tsx @packages/web/components/ @packages/web/lib/registry.ts Redesign the component detail page for Orizen TUI docs site. It should look like shadcn.com or ui.aceternity.com component pages. Must show::*)",
       "Bash(gemini:*)",
       "Bash(grep -v \"^$\")",
-      "WebFetch(domain:www.npmjs.com)"
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(curl -s \"https://api.github.com/repos/charmbracelet/bubbles/contents\")",
+      "Bash(curl -s \"https://raw.githubusercontent.com/charmbracelet/bubbles/main/README.md\")"
     ]
   }
 }
