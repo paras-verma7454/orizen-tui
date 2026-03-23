@@ -12,7 +12,7 @@ export type PrimitiveName = 'borders' | 'symbols'
 
 const PRIMITIVE_IMPORT_RE = /from ['"]\.\.\/\.\.\/primitives\/(borders|symbols)\.js['"]/g
 const TRAILING_SLASH_RE = /\/+$/
-const REQUIRED_DEPENDENCIES = ['ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'] as const
+const REQUIRED_DEPENDENCIES = ['ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', '@types/node@latest', 'orizen-tui-core@latest'] as const
 const DEFAULT_REGISTRY_BASE_URL = 'https://raw.githubusercontent.com/paras-verma7454/orizen-tui/main/packages/registry/src'
 
 export interface AddCommandOptions {
@@ -445,7 +445,7 @@ function printSummary(result: AddExecutionResult, dryRun: boolean): void {
   }
   else if (result.installAttempted && !result.installSucceeded) {
     console.log(`${pc.yellow('!')} Dependency install failed. Run manually:`)
-    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')}`)
+    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 @types/node@latest orizen-tui-core@latest')}`)
   }
 }
 

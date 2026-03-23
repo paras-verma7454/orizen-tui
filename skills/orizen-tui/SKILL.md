@@ -207,7 +207,7 @@ Browse live previews: **[orizen-tui.vercel.app](https://orizen-tui.vercel.app)**
 ## Dependency Install Behavior
 
 The CLI auto-detects your package manager from lock files and installs:
-`ink@^5.0.1` · `react@^18.3.1` · `@types/react@^18.3.18` · `orizen-tui-core@latest`
+`ink@^5.0.1` · `react@^18.3.1` · `@types/react@^18.3.18` · `@types/node@latest` · `orizen-tui-core@latest`
 
 - `bun.lock` → **Bun** · `pnpm-lock.yaml` → **pnpm** · `yarn.lock` → **Yarn** · fallback → **npm**
 

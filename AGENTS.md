@@ -108,7 +108,7 @@ Implemented in `packages/cli/src/commands/add.ts`.
 - Dependency install precedence:
   - Bun lock -> pnpm lock -> yaml lock -> npm fallback
 - Required dependencies installed automatically:
-  - `ink@^5.0.1`, `react@^18.3.1`, `@types/react@^18.3.18`, `orizen-tui-core@latest`
+  - `ink@^5.0.1`, `react@^18.3.1`, `@types/react@^18.3.18`, `@types/node@latest`, `orizen-tui-core@latest`
 - Environment variables:
   - `ORIZEN_TUI_REGISTRY_SRC` - path to a local registry `src/` directory (overrides auto-detection)
   - `ORIZEN_TUI_REGISTRY_BASE_URL` - override remote registry base URL
