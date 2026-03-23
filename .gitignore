@@ -22,4 +22,3 @@ out
 .env.*.local
 .nyc_output
 .claude
-.code-review-graph
