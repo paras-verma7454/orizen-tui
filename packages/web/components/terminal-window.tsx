@@ -20,7 +20,7 @@ export function TerminalWindow({ title = 'bash', children, className = '' }: Ter
         <div className="w-12" />
       </div>
       {/* Content */}
-      <div className="p-5 text-sm leading-relaxed overflow-auto">
+      <div className="p-5 text-sm leading-relaxed overflow-x-auto break-all sm:break-normal">
         {children}
       </div>
     </div>

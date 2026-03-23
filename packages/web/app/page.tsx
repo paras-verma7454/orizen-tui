@@ -128,9 +128,9 @@ function ScrollingRows({ children }: { children: React.ReactNode }): JSX.Element
   const row1 = childrenArray.slice(0, midpoint)
   const row2 = childrenArray.slice(midpoint)
 
-  // Triple the items for seamless infinite scroll
-  const duplicatedRow1 = [...row1, ...row1, ...row1]
-  const duplicatedRow2 = [...row2, ...row2, ...row2]
+  // Duplicate the items for seamless infinite scroll
+  const duplicatedRow1 = [...row1, ...row1]
+  const duplicatedRow2 = [...row2, ...row2]
 
   return (
     <div className="space-y-4">
@@ -138,10 +138,14 @@ function ScrollingRows({ children }: { children: React.ReactNode }): JSX.Element
       <div className="relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
-        <div className="flex gap-4 animate-marquee-left hover:[animation-play-state:paused]">
-          {duplicatedRow1.map((child, index) => (
-            <div key={`r1-${index}`} className="shrink-0 w-80">
-              {child}
+        <div className="flex w-max animate-marquee-left hover:[animation-play-state:paused]">
+          {[1, 2].map(blockIndex => (
+            <div key={`block-${blockIndex}`} className="flex gap-4 pr-4">
+              {duplicatedRow1.map((child, index) => (
+                <div key={`r1-${blockIndex}-${index}`} className="shrink-0 w-64 sm:w-80">
+                  {child}
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -151,10 +155,14 @@ function ScrollingRows({ children }: { children: React.ReactNode }): JSX.Element
       <div className="relative overflow-hidden">
         <div className="absolute left-0 top-0 bottom-0 w-16 bg-linear-to-r from-background to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 bg-linear-to-l from-background to-transparent z-10 pointer-events-none" />
-        <div className="flex gap-4 animate-marquee-right hover:[animation-play-state:paused]">
-          {duplicatedRow2.map((child, index) => (
-            <div key={`r2-${index}`} className="shrink-0 w-80">
-              {child}
+        <div className="flex w-max animate-marquee-right hover:[animation-play-state:paused]">
+          {[1, 2].map(blockIndex => (
+            <div key={`block-${blockIndex}`} className="flex gap-4 pr-4">
+              {duplicatedRow2.map((child, index) => (
+                <div key={`r2-${blockIndex}-${index}`} className="shrink-0 w-64 sm:w-80">
+                  {child}
+                </div>
+              ))}
             </div>
           ))}
         </div>
@@ -170,13 +178,13 @@ export default function LandingPage(): JSX.Element {
     <main className="bg-background">
       {/* Hero */}
       <section className="pt-16 sm:pt-28 pb-16 px-4 sm:px-6 max-w-5xl mx-auto text-center">
-        <div className="mb-8 flex justify-center pr-16">
+        <div className="mb-8 flex justify-center sm:pr-16">
           <span className="group inline-flex items-center rounded-full border border-zinc-800 bg-zinc-900/50 p-1 transition-all duration-300 hover:border-zinc-700">
             <span className="max-w-0 overflow-hidden text-[11px] text-zinc-400 opacity-0 transition-all duration-300 group-hover:max-w-xs group-hover:px-2 group-hover:opacity-100 whitespace-nowrap">
               We're proudly
             </span>
             <a
-              href="https://github.com/orizen-tui/orizen-tui"
+              href="https://github.com/paras-verma7454/orizen-tui"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-zinc-950 px-3 py-1.5 text-xs font-medium text-zinc-400 uppercase tracking-wider transition-all duration-300 hover:text-zinc-200 shadow-sm"
@@ -187,15 +195,14 @@ export default function LandingPage(): JSX.Element {
           </span>
         </div>
 
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-linear-to-b from-zinc-50 via-zinc-300 to-zinc-600 bg-clip-text text-transparent leading-none pb-2">
-          Terminal UI Components.
-          <br />
-          For Node.js CLI Apps.
+        <h1 className="text-[28px] sm:text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-linear-to-b from-zinc-50 via-zinc-300 to-zinc-600 bg-clip-text text-transparent leading-[1.2] pb-2 sm:leading-[1.1]">
+          <span className="block sm:inline">Terminal UI Components</span>
+          <br className="hidden sm:block" />
+          <span className="block sm:inline text-[22px] sm:text-4xl md:text-6xl text-zinc-300/80">For Node.js CLI Apps</span>
         </h1>
 
-        <p className="text-zinc-400 max-w-xl mx-auto mb-10 text-base leading-relaxed">
+        <p className="text-zinc-400 max-w-xl mx-auto mb-10 text-sm sm:text-base leading-relaxed text-balance">
           A shadcn-style component library for terminal applications.
-          Copy the source, own every line, and ship fast with accessible, themeable primitives.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -211,7 +218,7 @@ export default function LandingPage(): JSX.Element {
       </section>
 
       {/* Hero terminal */}
-      <section className="px-6 pb-24 max-w-3xl mx-auto">
+      <section className="px-6 pb-24 max-w-3xl mx-auto overflow-hidden">
         <HeroTerminal />
       </section>
 
@@ -357,7 +364,7 @@ export default function LandingPage(): JSX.Element {
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <a
-                href="https://github.com/orizen-tui/orizen-tui"
+                href="https://github.com/paras-verma7454/orizen-tui"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-zinc-700 text-zinc-300 font-medium text-sm hover:border-zinc-500 hover:text-zinc-100 transition-colors"
@@ -370,17 +377,23 @@ export default function LandingPage(): JSX.Element {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-8 max-w-5xl mx-auto border-t border-zinc-900">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-cyan-400 font-bold">orizen-tui</span>
-            <span className="text-zinc-600">—</span>
+      <footer className="px-6 py-10 max-w-5xl mx-auto border-t border-zinc-900">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4">
+          <div className="flex flex-col md:flex-row items-center gap-3 text-center md:text-left">
+            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <Terminal className="w-4 h-4 text-cyan-400" />
+              <span className="font-mono font-bold text-sm tracking-wider">
+                <span className="text-cyan-400">ORIZEN</span>
+                <span className="text-zinc-500">/</span>
+                <span className="text-zinc-100">TUI</span>
+              </span>
+            </Link>
+            <span className="hidden md:inline text-zinc-700">—</span>
             <span className="text-zinc-500 text-sm">Terminal UI components for Node.js</span>
           </div>
-          <div className="flex items-center gap-6 text-sm text-zinc-500">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-zinc-500 w-full md:w-auto pt-6 md:pt-0 border-t border-zinc-900/50 md:border-0">
             <Link href="/components" className="hover:text-zinc-300 transition-colors">Components</Link>
-            <a href="https://github.com/orizen-tui/orizen-tui" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
+            <a href="https://github.com/paras-verma7454/orizen-tui" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
             <a href="https://www.npmjs.com/package/orizen-tui" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">NPM</a>
           </div>
         </div>

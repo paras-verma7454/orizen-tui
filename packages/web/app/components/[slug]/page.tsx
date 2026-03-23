@@ -206,7 +206,7 @@ export default async function ComponentPage({ params }: PageProps): Promise<JSX.
 
         <div className="pt-4 border-t border-zinc-800">
           <a
-            href={`https://github.com/orizen-tui/orizen-tui/tree/main/packages/registry/src/components/${slug}`}
+            href={`https://github.com/paras-verma7454/orizen-tui/tree/main/packages/registry/src/components/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
