@@ -9,7 +9,7 @@ Guidance for coding agents working in the `orizen-tui` monorepo.
 - Workspace layout:
   - `packages/cli` - `orizen-tui` CLI (source-copy flow via `add`)
   - `packages/core` - theme + shared primitives/hooks for TUI components
-  - `packages/registry` - canonical terminal components and metadata
+  - `packages/registry` - canonical terminal components, metadata, and docs pipeline
   - `packages/web` - docs site + browser preview simulations
   - `packages/demo` - local interactive demo
 
@@ -36,6 +36,16 @@ bun run typecheck
 
 # Run all tests
 bun test
+
+# Run tests with coverage
+bun test --coverage
+
+# Lint
+bun run lint
+bun run lint:fix
+
+# Run the demo app
+bun run demo
 ```
 
 Package-level:
@@ -47,22 +57,34 @@ bun test packages/cli/src/commands/add.test.ts
 # Registry docs pipeline tests
 bun test packages/registry/src/docs/collect.test.ts
 
-# Web dev server
+# Web dev server (shorthand)
+bun run dev:web
+# Equivalent to:
 bun run --filter './packages/web' dev
 ```
 
 ## Registry + Docs Data Flow
 
-1. Component runtime code lives in `packages/registry/src/components/<slug>/index.tsx`.
-2. Docs metadata lives beside it in `packages/registry/src/components/<slug>/meta.ts`.
-3. Generator script:
-   - `packages/registry/scripts/generate-web-component-docs.ts`
-4. Generated output:
-   - `packages/web/lib/generated/components.ts` (auto-generated, deterministic order)
-5. Web adapter:
-   - `packages/web/lib/registry.ts` maps generated docs to web-facing shape (`install` command included).
+1. Component runtime code: `packages/registry/src/components/<slug>/index.tsx`
+2. Docs metadata: `packages/registry/src/components/<slug>/meta.ts`
+3. Docs pipeline helpers: `packages/registry/src/docs/collect.ts`
+4. Generator script: `packages/registry/scripts/generate-web-component-docs.ts`
+5. Generated output: `packages/web/lib/generated/components.ts` (auto-generated, deterministic order)
+6. Web adapter: `packages/web/lib/registry.ts` maps generated docs to web-facing shape (`install` command included)
 
-If adding a new component, update both runtime and metadata, then run `bun run generate:docs`.
+If adding a new component, update both runtime (`index.tsx`) and metadata (`meta.ts`), then run `bun run generate:docs`.
+
+## Available Registry Components (18)
+
+`badge`, `checkbox`, `confirm-input`, `file-picker`, `help`, `list`, `multi-select`, `number-input`, `paginator`, `progress`, `select`, `spinner`, `stopwatch`, `table`, `text-input`, `textarea`, `timer`, `viewport`
+
+## Core Package (`packages/core/src`)
+
+- `theme.ts` - theme tokens and types
+- `ThemeContext.tsx` - React context for theming
+- `focus.tsx` - focus management hook
+- `tv.ts` - tailwind-variants-style utility for terminal styles
+- `index.ts` - public exports
 
 ## CLI `add` Behavior (Expected)
 
@@ -73,14 +95,23 @@ Implemented in `packages/cli/src/commands/add.ts`.
   - target path: `components/ui`
   - copy destination: `components/ui/orizen/<slug>.tsx`
   - primitives copied on-demand to: `components/ui/orizen/primitives/{borders,symbols}.ts`
+- Also generates/updates:
+  - `components/ui/orizen/components.json` - manifest of installed components
+  - `components/ui/orizen/index.ts` - barrel re-export for all installed components
 - Flags:
   - `--path <dir>`
   - `--cwd <dir>`
   - `--dry-run`
   - `--no-install`
   - `--overwrite`
+  - `--registry <url>` - override remote registry base URL
 - Dependency install precedence:
-  - Bun lock -> pnpm lock -> yarn lock -> npm fallback
+  - Bun lock -> pnpm lock -> yaml lock -> npm fallback
+- Required dependencies installed automatically:
+  - `ink@^5.0.1`, `react@^18.3.1`, `@types/react@^18.3.18`, `orizen-tui-core@latest`
+- Environment variables:
+  - `ORIZEN_TUI_REGISTRY_SRC` - path to a local registry `src/` directory (overrides auto-detection)
+  - `ORIZEN_TUI_REGISTRY_BASE_URL` - override remote registry base URL
 
 Keep import rewriting behavior intact (`../../primitives/*.js` -> `./primitives/*`).
 
@@ -89,7 +120,8 @@ Keep import rewriting behavior intact (`../../primitives/*.js` -> `./primitives/
 - Use ASCII unless the target file already contains Unicode symbols intentionally.
 - Keep TypeScript strictness intact; avoid `any` unless necessary.
 - Maintain ESM-compatible imports where used.
-- For generated artifacts, prefer updating generator logic, then regenerate.
+- For generated artifacts (`packages/web/lib/generated/components.ts`), prefer updating generator logic, then regenerate.
+- `vitest.config.ts` exists at root but tests are run via `bun test` (Bun's native test runner).
 
 ## Verification Checklist Before Finishing
 
