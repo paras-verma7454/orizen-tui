@@ -11,12 +11,24 @@ export const metadata: Metadata = {
     shortcut: '/icon.svg',
     apple: '/icon.svg',
   },
+  openGraph: {
+    title: 'Orizen TUI - Terminal UI Components',
+    description: 'A component library for building terminal user interfaces. Themeable, accessible, and optimized for 60fps rendering in Node.js CLI apps.',
+    images: [
+      {
+        url: '/image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Orizen TUI',
+      },
+    ],
+  },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Orizen TUI - Terminal UI Components',
     description:
       'A component library for building terminal user interfaces. Themeable, accessible, and optimized for 60fps rendering in Node.js CLI apps.',
-    images: ['/icon.svg'],
+    images: ['/image.png'],
   },
 }
 
