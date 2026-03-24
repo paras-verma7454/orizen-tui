@@ -29,11 +29,11 @@ import React from 'react'
 import { List } from '@/components/ui/orizen/list'
 
 const items = [
-  { label: 'Pocky', value: 'pocky', desc: 'Expensive' },
-  { label: 'Ginger', value: 'ginger', desc: 'Exquisite' },
-  { label: 'Plantains', value: 'plantains', desc: 'Questionable' },
-  { label: 'Honey Dew', value: 'honey-dew', desc: 'Delectable' },
-  { label: 'Pineapple', value: 'pineapple', desc: 'Kind of spicy' },
+  { label: 'Pocky', value: 'pocky' },
+  { label: 'Ginger', value: 'ginger' },
+  { label: 'Plantains', value: 'plantains' },
+  { label: 'Honey Dew', value: 'honey-dew' },
+  { label: 'Pineapple', value: 'pineapple' },
 ]
 
 function Demo() {

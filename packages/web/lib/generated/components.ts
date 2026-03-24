@@ -236,7 +236,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "examples": [
       {
         "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React from 'react'\nimport { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Pocky', value: 'pocky', desc: 'Expensive' },\n  { label: 'Ginger', value: 'ginger', desc: 'Exquisite' },\n  { label: 'Plantains', value: 'plantains', desc: 'Questionable' },\n  { label: 'Honey Dew', value: 'honey-dew', desc: 'Delectable' },\n  { label: 'Pineapple', value: 'pineapple', desc: 'Kind of spicy' },\n]\n\nfunction Demo() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Box>\n        <Text bold>Groceries</Text>\n        <Text dimColor> 72 items</Text>\n      </Box>\n      <List\n        items={items}\n        height={5}\n        onSelect={(item) => console.log('Selected:', item.label)}\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
+        "code": "import { Box, Text, render } from 'ink'\nimport React from 'react'\nimport { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Pocky', value: 'pocky' },\n  { label: 'Ginger', value: 'ginger' },\n  { label: 'Plantains', value: 'plantains' },\n  { label: 'Honey Dew', value: 'honey-dew' },\n  { label: 'Pineapple', value: 'pineapple' },\n]\n\nfunction Demo() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Box>\n        <Text bold>Groceries</Text>\n        <Text dimColor> 72 items</Text>\n      </Box>\n      <List\n        items={items}\n        height={5}\n        onSelect={(item) => console.log('Selected:', item.label)}\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
       }
     ],
     "props": [

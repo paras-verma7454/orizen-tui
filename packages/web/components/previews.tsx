@@ -535,36 +535,36 @@ export function ViewportPreview({ compact = false }: { compact?: boolean }): JSX
 
 // ── List preview ──────────────────────────────────────────────────────────────
 
-const LIST_DATA = [
-  { label: 'Pocky', desc: 'Expensive' },
-  { label: 'Ginger', desc: 'Exquisite' },
-  { label: 'Plantains', desc: 'Questionable' },
-  { label: 'Honey Dew', desc: 'Delectable' },
-  { label: 'Pineapple', desc: 'Kind of spicy' },
-]
+
 
 export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [active, setActive] = useState(0)
   useEffect(() => {
-    const timer = setInterval(() => setActive(i => (i + 1) % LIST_DATA.length), 900)
+    const timer = setInterval(() => setActive(i => (i + 1) % 8), 900)
     return () => clearInterval(timer)
   }, [])
-  const paginationDots = Array.from({ length: LIST_DATA.length }, (_, i) => i)
+
+  const allItems = [
+    { label: 'Pocky' },
+    { label: 'Ginger' },
+    { label: 'Plantains' },
+    { label: 'Honey Dew' },
+    { label: 'Pineapple' },
+    { label: 'Apples' },
+    { label: 'Bananas' },
+    { label: 'Oranges' },
+  ]
 
   if (compact) {
     return (
       <div className="font-mono text-xs w-full max-w-[16rem]">
         <div className="space-y-1">
-          {LIST_DATA.slice(0, 4).map((item, i) => {
+          {allItems.slice(0, 4).map((item, i) => {
             const isActive = i === active
             return (
-              <div
-                key={item.label}
-                className={`pl-2 border-l-2 ${isActive ? 'border-fuchsia-400' : 'border-transparent'}`}
-              >
-                <div className={`font-semibold ${isActive ? 'text-fuchsia-400' : 'text-zinc-300'}`}>
-                  {item.label}
-                </div>
+              <div key={item.label} className="flex gap-1">
+                <span className={isActive ? 'text-fuchsia-400' : 'text-zinc-600'}>{isActive ? '❯' : ' '}</span>
+                <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-zinc-300'}>{item.label}</span>
               </div>
             )
           })}
@@ -575,61 +575,23 @@ export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Ele
 
   return (
     <div className="font-mono text-xs min-w-56">
-      <div className="mb-1.5">
+      <div className="mb-1">
         <span className="bg-emerald-500 text-black text-xs font-bold px-2 py-0.5 rounded">Groceries</span>
+        <span className="text-zinc-500 ml-2">72 items</span>
       </div>
-      <div className="text-zinc-500 text-xs mb-2">72 items</div>
-      <div className="space-y-1.5 mb-2">
-        {LIST_DATA.map((item, i) => {
+      <div className="space-y-0.5 mb-2">
+        {allItems.slice(0, 5).map((item, i) => {
           const isActive = i === active
           return (
-            <div
-              key={item.label}
-              className={`pl-2 border-l-2 ${isActive ? 'border-fuchsia-400' : 'border-transparent'}`}
-            >
-              <div className={`font-semibold ${isActive ? 'text-fuchsia-400' : 'text-zinc-300'}`}>
-                {item.label}
-              </div>
-              <div className={isActive ? 'text-fuchsia-500/70' : 'text-zinc-600'}>{item.desc}</div>
+            <div key={item.label} className="flex gap-1">
+              <span className={isActive ? 'text-fuchsia-400' : 'text-zinc-600'}>{isActive ? '❯' : ' '}</span>
+              <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-zinc-300'}>{item.label}</span>
             </div>
           )
         })}
       </div>
-      <div className="flex gap-0.5 mb-2">
-        {paginationDots.map(i => (
-          <span key={i} className={`text-[8px] ${i === active ? 'text-zinc-300' : 'text-zinc-700'}`}>●</span>
-        ))}
-      </div>
-      <div className="flex flex-wrap gap-x-2 gap-y-0.5 text-zinc-600 text-[10px]">
-        <span>
-          <span className="text-zinc-500">↑/k</span>
-          {' '}
-          up
-        </span>
-        <span className="text-zinc-800">•</span>
-        <span>
-          <span className="text-zinc-500">↓/j</span>
-          {' '}
-          down
-        </span>
-        <span className="text-zinc-800">•</span>
-        <span>
-          <span className="text-zinc-500">enter</span>
-          {' '}
-          choose
-        </span>
-        <span className="text-zinc-800">•</span>
-        <span>
-          <span className="text-zinc-500">/</span>
-          {' '}
-          filter
-        </span>
-        <span className="text-zinc-800">•</span>
-        <span>
-          <span className="text-zinc-500">q</span>
-          {' '}
-          quit
-        </span>
+      <div className="text-zinc-500 text-xs">
+        {'  '}(1–5 of {allItems.length})
       </div>
     </div>
   )
