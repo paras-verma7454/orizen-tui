@@ -29,8 +29,12 @@ export function navigateMultiSelect(index: number, total: number, direction: 'up
 
 export interface MultiSelectProps<T = string> {
   items: ReadonlyArray<MultiSelectItem<T>>
-  value: T[]
-  onChange: (values: T[]) => void
+  /** Selected values (controlled mode) */
+  value?: T[]
+  /** Callback fired when selection changes (controlled mode) */
+  onChange?: (values: T[]) => void
+  /** Initial values for uncontrolled mode */
+  defaultValue?: T[]
   /** Called with final selection when Enter is pressed */
   onSubmit?: (values: T[]) => void
   /** Label shown above the list */
@@ -51,14 +55,26 @@ export interface MultiSelectProps<T = string> {
  */
 export function MultiSelect<T = string>({
   items,
-  value,
+  value: controlledValue,
   onChange,
+  defaultValue = [],
   onSubmit,
   label,
   focus = true,
 }: MultiSelectProps<T>): JSX.Element {
   const { colors } = useTheme()
+  const [internalValue, setInternalValue] = useState(defaultValue)
   const [cursorIndex, setCursorIndex] = useState(0)
+
+  const isControlled = controlledValue !== undefined
+  const selectedValues = isControlled ? controlledValue : internalValue
+
+  const handleChange = (newValues: T[]) => {
+    if (!isControlled) {
+      setInternalValue(newValues)
+    }
+    onChange?.(newValues)
+  }
 
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
   useInput(
@@ -72,19 +88,19 @@ export function MultiSelect<T = string>({
       if (_input === ' ') {
         const item = items[cursorIndex]
         const strValue = String(item.value)
-        const strValues = value.map(v => String(v))
+        const strValues = selectedValues.map(v => String(v))
         const next = toggleMultiSelect(strValues, strValue)
-        onChange(next as T[])
+        handleChange(next as T[])
       }
       if (key.return) {
-        onSubmit?.(value)
+        onSubmit?.(selectedValues)
       }
     },
     { isActive: focus },
   )
   // c8 ignore stop
 
-  const selectedSet = new Set(value.map(v => String(v)))
+  const selectedSet = new Set(selectedValues.map(v => String(v)))
 
   return (
     <Box flexDirection="column">

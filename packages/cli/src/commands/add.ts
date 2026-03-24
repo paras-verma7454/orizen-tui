@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url'
 import { Command } from 'commander'
 import { execa } from 'execa'
 import pc from 'picocolors'
+import prompts from 'prompts'
 
 export type PackageManager = 'bun' | 'pnpm' | 'yarn' | 'npm'
 export type PrimitiveName = 'borders' | 'symbols'
@@ -234,6 +235,28 @@ function suggestSlugs(slug: string, available: string[]): string[] {
   return partialMatches.slice(0, 5)
 }
 
+async function promptForExistingFiles(files: PlannedFile[], targetPath: string): Promise<void> {
+  const existingFiles = files.filter(f => !f.shouldWrite && f.type !== 'manifest' && f.type !== 'barrel')
+  if (existingFiles.length === 0)
+    return
+
+  const fileList = existingFiles.map(f => relative(targetPath, f.outputPath)).join('\n  - ')
+  const response = await prompts({
+    type: 'confirm',
+    name: 'overwrite',
+    message: `The following files already exist:\n  - ${fileList}\n\nDo you want to overwrite them?`,
+    initial: false,
+  })
+
+  if (!response.overwrite) {
+    return
+  }
+
+  for (const file of existingFiles) {
+    file.shouldWrite = true
+  }
+}
+
 export async function executeAddCommand(
   slugs: string[],
   options: AddCommandOptions,
@@ -374,6 +397,10 @@ export async function executeAddCommand(
         shouldWrite,
       })
     }
+  }
+
+  if (!dryRun) {
+    await promptForExistingFiles(files, targetPath)
   }
 
   if (!dryRun) {

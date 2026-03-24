@@ -29,8 +29,12 @@ export function navigateCheckbox(index: number, total: number, direction: 'up' |
 
 export interface CheckboxProps<T = string> {
   items: ReadonlyArray<CheckboxItem<T>>
-  value: T[]
-  onChange: (values: T[]) => void
+  /** Selected values (controlled mode) */
+  value?: T[]
+  /** Callback fired when selection changes (controlled mode) */
+  onChange?: (values: T[]) => void
+  /** Initial values for uncontrolled mode */
+  defaultValue?: T[]
   /** Label shown above the list */
   label?: string
   /** Whether this component is focused and accepting keyboard input */
@@ -49,13 +53,25 @@ export interface CheckboxProps<T = string> {
  */
 export function Checkbox<T = string>({
   items,
-  value,
+  value: controlledValue,
   onChange,
+  defaultValue = [],
   label,
   focus = true,
 }: CheckboxProps<T>): JSX.Element {
   const { colors } = useTheme()
+  const [internalValue, setInternalValue] = useState(defaultValue)
   const [cursorIndex, setCursorIndex] = useState(0)
+
+  const isControlled = controlledValue !== undefined
+  const selectedValues = isControlled ? controlledValue : internalValue
+
+  const handleChange = (newValues: T[]) => {
+    if (!isControlled) {
+      setInternalValue(newValues)
+    }
+    onChange?.(newValues)
+  }
 
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
   useInput(
@@ -69,19 +85,19 @@ export function Checkbox<T = string>({
       if (_input === ' ') {
         const item = items[cursorIndex]
         const strValue = String(item.value)
-        const strValues = value.map(v => String(v))
+        const strValues = selectedValues.map(v => String(v))
         const next = toggleCheckboxItem(strValues, strValue)
-        onChange(next as T[])
+        handleChange(next as T[])
       }
       if (key.escape) {
-        onChange([])
+        handleChange([])
       }
     },
     { isActive: focus },
   )
   // c8 ignore stop
 
-  const selectedSet = new Set(value.map(v => String(v)))
+  const selectedSet = new Set(selectedValues.map(v => String(v)))
 
   return (
     <Box flexDirection="column">

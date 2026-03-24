@@ -21,8 +21,11 @@ export interface SelectItem<T = string> {
 
 export interface SelectProps<T = string> {
   items: ReadonlyArray<SelectItem<T>>
-  onSelect: (item: SelectItem<T>) => void
-  /** Initially highlighted item index */
+  /** Selected value (controlled mode) */
+  value?: T
+  /** Callback fired when an item is selected (controlled mode) */
+  onSelect?: (item: SelectItem<T>) => void
+  /** Initially highlighted item index (uncontrolled mode) */
   initialIndex?: number
   /** Label shown above the list */
   label?: string
@@ -42,27 +45,42 @@ export interface SelectProps<T = string> {
  */
 export function Select<T = string>({
   items,
+  value,
   onSelect,
   initialIndex = 0,
   label,
   focus = true,
 }: SelectProps<T>): JSX.Element {
   const { colors } = useTheme()
-  const [index, setIndex] = useState(initialIndex)
+  const [internalIndex, setInternalIndex] = useState(initialIndex)
+
+  const isControlled = value !== undefined
+  const selectedIndex = isControlled ? items.findIndex(item => item.value === value) : internalIndex
+
+  const handleSelect = (item: SelectItem<T>) => {
+    if (!isControlled) {
+      setInternalIndex(items.findIndex(i => i.value === item.value))
+    }
+    onSelect?.(item)
+  }
 
   // input-isactive-focus: only active when this component is focused
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
   useInput(
     (_input, key) => {
       if (key.upArrow) {
-        // tuistate-functional-updates: functional update avoids stale closure
-        setIndex(i => Math.max(0, i - 1))
+        if (!isControlled) {
+          setInternalIndex(i => Math.max(0, i - 1))
+        }
       }
       if (key.downArrow) {
-        setIndex(i => Math.min(items.length - 1, i + 1))
+        if (!isControlled) {
+          setInternalIndex(i => Math.min(items.length - 1, i + 1))
+        }
       }
       if (key.return) {
-        onSelect(items[index])
+        const currentIndex = isControlled ? selectedIndex : internalIndex
+        handleSelect(items[currentIndex])
       }
     },
     { isActive: focus },
@@ -77,7 +95,7 @@ export function Select<T = string>({
           )
         : null}
       {items.map((item, i) => {
-        const isActive = i === index
+        const isActive = i === selectedIndex
         return (
           <Box key={String(item.value)} flexDirection="row" gap={1}>
             <Text color={isActive ? colors.primary : colors.muted}>

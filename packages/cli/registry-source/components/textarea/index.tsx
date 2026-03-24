@@ -33,10 +33,14 @@ export function processTextarea(
 }
 
 export interface TextareaProps {
-  value: string
-  onChange: (value: string) => void
+  /** Controlled value (use this for controlled mode) */
+  value?: string
+  /** Callback fired when value changes */
+  onChange?: (value: string) => void
+  /** Initial value for uncontrolled mode */
+  defaultValue?: string
   /** Callback fired when Enter is pressed (Shift+Enter adds newline instead) */
-  onSubmit: () => void
+  onSubmit?: () => void
   /** Placeholder shown when value is empty */
   placeholder?: string
   /** Label shown above the textarea */
@@ -62,8 +66,9 @@ export interface TextareaProps {
  * - tuicomp-border-styles: Box borderStyle for visual structure
  */
 export function Textarea({
-  value,
+  value: controlledValue,
   onChange,
+  defaultValue = '',
   onSubmit,
   placeholder = '',
   label,
@@ -74,6 +79,21 @@ export function Textarea({
 }: TextareaProps): JSX.Element {
   const { colors, borders } = useTheme()
   const [cursorVisible] = useState(true)
+  const [internalValue, setInternalValue] = useState(defaultValue)
+
+  const isControlled = controlledValue !== undefined
+  const value = isControlled ? controlledValue : internalValue
+
+  const handleChange = (newValue: string) => {
+    if (!isControlled) {
+      setInternalValue(newValue)
+    }
+    onChange?.(newValue)
+  }
+
+  const handleSubmit = () => {
+    onSubmit?.()
+  }
 
   const termWidth = process.stdout.columns || 80
   const effectiveWidth = width ?? termWidth
@@ -83,9 +103,9 @@ export function Textarea({
     (input, key) => {
       const result = processTextarea(value, input, key)
       if (result.submit) {
-        onSubmit()
+        handleSubmit()
       } else {
-        onChange(result.value)
+        handleChange(result.value)
       }
     },
     { isActive: focus },

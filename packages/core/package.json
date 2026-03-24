@@ -1,7 +1,7 @@
 {
   "name": "orizen-tui-core",
   "type": "module",
-  "version": "0.1.13",
+  "version": "0.1.14",
   "description": "Theme system and primitives for building terminal user interfaces",
   "sideEffects": false,
   "exports": {

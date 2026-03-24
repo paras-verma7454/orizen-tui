@@ -28,7 +28,7 @@ export interface ConfirmInputProps {
   /** Pre-selected answer — shown capitalised in the prompt hint */
   defaultAnswer?: 'yes' | 'no'
   /** Called when the user makes a choice */
-  onConfirm: (answer: boolean) => void
+  onConfirm?: (answer: boolean) => void
   /** Whether this input is focused and accepting keyboard input */
   focus?: boolean
 }
@@ -57,7 +57,7 @@ export function ConfirmInput({
     (input, key) => {
       const result = resolveConfirmKey(input, key, defaultAnswer)
       if (result !== null) {
-        onConfirm(result)
+        onConfirm?.(result)
       }
     },
     { isActive: focus },

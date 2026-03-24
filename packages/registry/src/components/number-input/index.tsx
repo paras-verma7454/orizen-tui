@@ -1,6 +1,6 @@
 import { Box, Text, useInput } from 'ink'
 import { useTheme } from 'orizen-tui-core'
-import React from 'react'
+import React, { useState } from 'react'
 import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
 /**
@@ -22,8 +22,12 @@ export function processNumberKey(
 }
 
 export interface NumberInputProps {
-  value: number
-  onChange: (value: number) => void
+  /** Controlled value (use this for controlled mode) */
+  value?: number
+  /** Callback fired when value changes */
+  onChange?: (value: number) => void
+  /** Initial value for uncontrolled mode */
+  defaultValue?: number
   /** Label shown above the input */
   label?: string
   /** Minimum allowed value */
@@ -46,8 +50,9 @@ export interface NumberInputProps {
  * - tuicomp-border-styles: Box borderStyle for visual structure
  */
 export function NumberInput({
-  value,
+  value: controlledValue,
   onChange,
+  defaultValue = 0,
   label,
   min = -Infinity,
   max = Infinity,
@@ -55,13 +60,24 @@ export function NumberInput({
   focus = true,
 }: NumberInputProps): JSX.Element {
   const { colors, borders } = useTheme()
+  const [internalValue, setInternalValue] = useState(defaultValue)
+
+  const isControlled = controlledValue !== undefined
+  const value = isControlled ? controlledValue : internalValue
+
+  const handleChange = (newValue: number) => {
+    if (!isControlled) {
+      setInternalValue(newValue)
+    }
+    onChange?.(newValue)
+  }
 
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
   useInput(
     (input, key) => {
       const next = processNumberKey(value, input, key, min, max, step)
       if (next !== value) {
-        onChange(next)
+        handleChange(next)
       }
     },
     { isActive: focus },

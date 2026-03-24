@@ -50,9 +50,10 @@ render(<Demo />)`,
   ],
   props: [
     { name: 'items', type: 'ReadonlyArray<{ label: string; value: T }>', default: '-', description: 'List items' },
-    { name: 'onSelect', type: '(item) => void', default: '-', description: 'Called when Enter is pressed' },
+    { name: 'value', type: 'T', default: '-', description: 'Selected value (controlled)' },
+    { name: 'onSelect', type: '(item) => void', default: '-', description: 'Called when item is selected (optional)' },
+    { name: 'initialIndex', type: 'number', default: '0', description: 'Initially highlighted item (uncontrolled)' },
     { name: 'label', type: 'string', default: 'undefined', description: 'Heading above the list' },
-    { name: 'initialIndex', type: 'number', default: '0', description: 'Initially highlighted item' },
     { name: 'focus', type: 'boolean', default: 'true', description: 'Whether list accepts keyboard events' },
   ],
 }

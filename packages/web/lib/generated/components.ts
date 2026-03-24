@@ -75,14 +75,20 @@ export const componentDocs: ComponentDocsMeta[] = [
       {
         "name": "value",
         "type": "string[]",
-        "default": "[]",
-        "description": "Array of selected values"
+        "default": "-",
+        "description": "Selected values (controlled)"
       },
       {
         "name": "onChange",
         "type": "(values: string[]) => void",
         "default": "-",
-        "description": "Called when an item is toggled"
+        "description": "Called when item is toggled (controlled)"
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "default": "[]",
+        "description": "Initial values (uncontrolled)"
       },
       {
         "name": "label",
@@ -127,7 +133,7 @@ export const componentDocs: ComponentDocsMeta[] = [
         "name": "onConfirm",
         "type": "(answer: boolean) => void",
         "default": "-",
-        "description": "Called when Enter is pressed"
+        "description": "Called when user confirms (optional)"
       },
       {
         "name": "focus",
@@ -365,14 +371,20 @@ export const componentDocs: ComponentDocsMeta[] = [
       {
         "name": "value",
         "type": "string[]",
-        "default": "[]",
-        "description": "Currently selected values"
+        "default": "-",
+        "description": "Selected values (controlled)"
       },
       {
         "name": "onChange",
         "type": "(values: string[]) => void",
         "default": "-",
-        "description": "Called when selection changes"
+        "description": "Called when selection changes (controlled)"
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "default": "[]",
+        "description": "Initial values (uncontrolled)"
       },
       {
         "name": "onSubmit",
@@ -410,14 +422,20 @@ export const componentDocs: ComponentDocsMeta[] = [
       {
         "name": "value",
         "type": "number",
-        "default": "0",
-        "description": "Current numeric value"
+        "default": "-",
+        "description": "Current numeric value (controlled)"
       },
       {
         "name": "onChange",
         "type": "(value: number) => void",
         "default": "-",
-        "description": "Called when value changes"
+        "description": "Called when value changes (controlled)"
+      },
+      {
+        "name": "defaultValue",
+        "type": "number",
+        "default": "0",
+        "description": "Initial value (uncontrolled)"
       },
       {
         "name": "min",
@@ -561,22 +579,28 @@ export const componentDocs: ComponentDocsMeta[] = [
         "description": "List items"
       },
       {
+        "name": "value",
+        "type": "T",
+        "default": "-",
+        "description": "Selected value (controlled)"
+      },
+      {
         "name": "onSelect",
         "type": "(item) => void",
         "default": "-",
-        "description": "Called when Enter is pressed"
+        "description": "Called when item is selected (optional)"
+      },
+      {
+        "name": "initialIndex",
+        "type": "number",
+        "default": "0",
+        "description": "Initially highlighted item (uncontrolled)"
       },
       {
         "name": "label",
         "type": "string",
         "default": "undefined",
         "description": "Heading above the list"
-      },
-      {
-        "name": "initialIndex",
-        "type": "number",
-        "default": "0",
-        "description": "Initially highlighted item"
       },
       {
         "name": "focus",
@@ -716,13 +740,19 @@ export const componentDocs: ComponentDocsMeta[] = [
         "name": "value",
         "type": "string",
         "default": "-",
-        "description": "Current input value"
+        "description": "Current input value (controlled)"
       },
       {
         "name": "onChange",
         "type": "(value: string) => void",
         "default": "-",
-        "description": "Called on every keypress"
+        "description": "Called when value changes (controlled)"
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "default": "''",
+        "description": "Initial value (uncontrolled)"
       },
       {
         "name": "onSubmit",
@@ -785,13 +815,19 @@ export const componentDocs: ComponentDocsMeta[] = [
         "name": "value",
         "type": "string",
         "default": "-",
-        "description": "Current text value"
+        "description": "Current text value (controlled)"
       },
       {
         "name": "onChange",
         "type": "(value: string) => void",
         "default": "-",
-        "description": "Called on every keypress"
+        "description": "Called when value changes (controlled)"
+      },
+      {
+        "name": "defaultValue",
+        "type": "string",
+        "default": "''",
+        "description": "Initial value (uncontrolled)"
       },
       {
         "name": "onSubmit",

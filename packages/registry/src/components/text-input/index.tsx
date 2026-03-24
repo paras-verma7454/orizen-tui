@@ -33,10 +33,14 @@ export function processTextInput(
 }
 
 export interface TextInputProps {
-  value: string
-  onChange: (value: string) => void
+  /** Controlled value (use this for controlled mode) */
+  value?: string
+  /** Callback fired when value changes */
+  onChange?: (value: string) => void
+  /** Initial value for uncontrolled mode */
+  defaultValue?: string
   /** Callback fired when Enter is pressed */
-  onSubmit: () => void
+  onSubmit?: () => void
   /** Placeholder shown when value is empty */
   placeholder?: string
   /** Character to render instead of actual value (e.g. '*' for passwords) */
@@ -62,8 +66,9 @@ export interface TextInputProps {
  * - tuicomp-border-styles: Box borderStyle for visual structure
  */
 export function TextInput({
-  value,
+  value: controlledValue,
   onChange,
+  defaultValue = '',
   onSubmit,
   placeholder = '',
   mask,
@@ -74,6 +79,21 @@ export function TextInput({
 }: TextInputProps): JSX.Element {
   const { colors, borders } = useTheme()
   const [cursorVisible, _setCursorVisible] = useState(true)
+  const [internalValue, setInternalValue] = useState(defaultValue)
+
+  const isControlled = controlledValue !== undefined
+  const value = isControlled ? controlledValue : internalValue
+
+  const handleChange = (newValue: string) => {
+    if (!isControlled) {
+      setInternalValue(newValue)
+    }
+    onChange?.(newValue)
+  }
+
+  const handleSubmit = () => {
+    onSubmit?.()
+  }
 
   const termWidth = process.stdout.columns || 80
   const effectiveWidth = width ?? termWidth
@@ -84,9 +104,9 @@ export function TextInput({
     (input, key) => {
       const result = processTextInput(value, input, key)
       if (result.submit) {
-        onSubmit()
+        handleSubmit()
       } else {
-        onChange(result.value)
+        handleChange(result.value)
       }
     },
     { isActive: focus },
