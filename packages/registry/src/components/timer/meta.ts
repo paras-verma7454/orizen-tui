@@ -20,51 +20,24 @@ export const meta: ComponentDocsMeta = {
     {
       title: 'Usage',
       code: `import { Box, Text, render } from 'ink'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Timer } from '@/components/ui/orizen/timer'
 
 function Demo() {
-  const [shortTimer, setShortTimer] = useState(5000)
-  const [mediumTimer, setMediumTimer] = useState(15000)
+  const [ms, setMs] = useState(5320)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMs(m => m <= 0 ? 9999 : m - 37)
+    }, 37)
+    return () => clearInterval(timer)
+  }, [])
+
+  const display = ms > 0 ? \`\${ms}ms\` : '0ms'
 
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Countdown Timers</Text>
-
-      <Box gap={6}>
-        <Box flexDirection="column" gap={1}>
-          <Text dimColor>5 seconds:</Text>
-          <Timer
-            durationMs={shortTimer}
-            label="Starting in:"
-            onExpire={() => setShortTimer(5000)}
-          />
-        </Box>
-
-        <Box flexDirection="column" gap={1}>
-          <Text dimColor>15 seconds:</Text>
-          <Timer
-            durationMs={mediumTimer}
-            label="Session ends:"
-            onExpire={() => setMediumTimer(15000)}
-          />
-        </Box>
-      </Box>
-
-      <Text bold>Without Labels</Text>
-      <Box gap={4}>
-        <Timer durationMs={10000} />
-        <Timer durationMs={30000} />
-      </Box>
-
-      <Text bold>Session Timeout</Text>
-      <Timer
-        durationMs={60000}
-        label="Auto-logout in:"
-        onExpire={() => console.log('Session expired!')}
-      />
-
-      <Text dimColor>Use onExpire callback to trigger actions when timer ends.</Text>
+    <Box flexDirection="column" gap={2}>
+      <Text>Exiting in <Text color={ms <= 3000 ? 'yellow' : 'cyan'}>{display}</Text></Text>
     </Box>
   )
 }

@@ -34,46 +34,20 @@ const frameworks = [
   { label: 'Vue', value: 'vue' },
   { label: 'Svelte', value: 'svelte' },
   { label: 'Solid', value: 'solid' },
-  { label: 'Angular', value: 'angular' },
-]
-
-const features = [
-  { label: 'TypeScript', value: 'ts' },
-  { label: 'SSR', value: 'ssr' },
-  { label: 'SSG', value: 'ssg' },
-  { label: 'Edge Runtime', value: 'edge' },
 ]
 
 function Demo() {
-  const [selected, setSelected] = useState<string[]>([])
-  const [featureSet, setFeatureSet] = useState<string[]>(['ts'])
+  const [selected, setSelected] = useState<string[]>(['react', 'svelte'])
 
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>MultiSelect (Space to toggle, Enter to submit)</Text>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Pick frameworks:</Text>
-        <MultiSelect
-          label=""
-          items={frameworks}
-          value={selected}
-          onChange={setSelected}
-          onSubmit={(vals) => console.log('Submitted:', vals)}
-        />
-      </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Feature set:</Text>
-        <MultiSelect
-          label=""
-          items={features}
-          value={featureSet}
-          onChange={setFeatureSet}
-        />
-      </Box>
-
-      <Text dimColor>Selected: {selected.join(', ') || 'none'}</Text>
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Pick frameworks: <Text dimColor>(space to toggle)</Text></Text>
+      <MultiSelect
+        label=""
+        items={frameworks}
+        value={selected}
+        onChange={setSelected}
+      />
     </Box>
   )
 }

@@ -25,36 +25,17 @@ import React, { useState } from 'react'
 import { Textarea } from '@/components/ui/orizen/textarea'
 
 function Demo() {
-  const [bio, setBio] = useState('')
-  const [notes, setNotes] = useState('')
+  const [value, setValue] = useState('')
 
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Textarea Components</Text>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Short bio (3 rows):</Text>
-        <Textarea
-          value={bio}
-          onChange={setBio}
-          rows={3}
-          placeholder="Tell us about yourself..."
-        />
-      </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Notes (5 rows):</Text>
-        <Textarea
-          value={notes}
-          onChange={setNotes}
-          rows={5}
-          placeholder="Additional notes..."
-        />
-      </Box>
-
-      <Text dimColor>
-        Bio: {bio || '(empty)'}
-      </Text>
+    <Box flexDirection="column" gap={1}>
+      <Text dimColor>Description:</Text>
+      <Textarea
+        value={value}
+        onChange={setValue}
+        rows={2}
+        placeholder="Building a terminal UI"
+      />
     </Box>
   )
 }

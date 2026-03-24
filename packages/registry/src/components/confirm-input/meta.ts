@@ -25,36 +25,21 @@ function Demo() {
   const [result, setResult] = useState<boolean | null>(null)
 
   return (
-    <Box flexDirection="column" gap={3}>
-      <Text bold>Confirm Inputs</Text>
-      
-      <Box flexDirection="column">
-        <Text dimColor>Default yes:</Text>
-        {result === null
-          ? <ConfirmInput
-              message="Save changes?"
-              defaultAnswer="yes"
-              onConfirm={setResult}
-            />
-          : <Text>Answer: <Text color={result ? 'green' : 'red'}>{result ? 'yes' : 'no'}</Text></Text>
-        }
-      </Box>
-
-      <Box flexDirection="column">
-        <Text dimColor>Default no:</Text>
+    <Box flexDirection="column" gap={2}>
+      <Box gap={2}>
+        <Text>Overwrite existing file?</Text>
         <ConfirmInput
-          message="Delete file?"
-          defaultAnswer="no"
-          onConfirm={(answer) => console.log('Delete:', answer)}
+          message="Overwrite existing file?"
+          defaultAnswer="yes"
+          onConfirm={setResult}
         />
       </Box>
-
-      <Box flexDirection="column">
-        <Text dimColor>With warning:</Text>
+      <Box gap={2}>
+        <Text>Delete 3 files?</Text>
         <ConfirmInput
-          message="This action cannot be undone. Continue?"
+          message="Delete 3 files?"
           defaultAnswer="no"
-          onConfirm={(answer) => console.log('Confirmed:', answer)}
+          onConfirm={(answer) => console.log('Deleted:', answer)}
         />
       </Box>
     </Box>

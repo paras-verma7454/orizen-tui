@@ -24,43 +24,29 @@ import { Paginator } from '@/components/ui/orizen/paginator'
 
 function Demo() {
   const [page, setPage] = useState(1)
+  const total = 7
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setPage(p => (p >= 5 ? 1 : p + 1))
-    }, 1500)
+      setPage(p => (p >= total ? 1 : p + 1))
+    }, 700)
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Paginator Variants</Text>
-
-      <Box flexDirection="column" gap={2}>
-        <Text dimColor>Dots (default):</Text>
-        <Paginator total={5} current={page} variant="dots" />
+    <Box flexDirection="column" gap={3}>
+      <Box flexDirection="column" gap={1}>
+        <Text dimColor>Dots</Text>
+        <Paginator total={total} current={page} variant="dots" />
       </Box>
 
-      <Box flexDirection="column" gap={2}>
-        <Text dimColor>Numeric:</Text>
-        <Paginator total={5} current={page} variant="numeric" />
+      <Box flexDirection="column" gap={1}>
+        <Text dimColor>Numeric</Text>
+        <Text>
+          <Text color="cyan">{page}</Text>
+          <Text dimColor> / {total}</Text>
+        </Text>
       </Box>
-
-      <Text bold>Custom Dots</Text>
-      <Box gap={4}>
-        <Box flexDirection="column" gap={1}>
-          <Paginator total={4} current={2} activeDot="◆" inactiveDot="◇" />
-        </Box>
-        <Box flexDirection="column" gap={1}>
-          <Paginator total={4} current={3} activeDot="▮" inactiveDot="▯" />
-        </Box>
-        <Box flexDirection="column" gap={1}>
-          <Paginator total={4} current={1} activeDot="◉" inactiveDot="○" />
-        </Box>
-      </Box>
-
-      <Text bold>Many Pages</Text>
-      <Paginator total={10} current={7} variant="numeric" />
     </Box>
   )
 }

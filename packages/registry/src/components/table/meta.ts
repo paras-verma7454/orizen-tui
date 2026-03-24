@@ -24,62 +24,34 @@ const data = [
     {
       title: 'Usage',
       code: `import { Box, Text, render } from 'ink'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table } from '@/components/ui/orizen/table'
 
-const packageColumns = [
-  { key: 'name', label: 'Package', width: 16 },
-  { key: 'version', label: 'Version', width: 10 },
-  { key: 'status', label: 'Status', width: 10 },
-]
-
-const packages = [
-  { name: 'react', version: '18.3.1', status: '✓' },
-  { name: 'ink', version: '5.0.1', status: '✓' },
-  { name: 'typescript', version: '5.4.5', status: '✓' },
-  { name: 'vitest', version: '1.6.0', status: '✓' },
-  { name: 'eslint', version: '9.0.0', status: '⚠' },
-]
-
-const cityColumns = [
-  { key: 'rank', label: '#', width: 4 },
-  { key: 'city', label: 'City', width: 18 },
+const columns = [
+  { key: 'rank', label: 'Rank', width: 6 },
+  { key: 'city', label: 'City', width: 20 },
   { key: 'country', label: 'Country', width: 12 },
-  { key: 'pop', label: 'Population', width: 14, align: 'right' },
+  { key: 'pop', label: 'Population', width: 16, align: 'right' },
 ]
 
-const cities = [
-  { rank: '1', city: 'Tokyo', country: 'Japan', pop: '37M' },
-  { rank: '2', city: 'Delhi', country: 'India', pop: '31M' },
-  { rank: '3', city: 'Shanghai', country: 'China', pop: '28M' },
-  { rank: '4', city: 'Sao Paulo', country: 'Brazil', pop: '22M' },
-  { rank: '5', city: 'Mexico City', country: 'Mexico', pop: '22M' },
+const rows = [
+  { rank: '6', city: 'Mexico City', country: 'Mexico', pop: '22,085,140' },
+  { rank: '7', city: 'Cairo', country: 'Egypt', pop: '21,750,020' },
+  { rank: '8', city: 'Beijing', country: 'China', pop: '21,333,332' },
+  { rank: '9', city: 'Mumbai', country: 'India', pop: '20,961,472' },
+  { rank: '10', city: 'Osaka', country: 'Japan', pop: '19,059,856' },
+  { rank: '11', city: 'Chongqing', country: 'China', pop: '16,874,740' },
+  { rank: '12', city: 'Karachi', country: 'Pakistan', pop: '16,839,950' },
 ]
 
 function Demo() {
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Data Tables</Text>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Package Versions (↑↓ to scroll):</Text>
-        <Table
-          columns={packageColumns}
-          data={packages}
-          height={4}
-        />
-      </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>City Populations:</Text>
-        <Table
-          columns={cityColumns}
-          data={cities}
-          height={5}
-        />
-      </Box>
-
-      <Text dimColor>Tables support keyboard navigation and custom column widths.</Text>
+    <Box flexDirection="column" gap={1}>
+      <Table
+        columns={columns}
+        data={rows}
+        height={5}
+      />
     </Box>
   )
 }

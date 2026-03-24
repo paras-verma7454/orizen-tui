@@ -27,48 +27,25 @@ const [selected, setSelected] = useState<string[]>(['typescript'])
 import React, { useState } from 'react'
 import { Checkbox } from '@/components/ui/orizen/checkbox'
 
-const techItems = [
+const items = [
   { label: 'TypeScript', value: 'ts' },
   { label: 'ESLint', value: 'eslint' },
   { label: 'Prettier', value: 'prettier' },
-  { label: 'Vitest', value: 'vitest' },
-]
-
-const projectItems = [
-  { label: 'Run tests', value: 'test' },
-  { label: 'Build', value: 'build' },
-  { label: 'Deploy', value: 'deploy' },
+  { label: 'Husky', value: 'husky' },
 ]
 
 function Demo() {
-  const [tech, setTech] = useState<string[]>(['ts'])
-  const [tasks, setTasks] = useState<string[]>([])
+  const [selected, setSelected] = useState<string[]>(['ts', 'eslint'])
 
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Checkboxes</Text>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Technologies (↑↓ navigate, Space toggle):</Text>
-        <Checkbox
-          label=""
-          items={techItems}
-          value={tech}
-          onChange={setTech}
-        />
-      </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Build Tasks:</Text>
-        <Checkbox
-          label=""
-          items={projectItems}
-          value={tasks}
-          onChange={setTasks}
-        />
-      </Box>
-
-      <Text dimColor>Selected: {tech.join(', ') || 'none'}</Text>
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Select features:</Text>
+      <Checkbox
+        label=""
+        items={items}
+        value={selected}
+        onChange={setSelected}
+      />
     </Box>
   )
 }

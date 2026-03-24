@@ -24,40 +24,22 @@ export const meta: ComponentDocsMeta = {
 import React, { useState } from 'react'
 import { FilePicker } from '@/components/ui/orizen/file-picker'
 
-// Mock file entries for demo
-const mockEntries = [
-  { name: 'src', isDir: true, path: './src' },
-  { name: 'dist', isDir: true, path: './dist' },
-  { name: 'package.json', isDir: false, path: './package.json' },
-  { name: 'tsconfig.json', isDir: false, path: './tsconfig.json' },
-  { name: 'README.md', isDir: false, path: './README.md' },
+const entries = [
+  { name: 'bin', isDir: true, path: './bin' },
+  { name: 'books', isDir: true, path: './books' },
+  { name: 'movies', isDir: true, path: './movies' },
+  { name: 'projects', isDir: true, path: './projects' },
 ]
 
 function Demo() {
   const [selected, setSelected] = useState<string | null>(null)
 
   return (
-    <Box flexDirection="column" gap={3}>
-      <Text bold>File Picker</Text>
-      
-      <Box flexDirection="column">
-        <Text dimColor>Pick a file (↑↓ to navigate, Enter to select):</Text>
-        <FilePicker
-          height={6}
-          onSelect={(entry) => setSelected(entry.path)}
-          onCancel={() => process.exit(0)}
-        />
-      </Box>
-
-      {selected && (
-        <Text>Selected: <Text color="cyan">{selected}</Text></Text>
-      )}
-
-      <Text bold>With Extension Filter (.json)</Text>
+    <Box flexDirection="column" gap={1}>
+      <Text dimColor>Pick a file:</Text>
       <FilePicker
-        extensions={['.json']}
-        height={5}
-        onSelect={(entry) => console.log('Selected:', entry.path)}
+        height={4}
+        onSelect={(entry) => setSelected(entry.path)}
       />
     </Box>
   )

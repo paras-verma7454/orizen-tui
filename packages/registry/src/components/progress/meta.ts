@@ -22,24 +22,25 @@ function AnimatedProgress() {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setValue(v => (v >= 100 ? 0 : v + 5))
-    }, 100)
+      setValue(v => (v >= 100 ? 0 : v + 2))
+    }, 80)
     return () => clearInterval(timer)
   }, [])
 
   return (
-    <Box flexDirection="column" gap={2}>
-      <Text bold>Progress Bars</Text>
-      
-      <Progress value={value} label="Download:" width={30} />
-      <Progress value={75} label="Upload:" width={30} />
-      <Progress value={100} label="Complete:" width={30} />
-      
-      <Text bold>No Labels</Text>
-      <Progress value={45} width={20} showPercent={false} />
-      
-      <Text bold>Indeterminate</Text>
-      <Progress />
+    <Box flexDirection="column" gap={1}>
+      <Box gap={2}>
+        <Text dimColor>Animated:</Text>
+        <Progress value={value} width={30} />
+      </Box>
+      <Box gap={2}>
+        <Text dimColor>Static:</Text>
+        <Progress value={65} width={30} />
+      </Box>
+      <Box gap={2}>
+        <Text dimColor>Complete:</Text>
+        <Progress value={100} width={30} />
+      </Box>
     </Box>
   )
 }

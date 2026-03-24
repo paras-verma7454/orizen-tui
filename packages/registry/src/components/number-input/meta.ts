@@ -27,49 +27,31 @@ import { NumberInput } from '@/components/ui/orizen/number-input'
 
 function Demo() {
   const [port, setPort] = useState(3000)
-  const [count, setCount] = useState(0)
-  const [volume, setVolume] = useState(50)
+  const [workers, setWorkers] = useState(4)
 
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Number Inputs (↑↓ to adjust)</Text>
-
+    <Box flexDirection="column" gap={3}>
       <Box flexDirection="column" gap={1}>
-        <Text dimColor>Port (1-65535, step 1):</Text>
+        <Text dimColor>Port:</Text>
         <NumberInput
           value={port}
           onChange={setPort}
+          min={3000}
+          max={3005}
+          step={1}
+        />
+      </Box>
+
+      <Box flexDirection="column" gap={1}>
+        <Text dimColor>Workers:</Text>
+        <NumberInput
+          value={workers}
+          onChange={setWorkers}
           min={1}
-          max={65535}
+          max={8}
           step={1}
         />
       </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Counter (0-100, step 1):</Text>
-        <NumberInput
-          value={count}
-          onChange={setCount}
-          min={0}
-          max={100}
-          step={1}
-        />
-      </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Volume (0-100, step 10):</Text>
-        <NumberInput
-          value={volume}
-          onChange={setVolume}
-          min={0}
-          max={100}
-          step={10}
-        />
-      </Box>
-
-      <Text dimColor>
-        Port: {port} | Count: {count} | Volume: {volume}%
-      </Text>
     </Box>
   )
 }

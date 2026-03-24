@@ -34,37 +34,18 @@ const navBindings = [
 ]
 
 const actionBindings = [
-  { key: 'Enter', description: 'select' },
-  { key: 'Space', description: 'toggle' },
-  { key: 'Esc', description: 'cancel' },
+  { key: '?', description: 'toggle help' },
   { key: 'q', description: 'quit' },
 ]
 
 function Demo() {
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Help Panels</Text>
-
-      <Box flexDirection="column" gap={2}>
-        <Text dimColor>Horizontal (default):</Text>
-        <Help bindings={navBindings} direction="row" />
+    <Box gap={8}>
+      <Box flexDirection="column" gap={1}>
+        <Help bindings={navBindings} />
       </Box>
-
-      <Box flexDirection="column" gap={2}>
-        <Text dimColor>Vertical:</Text>
-        <Help bindings={actionBindings} direction="column" />
-      </Box>
-
-      <Text bold>Combined Navigation + Actions</Text>
-      <Box gap={8}>
-        <Box flexDirection="column" gap={1}>
-          <Text dimColor>Navigation</Text>
-          <Help bindings={navBindings} />
-        </Box>
-        <Box flexDirection="column" gap={1}>
-          <Text dimColor>Actions</Text>
-          <Help bindings={actionBindings} />
-        </Box>
+      <Box flexDirection="column" gap={1}>
+        <Help bindings={actionBindings} />
       </Box>
     </Box>
   )

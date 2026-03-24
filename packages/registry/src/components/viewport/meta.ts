@@ -21,58 +21,34 @@ const lines = Array.from({ length: 50 }, (_, i) => \`Line \${i + 1}\`)
 import React from 'react'
 import { Viewport } from '@/components/ui/orizen/viewport'
 
-const poem = [
-  'Roses are red,',
-  'Violets are blue,',
-  'Terminals are awesome,',
-  'And so are you!',
+const lines = [
+  '> He holds him with a skinny hand,',
+  '  \\'There was a ship,\\' quoth he.',
+  '  \\'Hold off! unhand me, grey-beard loon!\\'',
+  '  An artichoke, dropt he.',
   '',
-  '## Features',
+  '--Samuel Taylor Coleridge',
   '',
-  '- Scrollable content',
-  '- Keyboard navigation',
-  '- Overflow indicators',
-  '- Custom heights',
+  '## Other foods worth mentioning',
   '',
-  '## Tips',
+  '1. Carrots',
+  '1. Celery',
+  '1. Tacos',
+  '      * Soft',
+  '      * Hard',
+  '1. Cucumber',
   '',
-  'Use ↑↓ keys to scroll',
-  'or PageUp/PageDown.',
+  '## Things to eat today',
   '',
-  'The viewport component',
-  'handles overflow elegantly.',
-]
-
-const logLines = [
-  '[INFO] Server started on port 3000',
-  '[INFO] Database connected',
-  '[INFO] Cache initialized',
-  '[WARN] Rate limit approaching',
-  '[INFO] Processing request...',
-  '[DEBUG] Query: SELECT * FROM users',
-  '[INFO] Request completed in 45ms',
-  '[ERROR] Failed to connect to redis',
-  '[INFO] Retrying connection...',
-  '[INFO] Redis connected',
-  '[INFO] Health check passed',
+  '* [x] Carrots',
+  '* [x] Ramen',
+  '* [ ] Currywurst',
 ]
 
 function Demo() {
   return (
-    <Box flexDirection="column" gap={4}>
-      <Text bold>Viewports (↑↓ to scroll)</Text>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Poem (height 6):</Text>
-        <Viewport lines={poem} height={6} />
-      </Box>
-
-      <Box flexDirection="column" gap={1}>
-        <Text dimColor>Log output (height 5):</Text>
-        <Viewport lines={logLines} height={5} />
-      </Box>
-
-      <Text dimColor>Viewports show overflow indicators when content exceeds height.</Text>
+    <Box flexDirection="column" gap={1}>
+      <Viewport lines={lines} height={10} />
     </Box>
   )
 }
