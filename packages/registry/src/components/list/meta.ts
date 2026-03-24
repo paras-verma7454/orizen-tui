@@ -21,7 +21,10 @@ const items = [
 
 // Loading state
 <List items={[]} isLoading />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { List } from '@/components/ui/orizen/list'
 
@@ -65,6 +68,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'items', type: 'ListItem[]', default: '—', description: 'Items to display' },
     { name: 'height', type: 'number', default: '8', description: 'Number of visible items' },

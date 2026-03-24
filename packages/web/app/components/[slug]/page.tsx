@@ -189,28 +189,33 @@ export default async function ComponentPage({ params }: PageProps): Promise<JSX.
           <CodeBlock code={exampleCode} lang="tsx" filename={`${slug}.example.tsx`} />
         </section>
 
-        <section id="examples" className="space-y-3 scroll-mt-24">
+        <section id="examples" className="space-y-6 scroll-mt-24">
           <h2 className="text-xs uppercase tracking-widest text-zinc-500 font-medium">Examples</h2>
-          <Tabs
-            tabs={[
-              {
-                label: 'Preview',
-                content: (
-                  <TerminalWindow title={`${slug}.demo.tsx`}>
-                    <div className="py-2">
-                      <ComponentPreview slug={slug} />
-                    </div>
-                  </TerminalWindow>
-                ),
-              },
-              {
-                label: 'Code',
-                content: component.demo
-                  ? <CodeBlock code={component.demo} lang="tsx" filename={`${slug}.demo.tsx`} />
-                  : <p className="text-zinc-500 text-sm">No demo available</p>,
-              },
-            ]}
-          />
+          {component.examples.length === 0
+            ? <p className="text-zinc-500 text-sm">No examples available</p>
+            : component.examples.map((example, index) => (
+                <div key={index} className="space-y-3">
+                  <h3 className="text-sm font-medium text-zinc-300">{example.title}</h3>
+                  <Tabs
+                    tabs={[
+                      {
+                        label: 'Preview',
+                        content: (
+                          <TerminalWindow title={`${slug}.example${index + 1}.tsx`}>
+                            <div className="py-2">
+                              <ComponentPreview slug={slug} exampleIndex={index} />
+                            </div>
+                          </TerminalWindow>
+                        ),
+                      },
+                      {
+                        label: 'Code',
+                        content: <CodeBlock code={example.code} lang="tsx" filename={`${slug}.example${index + 1}.tsx`} />,
+                      },
+                    ]}
+                  />
+                </div>
+              ))}
         </section>
 
         <section id="api-reference" className="space-y-3 scroll-mt-24">

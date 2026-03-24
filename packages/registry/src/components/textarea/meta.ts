@@ -17,7 +17,10 @@ const [value, setValue] = useState('')
   rows={4}
   placeholder="Enter description..."
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { Textarea } from '@/components/ui/orizen/textarea'
 
@@ -57,6 +60,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'value', type: 'string', default: '-', description: 'Current text value' },
     { name: 'onChange', type: '(value: string) => void', default: '-', description: 'Called on every keypress' },

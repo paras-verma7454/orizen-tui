@@ -16,7 +16,10 @@ const [value, setValue] = useState('')
   onChange={setValue}
   placeholder="e.g. button..."
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { TextInput } from '@/components/ui/orizen/text-input'
 
@@ -63,6 +66,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'value', type: 'string', default: '-', description: 'Current input value' },
     { name: 'onChange', type: '(value: string) => void', default: '-', description: 'Called on every keypress' },

@@ -18,7 +18,10 @@ const [port, setPort] = useState(3000)
   max={65535}
   step={1}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { NumberInput } from '@/components/ui/orizen/number-input'
 
@@ -72,6 +75,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'value', type: 'number', default: '0', description: 'Current numeric value' },
     { name: 'onChange', type: '(value: number) => void', default: '-', description: 'Called when value changes' },

@@ -17,7 +17,10 @@ export const meta: ComponentDocsMeta = {
     // item.value => "react" | "vue"
   }}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { Select } from '@/components/ui/orizen/select'
 
@@ -67,6 +70,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'items', type: 'ReadonlyArray<{ label: string; value: T }>', default: '-', description: 'List items' },
     { name: 'onSelect', type: '(item) => void', default: '-', description: 'Called when Enter is pressed' },

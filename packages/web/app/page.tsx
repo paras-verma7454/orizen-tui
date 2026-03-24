@@ -120,6 +120,25 @@ const themeCode = `const theme = {
   <YourApp />
 </ThemeProvider>`
 
+// ── Quick Start code examples ─────────────────────────────────────────────────
+
+const initCommand = `npx orizen-tui init my-tui-app`
+
+const initInstallCode = `# Using npm
+npm install
+
+# Using pnpm
+pnpm install
+
+# Using yarn
+yarn install
+
+# Using bun
+bun install`
+
+const initRunCode = `# Run your app
+npm run dev`
+
 // ── Scrolling Rows Component ──────────────────────────────────────────────────
 
 function ScrollingRows({ children }: { children: React.ReactNode }): JSX.Element {
@@ -272,6 +291,43 @@ export default function LandingPage(): JSX.Element {
             <CodeBlock code={installCliCode} lang="bash" filename="install" />
             <CodeBlock code={addComponentCode} lang="bash" filename="add component" />
             <CodeBlock code={usageCode} lang="tsx" filename="app.tsx" />
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Start / Init */}
+      <section className="px-6 pb-24 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold">Start a new project</h2>
+            <p className="text-zinc-400 text-sm leading-relaxed">
+              Use the <code className="text-cyan-400">init</code> command to scaffold a complete project with TypeScript, dependencies, and starter components ready to go.
+            </p>
+            <div className="flex flex-col gap-3 pt-2">
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/10 flex items-center justify-center">
+                  <span className="text-cyan-400 text-xs font-bold">1</span>
+                </div>
+                <span className="text-zinc-300">Run init command</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/10 flex items-center justify-center">
+                  <span className="text-cyan-400 text-xs font-bold">2</span>
+                </div>
+                <span className="text-zinc-300">Install dependencies</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm">
+                <div className="w-6 h-6 rounded-full bg-cyan-500/10 flex items-center justify-center">
+                  <span className="text-cyan-400 text-xs font-bold">3</span>
+                </div>
+                <span className="text-zinc-300">Start building</span>
+              </div>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <CodeBlock code={initCommand} lang="bash" filename="init" />
+            <CodeBlock code={initInstallCode} lang="bash" filename="install" />
+            <CodeBlock code={initRunCode} lang="bash" filename="run" />
           </div>
         </div>
       </section>

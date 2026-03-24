@@ -12,7 +12,10 @@ export const meta: ComponentDocsMeta = {
 
 // Paused stopwatch with label
 <Stopwatch running={false} label="Elapsed:" />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Variants',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { Stopwatch } from '@/components/ui/orizen/stopwatch'
 
@@ -58,6 +61,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'running', type: 'boolean', default: 'true', description: 'Whether the stopwatch is counting up' },
     { name: 'label', type: 'string', default: 'undefined', description: 'Text shown before the elapsed time' },

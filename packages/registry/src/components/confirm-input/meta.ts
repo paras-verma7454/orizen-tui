@@ -14,7 +14,10 @@ export const meta: ComponentDocsMeta = {
     if (answer) overwriteFile()
   }}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { ConfirmInput } from '@/components/ui/orizen/confirm-input'
 
@@ -59,6 +62,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'message', type: 'string', default: '-', description: 'Question shown to the user' },
     { name: 'defaultAnswer', type: '\'yes\' | \'no\'', default: '\'yes\'', description: 'Pre-selected answer (shown capitalized)' },

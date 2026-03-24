@@ -17,7 +17,10 @@ export const meta: ComponentDocsMeta = {
   onSelect={(entry) => console.log(entry.path)}
   onCancel={() => process.exit(0)}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { FilePicker } from '@/components/ui/orizen/file-picker'
 
@@ -61,6 +64,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'initialDir', type: 'string', default: '"."', description: 'Directory to open on mount' },
     { name: 'extensions', type: 'string[]', default: 'undefined', description: 'File extension filter e.g. [".ts", ".tsx"]' },

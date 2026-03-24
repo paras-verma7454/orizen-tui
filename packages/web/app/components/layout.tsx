@@ -2,11 +2,11 @@ import { Sidebar } from '@/components/sidebar'
 
 export default function ComponentsLayout({ children }: { children: React.ReactNode }): JSX.Element {
   return (
-    <div className="max-w-7xl mx-auto px-6 flex gap-8 min-h-[calc(100vh-3.5rem)]">
+    <div className="max-w-7xl mx-auto px-4 md:px-6 flex gap-4 md:gap-8 min-h-[calc(100vh-3.5rem)]">
       <div className="hidden md:block">
         <Sidebar />
       </div>
-      <main className="flex-1 py-8 min-w-0">
+      <main className="flex-1 py-6 md:py-8 min-w-0">
         {children}
       </main>
     </div>

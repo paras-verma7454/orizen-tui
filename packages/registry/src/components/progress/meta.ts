@@ -10,7 +10,10 @@ export const meta: ComponentDocsMeta = {
 <Progress value={75} label="Uploading:" />
 <Progress value={100} label="Done:" />
 <Progress /> // indeterminate`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState, useEffect } from 'react'
 import { Progress } from '@/components/ui/orizen/progress'
 
@@ -42,6 +45,8 @@ function AnimatedProgress() {
 }
 
 render(<AnimatedProgress />)`,
+    },
+  ],
   props: [
     { name: 'value', type: 'number', default: 'undefined', description: 'Current value (omit for indeterminate)' },
     { name: 'max', type: 'number', default: '100', description: 'Maximum value' },

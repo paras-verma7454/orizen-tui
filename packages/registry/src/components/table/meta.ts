@@ -20,7 +20,10 @@ const data = [
 ]
 
 <Table columns={columns} data={data} height={5} />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React from 'react'
 import { Table } from '@/components/ui/orizen/table'
 
@@ -82,6 +85,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'columns', type: 'TableColumn[]', default: '—', description: 'Column definitions (key, label, width, align)' },
     { name: 'data', type: 'Record<string, string>[]', default: '—', description: 'Row data array' },

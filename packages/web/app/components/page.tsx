@@ -5,6 +5,7 @@ import { TerminalWindow } from '@/components/terminal-window'
 import { categories, components } from '@/lib/registry'
 
 function ComponentCard({ slug, name, description }: { slug: string, name: string, description: string }): JSX.Element {
+  const useCompact = ['table', 'list', 'viewport', 'file-picker', 'select'].includes(slug)
   return (
     <Link
       href={`/components/${slug}`}
@@ -12,7 +13,7 @@ function ComponentCard({ slug, name, description }: { slug: string, name: string
     >
       <TerminalWindow title={`${name.toLowerCase()}.tsx`} className="rounded-none border-0 border-b border-zinc-800 h-full">
         <div className="h-28 md:h-32 flex items-center overflow-hidden">
-          <ComponentPreview slug={slug} />
+          <ComponentPreview slug={slug} compact={useCompact} />
         </div>
       </TerminalWindow>
       <div className="px-4 py-3 min-h-20 bg-zinc-950/60 group-hover:bg-zinc-900/60 transition-colors">

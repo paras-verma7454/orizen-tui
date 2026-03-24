@@ -14,7 +14,10 @@ export const meta: ComponentDocsMeta = {
 
 // Custom frames (advanced)
 <Spinner frames={['-', '\\\\', '|', '/']} label="Processing" />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Presets',
+      code: `import { Box, Text, render } from 'ink'
 import React from 'react'
 import { Spinner } from '@/components/ui/orizen/spinner'
 
@@ -27,10 +30,38 @@ function Demo() {
         <Spinner preset="circle" label="Processing" />
         <Spinner preset="bar" label="Building" />
       </Box>
+    </Box>
+  )
+}
 
+render(<Demo />)`,
+    },
+    {
+      title: 'Custom Frames',
+      code: `import { Box, Text, render } from 'ink'
+import React from 'react'
+import { Spinner } from '@/components/ui/orizen/spinner'
+
+function Demo() {
+  return (
+    <Box flexDirection="column" gap={2}>
       <Text bold>Custom Frames</Text>
       <Spinner frames={['🌐', '🌍', '🌎', '🌏']} label="Rotating" />
+    </Box>
+  )
+}
 
+render(<Demo />)`,
+    },
+    {
+      title: 'Slow Interval',
+      code: `import { Box, Text, render } from 'ink'
+import React from 'react'
+import { Spinner } from '@/components/ui/orizen/spinner'
+
+function Demo() {
+  return (
+    <Box flexDirection="column" gap={2}>
       <Text bold>Slow Interval</Text>
       <Spinner preset="dots" label="Take your time..." intervalMs={300} />
     </Box>
@@ -38,6 +69,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'label', type: 'string', default: 'undefined', description: 'Text shown after the spinner frame' },
     { name: 'preset', type: '"dots" | "circle" | "bar"', default: 'undefined', description: 'Named spinner style for common presets' },

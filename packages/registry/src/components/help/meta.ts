@@ -19,7 +19,10 @@ const bindings = [
 
 // Vertical layout
 <Help bindings={bindings} direction="column" />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React from 'react'
 import { Help } from '@/components/ui/orizen/help'
 
@@ -68,6 +71,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'bindings', type: 'KeyBinding[]', default: '—', description: 'Array of { key, description } pairs' },
     { name: 'direction', type: '"row" | "column"', default: '"row"', description: 'Layout direction for the binding list' },

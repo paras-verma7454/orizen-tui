@@ -15,7 +15,10 @@ export const meta: ComponentDocsMeta = {
 
 // Custom dots
 <Paginator total={4} current={1} activeDot="◆" inactiveDot="◇" />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Variants',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState, useEffect } from 'react'
 import { Paginator } from '@/components/ui/orizen/paginator'
 
@@ -63,6 +66,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'total', type: 'number', default: '—', description: 'Total number of pages' },
     { name: 'current', type: 'number', default: '—', description: 'Current page (1-based)' },

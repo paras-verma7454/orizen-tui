@@ -16,7 +16,18 @@ export function SidebarContent({ onNavigate, className }: { onNavigate?: () => v
 
   return (
     <div className={className ?? 'py-8 pr-4 font-mono'}>
-      <div className="mb-6">
+      <div className="mb-6 space-y-1">
+        <Link
+          href="/components/setup"
+          onClick={onNavigate}
+          className={`block px-3 py-1.5 text-sm rounded transition-colors ${
+            pathname === '/components/setup'
+              ? 'text-cyan-400 bg-cyan-500/10 border-l-2 border-cyan-400'
+              : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-900'
+          }`}
+        >
+          Setup
+        </Link>
         <Link
           href="/components"
           onClick={onNavigate}

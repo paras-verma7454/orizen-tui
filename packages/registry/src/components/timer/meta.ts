@@ -16,7 +16,10 @@ export const meta: ComponentDocsMeta = {
   label="Time remaining:"
   onExpire={() => console.log('Time is up!')}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { Timer } from '@/components/ui/orizen/timer'
 
@@ -67,6 +70,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'durationMs', type: 'number', default: '—', description: 'Countdown duration in milliseconds' },
     { name: 'label', type: 'string', default: 'undefined', description: 'Text shown before the time display' },

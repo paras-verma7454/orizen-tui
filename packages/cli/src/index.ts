@@ -4,6 +4,7 @@ import process from 'node:process'
 import { Command } from 'commander'
 import pc from 'picocolors'
 import { createAddCommand } from './commands/add.js'
+import { createInitCommand } from './commands/init.js'
 
 const program = new Command()
 
@@ -13,6 +14,7 @@ program
   .version('0.1.0')
 
 program.addCommand(createAddCommand())
+program.addCommand(createInitCommand())
 
 program.parseAsync(process.argv).catch((error: unknown) => {
   const message = error instanceof Error ? error.message : String(error)

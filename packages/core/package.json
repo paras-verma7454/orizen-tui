@@ -1,7 +1,7 @@
 {
   "name": "orizen-tui-core",
   "type": "module",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "Theme system and primitives for building terminal user interfaces",
   "sideEffects": false,
   "main": "./dist/index.mjs",
@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown && bun -e \"if(require('node:fs').existsSync('dist/index.d.mts')){require('node:fs').renameSync('dist/index.d.mts','dist/index.d.ts');console.log('Renamed d.mts to d.ts')}\"",
+    "build": "tsdown --publint false && bun -e \"if(require('node:fs').existsSync('dist/index.d.mts')){require('node:fs').renameSync('dist/index.d.mts','dist/index.d.ts');console.log('Renamed d.mts to d.ts')}\" && bunx publint .",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit"
   },

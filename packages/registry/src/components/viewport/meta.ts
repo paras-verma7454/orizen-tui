@@ -14,7 +14,10 @@ const lines = Array.from({ length: 50 }, (_, i) => \`Line \${i + 1}\`)
 
 // Fixed width, no indicators
 <Viewport lines={lines} height={8} width={60} showScrollIndicator={false} />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React from 'react'
 import { Viewport } from '@/components/ui/orizen/viewport'
 
@@ -75,6 +78,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'lines', type: 'string[]', default: '—', description: 'Lines of text to render' },
     { name: 'height', type: 'number', default: '—', description: 'Number of visible lines' },

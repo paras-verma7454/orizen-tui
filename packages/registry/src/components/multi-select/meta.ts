@@ -22,7 +22,10 @@ const [chosen, setChosen] = useState<string[]>([])
   onChange={setChosen}
   onSubmit={(values) => console.log(values)}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { MultiSelect } from '@/components/ui/orizen/multi-select'
 
@@ -76,6 +79,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'items', type: 'Array<{ label: string; value: string }>', default: '-', description: 'List of selectable items' },
     { name: 'value', type: 'string[]', default: '[]', description: 'Currently selected values' },

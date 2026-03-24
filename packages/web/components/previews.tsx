@@ -832,6 +832,40 @@ export function HelpPreview({ compact = false }: { compact?: boolean }): JSX.Ele
   )
 }
 
+// ── Spinner Example Previews ─────────────────────────────────────────────────
+
+const GLOBE = ['🌐', '🌍', '🌎', '🌏']
+
+export function SpinnerExample1Preview(): JSX.Element {
+  return (
+    <div className="flex flex-wrap gap-6 items-center">
+      <SpinnerFrame frames={DOTS} label="Loading…" />
+      <SpinnerFrame frames={CIRCLE} label="Processing" />
+      <SpinnerFrame frames={BAR} label="Building" />
+    </div>
+  )
+}
+
+export function SpinnerExample2Preview(): JSX.Element {
+  const frame = useFrames(GLOBE, 200)
+  return (
+    <span className="flex items-center gap-2">
+      <span className="text-cyan-400 font-bold inline-block w-6 text-center">{frame}</span>
+      <span className="text-zinc-300">Rotating</span>
+    </span>
+  )
+}
+
+export function SpinnerExample3Preview(): JSX.Element {
+  const frame = useFrames(DOTS, 300)
+  return (
+    <span className="flex items-center gap-2">
+      <span className="text-cyan-400 font-bold inline-block w-4 text-center">{frame}</span>
+      <span className="text-zinc-300">Take your time...</span>
+    </span>
+  )
+}
+
 // ── Slug → preview map ────────────────────────────────────────────────────────
 
 interface PreviewComponent extends React.FC<{ compact?: boolean }> {}
@@ -859,4 +893,12 @@ export const previewMap: Record<string, PreviewComponent> = {
 
 export const compactPreviewMap: Partial<Record<string, React.FC>> = {
   progress: ProgressPreviewCompact,
+}
+
+// Example-specific previews (for components with multiple examples)
+// Key format: "{slug}-{exampleIndex}" (0-based)
+export const examplePreviewMap: Record<string, React.FC> = {
+  'spinner-0': SpinnerExample1Preview,
+  'spinner-1': SpinnerExample2Preview,
+  'spinner-2': SpinnerExample3Preview,
 }

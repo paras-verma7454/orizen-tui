@@ -1,7 +1,7 @@
 {
   "name": "orizen-tui",
   "type": "module",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "CLI tool for adding terminal UI components to Node.js projects",
   "bin": {
     "orizen-tui": "dist/index.mjs"
@@ -24,7 +24,8 @@
     "execa": "^9.5.1",
     "fs-extra": "^11.2.0",
     "jiti": "^2.4.0",
-    "picocolors": "^1.1.1"
+    "picocolors": "^1.1.1",
+    "yoga-layout-prebuilt": "^1.0.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -32,8 +33,5 @@
     "@types/node": "^22.10.7",
     "tsdown": "^0.17.3",
     "typescript": "^5.9.3"
-  },
-  "overrides": {
-    "yoga-layout": "yoga-layout-prebuilt"
   }
 }

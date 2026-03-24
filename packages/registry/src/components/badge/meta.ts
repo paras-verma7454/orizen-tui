@@ -10,7 +10,10 @@ export const meta: ComponentDocsMeta = {
 <Badge variant="default">v1.0.0</Badge>
 <Badge variant="success">Deployed</Badge>
 <Badge variant="error">Failed</Badge>`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Variants',
+      code: `import { Box, Text, render } from 'ink'
 import React from 'react'
 import { Badge } from '@/components/ui/orizen/badge'
 
@@ -44,6 +47,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'variant', type: '\'default\' | \'success\' | \'warning\' | \'error\' | \'info\'', default: '\'default\'', description: 'Visual variant' },
     { name: 'children', type: 'React.ReactNode', default: '-', description: 'Badge content' },

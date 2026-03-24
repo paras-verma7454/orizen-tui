@@ -20,7 +20,10 @@ const [selected, setSelected] = useState<string[]>(['typescript'])
   value={selected}
   onChange={setSelected}
 />`,
-  demo: `import { Box, Text, render } from 'ink'
+  examples: [
+    {
+      title: 'Usage',
+      code: `import { Box, Text, render } from 'ink'
 import React, { useState } from 'react'
 import { Checkbox } from '@/components/ui/orizen/checkbox'
 
@@ -71,6 +74,8 @@ function Demo() {
 }
 
 render(<Demo />)`,
+    },
+  ],
   props: [
     { name: 'items', type: 'Array<{ label: string; value: string }>', default: '-', description: 'List of toggleable items' },
     { name: 'value', type: 'string[]', default: '[]', description: 'Array of selected values' },

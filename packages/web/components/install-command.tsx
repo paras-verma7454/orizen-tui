@@ -1,13 +1,13 @@
 'use client'
 
 import { Terminal } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CopyButton } from './copy-button'
+import { usePackageManager, type PackageManager } from '@/hooks/usePackageManager'
 
-const MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const
-type Manager = typeof MANAGERS[number]
+const MANAGERS: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun']
 
-function buildCmd(manager: Manager, slug: string): string {
+function buildCmd(manager: PackageManager, slug: string): string {
   if (manager === 'pnpm')
     return `pnpm dlx orizen-tui@latest add ${slug}`
   if (manager === 'npm')
@@ -22,8 +22,21 @@ interface InstallCommandProps {
 }
 
 export function InstallCommand({ slug }: InstallCommandProps): JSX.Element {
-  const [manager, setManager] = useState<Manager>('pnpm')
-  const cmd = buildCmd(manager, slug)
+  const { manager: preferredManager, setManager, isLoaded } = usePackageManager()
+  const [displayManager, setDisplayManager] = useState<PackageManager>('npm')
+
+  useEffect(() => {
+    if (isLoaded) {
+      setDisplayManager(preferredManager)
+    }
+  }, [isLoaded, preferredManager])
+
+  const handleManagerChange = (m: PackageManager): void => {
+    setDisplayManager(m)
+    setManager(m)
+  }
+
+  const cmd = buildCmd(displayManager, slug)
 
   return (
     <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 overflow-hidden font-mono">
@@ -35,9 +48,9 @@ export function InstallCommand({ slug }: InstallCommandProps): JSX.Element {
           {MANAGERS.map(m => (
             <button
               key={m}
-              onClick={() => setManager(m)}
+              onClick={() => handleManagerChange(m)}
               className={`px-2 py-0.5 text-xs rounded-md transition-colors ${
-                manager === m
+                displayManager === m
                   ? 'text-zinc-100 bg-zinc-800'
                   : 'text-zinc-500 hover:text-zinc-300'
               }`}

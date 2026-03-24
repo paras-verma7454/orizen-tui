@@ -7,12 +7,17 @@ export interface ComponentPropMeta {
   description: string
 }
 
+export interface ComponentExample {
+  title: string
+  code: string
+}
+
 export interface ComponentDocsMeta {
   slug: string
   name: string
   description: string
   category: ComponentCategory
   usage: string
-  demo?: string
+  examples: ComponentExample[]
   props: ComponentPropMeta[]
 }
