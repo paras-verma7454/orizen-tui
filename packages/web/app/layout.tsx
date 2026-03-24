@@ -17,8 +17,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/image.png',
-        width: 1200,
-        height: 630,
+        width: 1916,
+        height: 874,
         alt: 'Orizen TUI',
       },
     ],
