@@ -191,11 +191,26 @@ export default async function ComponentPage({ params }: PageProps): Promise<JSX.
 
         <section id="examples" className="space-y-3 scroll-mt-24">
           <h2 className="text-xs uppercase tracking-widest text-zinc-500 font-medium">Examples</h2>
-          <TerminalWindow title={`${slug}.demo.tsx`}>
-            <div className="py-2">
-              <ComponentPreview slug={slug} />
-            </div>
-          </TerminalWindow>
+          <Tabs
+            tabs={[
+              {
+                label: 'Preview',
+                content: (
+                  <TerminalWindow title={`${slug}.demo.tsx`}>
+                    <div className="py-2">
+                      <ComponentPreview slug={slug} />
+                    </div>
+                  </TerminalWindow>
+                ),
+              },
+              {
+                label: 'Code',
+                content: component.demo
+                  ? <CodeBlock code={component.demo} lang="tsx" filename={`${slug}.demo.tsx`} />
+                  : <p className="text-zinc-500 text-sm">No demo available</p>,
+              },
+            ]}
+          />
         </section>
 
         <section id="api-reference" className="space-y-3 scroll-mt-24">

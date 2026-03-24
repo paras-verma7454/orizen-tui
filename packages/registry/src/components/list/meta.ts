@@ -21,6 +21,50 @@ const items = [
 
 // Loading state
 <List items={[]} isLoading />`,
+  demo: `import { Box, Text, render } from 'ink'
+import React, { useState } from 'react'
+import { List } from '@/components/ui/orizen/list'
+
+const fruits = [
+  { label: 'Apple', value: 'apple', desc: 'Crisp and sweet' },
+  { label: 'Banana', value: 'banana', desc: 'Rich in potassium' },
+  { label: 'Cherry', value: 'cherry', desc: 'Stone fruit' },
+  { label: 'Date', value: 'date', desc: 'Sweet and sticky' },
+  { label: 'Elderberry', value: 'elderberry', desc: 'Immune booster' },
+  { label: 'Fig', value: 'fig', desc: 'Soft and chewy' },
+]
+
+function Demo() {
+  const [filter, setFilter] = useState('')
+
+  return (
+    <Box flexDirection="column" gap={3}>
+      <Text bold>Filterable List</Text>
+      
+      <Box flexDirection="column" gap={1}>
+        <Text dimColor>Type to filter (↑↓ navigate, Enter select):</Text>
+        <List
+          items={fruits}
+          height={4}
+          filter={filter}
+          onSelect={(item) => console.log('Selected:', item.label)}
+        />
+      </Box>
+
+      <Text bold>All Items</Text>
+      <List
+        items={fruits}
+        height={5}
+        onSelect={(item) => console.log('Picked:', item.label)}
+      />
+
+      <Text bold>Loading State</Text>
+      <List items={[]} isLoading height={4} />
+    </Box>
+  )
+}
+
+render(<Demo />)`,
   props: [
     { name: 'items', type: 'ListItem[]', default: '—', description: 'Items to display' },
     { name: 'height', type: 'number', default: '8', description: 'Number of visible items' },

@@ -13,5 +13,6 @@ export interface ComponentDocsMeta {
   description: string
   category: ComponentCategory
   usage: string
+  demo?: string
   props: ComponentPropMeta[]
 }

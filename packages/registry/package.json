@@ -1,16 +1,16 @@
 {
   "name": "@orizen-tui/registry",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Terminal UI components for orizen-tui",
   "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": "./src/index.ts",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
   "files": [
     "dist"
   ],
@@ -19,12 +19,6 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit"
-  },
-  "publishConfig": {
-    "exports": {
-      ".": "./dist/index.mjs",
-      "./package.json": "./package.json"
-    }
   },
   "peerDependencies": {
     "ink": ">=4.0.0",
@@ -42,5 +36,11 @@
     "react": "^18.3.1",
     "tsdown": "^0.17.3",
     "typescript": "^5.9.3"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": "./dist/index.mjs",
+      "./package.json": "./package.json"
+    }
   }
 }

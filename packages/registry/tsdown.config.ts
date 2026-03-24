@@ -8,7 +8,4 @@ export default defineConfig({
     enabled: true,
   },
   publint: true,
-  esbuild: {
-    jsx: 'automatic',
-  },
 })

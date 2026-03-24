@@ -1,37 +1,25 @@
 {
   "name": "orizen-tui-core",
   "type": "module",
-  "version": "0.1.5",
+  "version": "0.1.11",
   "description": "Theme system and primitives for building terminal user interfaces",
   "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
-      "default": "./src/index.ts"
-    },
-    "./package.json": "./package.json"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    }
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && bun -e \"if(require('node:fs').existsSync('dist/index.d.mts')){require('node:fs').renameSync('dist/index.d.mts','dist/index.d.ts');console.log('Renamed d.mts to d.ts')}\"",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit"
-  },
-  "publishConfig": {
-    "access": "public",
-    "exports": {
-      ".": {
-        "types": "./dist/index.d.mts",
-        "import": "./dist/index.mjs",
-        "default": "./dist/index.mjs"
-      },
-      "./package.json": "./package.json"
-    }
   },
   "peerDependencies": {
     "react": "^18.0.0"
@@ -45,5 +33,18 @@
     "react": "^18.3.1",
     "tsdown": "^0.17.3",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "yoga-layout": "yoga-layout-prebuilt"
+  },
+  "module": "./dist/index.mjs",
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.mjs"
+      },
+      "./package.json": "./package.json"
+    }
   }
 }

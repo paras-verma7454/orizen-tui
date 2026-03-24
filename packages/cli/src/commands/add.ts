@@ -12,7 +12,7 @@ export type PrimitiveName = 'borders' | 'symbols'
 
 const PRIMITIVE_IMPORT_RE = /from ['"]\.\.\/\.\.\/primitives\/(borders|symbols)\.js['"]/g
 const TRAILING_SLASH_RE = /\/+$/
-const REQUIRED_DEPENDENCIES = ['ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', '@types/node@latest', 'orizen-tui-core@latest'] as const
+const REQUIRED_DEPENDENCIES = ['ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', '@types/node@latest', 'orizen-tui-core@latest', 'yoga-layout-prebuilt'] as const
 const DEFAULT_REGISTRY_BASE_URL = 'https://raw.githubusercontent.com/paras-verma7454/orizen-tui/main/packages/registry/src'
 
 export interface AddCommandOptions {
@@ -129,6 +129,44 @@ export function buildInstallInvocation(
 export function buildInstallCommand(packageManager: PackageManager, dependencies: readonly string[] = REQUIRED_DEPENDENCIES): string {
   const { command, args } = buildInstallInvocation(packageManager, dependencies)
   return [command, ...args].join(' ')
+}
+
+interface UserPackageJson {
+  overrides?: Record<string, string>
+  resolutions?: Record<string, string>
+}
+
+export async function injectYogaLayoutOverride(cwd: string): Promise<boolean> {
+  const packageJsonPath = join(cwd, 'package.json')
+
+  if (!existsSync(packageJsonPath))
+    return false
+
+  try {
+    const rawContent = await readFile(packageJsonPath, 'utf8')
+    const pkg = JSON.parse(rawContent) as UserPackageJson
+
+    const overrideKey = pkg.overrides ? 'overrides' : 'resolutions'
+    const existing = pkg[overrideKey] || {}
+    const yogaKey = 'yoga-layout'
+
+    if (existing[yogaKey] === 'yoga-layout-prebuilt')
+      return true
+
+    const updated: UserPackageJson = {
+      ...pkg,
+      [overrideKey]: {
+        ...existing,
+        [yogaKey]: 'yoga-layout-prebuilt',
+      },
+    }
+
+    await writeFile(packageJsonPath, `${JSON.stringify(updated, null, 2)}\n`, 'utf8')
+    return true
+  }
+  catch {
+    return false
+  }
 }
 
 async function listAvailableSlugs(registrySourceDir: string): Promise<string[]> {
@@ -401,6 +439,7 @@ export async function executeAddCommand(
     try {
       await installRunner(command, args, cwd)
       installSucceeded = true
+      await injectYogaLayoutOverride(cwd)
     }
     catch {
       installSucceeded = false
@@ -445,7 +484,7 @@ function printSummary(result: AddExecutionResult, dryRun: boolean): void {
   }
   else if (result.installAttempted && !result.installSucceeded) {
     console.log(`${pc.yellow('!')} Dependency install failed. Run manually:`)
-    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 @types/node@latest orizen-tui-core@latest')}`)
+    console.log(`  ${pc.yellow(result.manualInstallCommand ?? 'npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 @types/node@latest orizen-tui-core@latest yoga-layout-prebuilt')}`)
   }
 }
 

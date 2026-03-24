@@ -53,9 +53,9 @@ describe('install command builders', () => {
   it('builds npm install invocation for npm', () => {
     expect(buildInstallInvocation('npm')).toEqual({
       command: 'npm',
-      args: ['install', 'ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'],
+      args: ['install', 'ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', '@types/node@latest', 'orizen-tui-core@latest', 'yoga-layout-prebuilt'],
     })
-    expect(buildInstallCommand('npm')).toBe('npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')
+    expect(buildInstallCommand('npm')).toBe('npm install ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 @types/node@latest orizen-tui-core@latest yoga-layout-prebuilt')
   })
 
   it('builds add invocation for non-npm package managers', () => {
@@ -285,10 +285,10 @@ describe('executeAddCommand', () => {
     expect(result.installAttempted).toBe(true)
     expect(result.installSucceeded).toBe(true)
     expect(result.packageManager).toBe('bun')
-    expect(result.manualInstallCommand).toBe('bun add ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 orizen-tui-core@latest')
+    expect(result.manualInstallCommand).toBe('bun add ink@^5.0.1 react@^18.3.1 @types/react@^18.3.18 @types/node@latest orizen-tui-core@latest yoga-layout-prebuilt')
     expect(installSpy).toHaveBeenCalledWith(
       'bun',
-      ['add', 'ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', 'orizen-tui-core@latest'],
+      ['add', 'ink@^5.0.1', 'react@^18.3.1', '@types/react@^18.3.18', '@types/node@latest', 'orizen-tui-core@latest', 'yoga-layout-prebuilt'],
       resolve(projectDir),
     )
   })

@@ -20,6 +20,57 @@ const [selected, setSelected] = useState<string[]>(['typescript'])
   value={selected}
   onChange={setSelected}
 />`,
+  demo: `import { Box, Text, render } from 'ink'
+import React, { useState } from 'react'
+import { Checkbox } from '@/components/ui/orizen/checkbox'
+
+const techItems = [
+  { label: 'TypeScript', value: 'ts' },
+  { label: 'ESLint', value: 'eslint' },
+  { label: 'Prettier', value: 'prettier' },
+  { label: 'Vitest', value: 'vitest' },
+]
+
+const projectItems = [
+  { label: 'Run tests', value: 'test' },
+  { label: 'Build', value: 'build' },
+  { label: 'Deploy', value: 'deploy' },
+]
+
+function Demo() {
+  const [tech, setTech] = useState<string[]>(['ts'])
+  const [tasks, setTasks] = useState<string[]>([])
+
+  return (
+    <Box flexDirection="column" gap={4}>
+      <Text bold>Checkboxes</Text>
+
+      <Box flexDirection="column" gap={1}>
+        <Text dimColor>Technologies (↑↓ navigate, Space toggle):</Text>
+        <Checkbox
+          label=""
+          items={techItems}
+          value={tech}
+          onChange={setTech}
+        />
+      </Box>
+
+      <Box flexDirection="column" gap={1}>
+        <Text dimColor>Build Tasks:</Text>
+        <Checkbox
+          label=""
+          items={projectItems}
+          value={tasks}
+          onChange={setTasks}
+        />
+      </Box>
+
+      <Text dimColor>Selected: {tech.join(', ') || 'none'}</Text>
+    </Box>
+  )
+}
+
+render(<Demo />)`,
   props: [
     { name: 'items', type: 'Array<{ label: string; value: string }>', default: '-', description: 'List of toggleable items' },
     { name: 'value', type: 'string[]', default: '[]', description: 'Array of selected values' },

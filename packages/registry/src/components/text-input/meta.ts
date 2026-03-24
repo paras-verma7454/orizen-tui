@@ -16,6 +16,53 @@ const [value, setValue] = useState('')
   onChange={setValue}
   placeholder="e.g. button..."
 />`,
+  demo: `import { Box, Text, render } from 'ink'
+import React, { useState } from 'react'
+import { TextInput } from '@/components/ui/orizen/text-input'
+
+function Demo() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  return (
+    <Box flexDirection="column" gap={3}>
+      <Text bold>Text Inputs</Text>
+      
+      <Box flexDirection="column">
+        <Text dimColor>Name:</Text>
+        <TextInput
+          value={name}
+          onChange={setName}
+          placeholder="Enter your name..."
+        />
+      </Box>
+
+      <Box flexDirection="column">
+        <Text dimColor>Email:</Text>
+        <TextInput
+          value={email}
+          onChange={setEmail}
+          placeholder="you@example.com"
+        />
+      </Box>
+
+      <Box flexDirection="column">
+        <Text dimColor>Password:</Text>
+        <TextInput
+          value={password}
+          onChange={setPassword}
+          placeholder="Enter password..."
+          mask="*"
+        />
+      </Box>
+
+      <Text dimColor>Submitted: {name || '-'}, {email || '-'}</Text>
+    </Box>
+  )
+}
+
+render(<Demo />)`,
   props: [
     { name: 'value', type: 'string', default: '-', description: 'Current input value' },
     { name: 'onChange', type: '(value: string) => void', default: '-', description: 'Called on every keypress' },

@@ -23,7 +23,7 @@ export function Tabs({ tabs, className = '' }: TabsProps): JSX.Element {
           <button
             key={tab.label}
             onClick={() => setActive(i)}
-            className={`px-4 py-2 text-xs font-mono transition-colors -mb-px border-b-2 ${
+            className={`px-4 py-2 text-xs font-mono transition-colors -mb-px border-b-2 cursor-pointer ${
               active === i
                 ? 'text-zinc-200 border-cyan-500'
                 : 'text-zinc-500 border-transparent hover:text-zinc-400'
