@@ -5,9 +5,9 @@ import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
 export type ColumnAlignment = 'left' | 'right' | 'center'
 
-export interface TableColumn {
+export interface TableColumn<Key extends string = string> {
   /** Data key to read from each row object */
-  key: string
+  key: Key
   /** Column header label */
   label: string
   /** Fixed column width in characters */
@@ -16,8 +16,8 @@ export interface TableColumn {
   align?: ColumnAlignment
 }
 
-export interface TableProps {
-  columns: TableColumn[]
+export interface TableProps<K extends string = string> {
+  columns: TableColumn<K>[]
   data: Record<string, string>[]
   /** Number of visible data rows (excludes header) */
   height?: number
@@ -49,7 +49,7 @@ function pad(text: string, width: number, align: ColumnAlignment): string {
 /**
  * Navigable data table with column alignment, scroll, and a border box.
  */
-export function Table({ columns, data, height = 10, focus = true }: TableProps): JSX.Element {
+export function Table<K extends string = string>({ columns, data, height = 10, focus = true }: TableProps<K>): JSX.Element {
   const { colors, borders } = useTheme()
   const [selectedRow, setSelectedRow] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
@@ -88,12 +88,14 @@ export function Table({ columns, data, height = 10, focus = true }: TableProps):
   const separator = colWidths.map(w => '─'.repeat(w)).join('  ')
 
   const borderStyle = getEffectiveBorderStyle(borders.style)
+  const totalWidth = colWidths.reduce((sum, w) => sum + w, 0) + (columns.length - 1) * 2
 
   return (
     <Box
       flexDirection="column"
       borderStyle={borderStyle}
       borderColor={borders.color}
+      width={totalWidth}
     >
       <Text bold color={colors.primary}>{header}</Text>
       <Text color={colors.muted}>{separator}</Text>

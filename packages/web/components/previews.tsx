@@ -149,6 +149,33 @@ export function TextInputPreview({ compact = false }: { compact?: boolean }): JS
   )
 }
 
+export function TextInputExample1Preview(): JSX.Element {
+  const cursor = useFrames(CURSOR_FRAMES, 530)
+  return (
+    <div className="space-y-1">
+      <span className="text-zinc-500 text-xs">Component name:</span>
+      <div className="border border-cyan-500/70 rounded px-2 py-1 flex items-center gap-0.5 w-fit min-w-44">
+        <span className="text-zinc-500">e.g. button…</span>
+        <span className="text-cyan-400">{cursor}</span>
+      </div>
+    </div>
+  )
+}
+
+export function TextInputExample2Preview(): JSX.Element {
+  const cursor = useFrames(CURSOR_FRAMES, 530)
+  return (
+    <div className="space-y-1">
+      <span className="text-zinc-500 text-xs">Enter name:</span>
+      <div className="border border-cyan-500/70 rounded px-2 py-1 flex items-center gap-0.5 w-fit min-w-44">
+        <span className="text-zinc-500">Type and press Enter…</span>
+        <span className="text-cyan-400">{cursor}</span>
+      </div>
+      <span className="text-green-400 text-xs">Submitted: hello</span>
+    </div>
+  )
+}
+
 // ── Select preview ────────────────────────────────────────────────────────────
 
 const SELECT_ITEMS = ['React', 'Vue', 'Svelte', 'Solid']
@@ -284,12 +311,12 @@ export function ConfirmInputPreview({ compact = false }: { compact?: boolean }):
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 font-mono">
-        <span className="text-zinc-300">Overwrite existing file?</span>
-        <span className="text-cyan-400 font-bold">{isYes ? '[Y/n]' : '[y/N]'}</span>
+        <span className="text-cyan-400">Overwrite existing file?</span>
+        <span className="text-zinc-500">{isYes ? '[Y/n]' : '[y/N]'}</span>
       </div>
       <div className="flex items-center gap-2 font-mono">
-        <span className="text-zinc-300">Delete 3 files?</span>
-        <span className="text-rose-400 font-bold">[y/N]</span>
+        <span className="text-cyan-400">Delete 3 files?</span>
+        <span className="text-zinc-500">[y/N]</span>
       </div>
     </div>
   )
@@ -372,6 +399,16 @@ export function PaginatorPreview({ compact = false }: { compact?: boolean }): JS
 
 // ── Timer preview ─────────────────────────────────────────────────────────────
 
+function formatTimerMs(ms: number): string {
+  const totalSec = Math.max(0, Math.ceil(ms / 1000))
+  const h = Math.floor(totalSec / 3600)
+  const m = Math.floor((totalSec % 3600) / 60)
+  const s = totalSec % 60
+  if (h > 0)
+    return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+
 // eslint-disable-next-line unused-imports/no-unused-vars
 export function TimerPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [ms, setMs] = useState(5320)
@@ -379,8 +416,8 @@ export function TimerPreview({ compact = false }: { compact?: boolean }): JSX.El
     const timer = setInterval(() => setMs(r => r <= 0 ? 9999 : r - 37), 37)
     return () => clearInterval(timer)
   }, [])
-  const isWarning = ms <= 3000
-  const display = ms > 0 ? `${ms}ms` : '0ms'
+  const isWarning = ms <= 10000
+  const display = formatTimerMs(ms)
   return (
     <div className="font-mono space-y-4">
       <div className="space-y-1">
@@ -415,6 +452,16 @@ export function TimerPreview({ compact = false }: { compact?: boolean }): JSX.El
 
 // ── Stopwatch preview ─────────────────────────────────────────────────────────
 
+function formatStopwatchMs(ms: number): string {
+  const totalSec = Math.floor(ms / 1000)
+  const h = Math.floor(totalSec / 3600)
+  const m = Math.floor((totalSec % 3600) / 60)
+  const s = totalSec % 60
+  if (h > 0)
+    return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+}
+
 // eslint-disable-next-line unused-imports/no-unused-vars
 export function StopwatchPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [ms, setMs] = useState(0)
@@ -429,7 +476,7 @@ export function StopwatchPreview({ compact = false }: { compact?: boolean }): JS
     const timer = setInterval(() => setMs(e => e + 37), 37)
     return () => clearInterval(timer)
   }, [running])
-  const secs = (ms / 1000).toFixed(2)
+  const display = formatStopwatchMs(ms)
   return (
     <div className="font-mono space-y-4">
       <div className="space-y-1">
@@ -437,8 +484,7 @@ export function StopwatchPreview({ compact = false }: { compact?: boolean }): JS
           Elapsed:
           {' '}
           <span className={running ? 'text-cyan-400' : 'text-zinc-500'}>
-            {secs}
-            s
+            {display}
           </span>
         </div>
       </div>
@@ -535,8 +581,6 @@ export function ViewportPreview({ compact = false }: { compact?: boolean }): JSX
 
 // ── List preview ──────────────────────────────────────────────────────────────
 
-
-
 export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Element {
   const [active, setActive] = useState(0)
   useEffect(() => {
@@ -557,17 +601,27 @@ export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Ele
 
   if (compact) {
     return (
-      <div className="font-mono text-xs w-full max-w-[16rem]">
-        <div className="space-y-1">
-          {allItems.slice(0, 4).map((item, i) => {
+      <div className="font-mono text-xs min-w-56">
+        <div className="mb-1">
+          <span className="font-bold text-emerald-400">Groceries</span>
+          <span className="text-zinc-500 ml-2">72 items</span>
+        </div>
+        <div className="space-y-0.5 mb-2">
+          {allItems.slice(0, 5).map((item, i) => {
             const isActive = i === active
             return (
               <div key={item.label} className="flex gap-1">
-                <span className={isActive ? 'text-fuchsia-400' : 'text-zinc-600'}>{isActive ? '❯' : ' '}</span>
-                <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-zinc-300'}>{item.label}</span>
+                <span className={isActive ? 'text-cyan-400' : 'text-zinc-600'}>{isActive ? '❯' : ' '}</span>
+                <span className={isActive ? 'text-cyan-400 font-bold' : 'text-zinc-300'}>{item.label}</span>
               </div>
             )
           })}
+        </div>
+        <div className="text-zinc-500 text-xs">
+          {'  '}
+          (1–5 of
+          {allItems.length}
+          )
         </div>
       </div>
     )
@@ -576,7 +630,7 @@ export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Ele
   return (
     <div className="font-mono text-xs min-w-56">
       <div className="mb-1">
-        <span className="bg-emerald-500 text-black text-xs font-bold px-2 py-0.5 rounded">Groceries</span>
+        <span className="font-bold text-emerald-400">Groceries</span>
         <span className="text-zinc-500 ml-2">72 items</span>
       </div>
       <div className="space-y-0.5 mb-2">
@@ -584,14 +638,17 @@ export function ListPreview({ compact = false }: { compact?: boolean }): JSX.Ele
           const isActive = i === active
           return (
             <div key={item.label} className="flex gap-1">
-              <span className={isActive ? 'text-fuchsia-400' : 'text-zinc-600'}>{isActive ? '❯' : ' '}</span>
-              <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-zinc-300'}>{item.label}</span>
+              <span className={isActive ? 'text-cyan-400' : 'text-zinc-600'}>{isActive ? '❯' : ' '}</span>
+              <span className={isActive ? 'text-cyan-400 font-bold' : 'text-zinc-300'}>{item.label}</span>
             </div>
           )
         })}
       </div>
       <div className="text-zinc-500 text-xs">
-        {'  '}(1–5 of {allItems.length})
+        {'  '}
+        (1–5 of
+        {allItems.length}
+        )
       </div>
     </div>
   )
@@ -621,8 +678,8 @@ export function TablePreview({ compact = false }: { compact?: boolean }): JSX.El
       <div className="font-mono text-xs border border-zinc-600 rounded w-full max-w-[16rem]">
         <div className="flex gap-2 text-cyan-400 font-semibold px-2 pt-2 pb-1 text-[10px]">
           <span className="w-5 text-right">#</span>
-          <span className="flex-1">City</span>
-          <span className="w-16 text-right">Pop</span>
+          <span className="w-14">City</span>
+          <span className="w-12 text-right">Pop</span>
         </div>
         <div className="text-zinc-700 px-2 mb-1">{'─'.repeat(30)}</div>
         {TABLE_ROWS.slice(0, 4).map((row, i) => {
@@ -630,7 +687,7 @@ export function TablePreview({ compact = false }: { compact?: boolean }): JSX.El
           return (
             <div
               key={row.rank}
-              className={`flex gap-2 px-2 py-px text-[10px] ${isActive ? 'bg-violet-600 text-white font-bold' : 'text-zinc-400'}`}
+              className={`flex gap-2 px-2 py-px text-[10px] ${isActive ? 'bg-cyan-600 text-cyan-200 font-bold' : 'text-zinc-400'}`}
             >
               <span className="w-5 text-right">{row.rank}</span>
               <span className="flex-1 truncate">{row.city}</span>
@@ -643,26 +700,28 @@ export function TablePreview({ compact = false }: { compact?: boolean }): JSX.El
     )
   }
 
+  const tableWidth = 6 + 2 + 20 + 2 + 12 + 2 + 16
+
   return (
-    <div className="font-mono text-xs border border-zinc-600 rounded min-w-72">
-      <div className="flex gap-3 text-cyan-400 font-semibold px-3 pt-2 pb-1">
-        <span className="w-6 text-right">Rank</span>
-        <span className="w-20">City</span>
-        <span className="w-16">Country</span>
-        <span className="w-20 text-right">Population</span>
+    <div className="font-mono text-xs border border-zinc-600 rounded" style={{ width: `${tableWidth * 8}px` }}>
+      <div className="flex gap-2 text-cyan-400 font-semibold px-3 pt-2 pb-1">
+        <span style={{ width: '48px' }} className="text-right">Rank</span>
+        <span style={{ width: '160px' }}>City</span>
+        <span style={{ width: '96px' }}>Country</span>
+        <span style={{ width: '128px' }} className="text-right">Population</span>
       </div>
-      <div className="text-zinc-700 px-3 mb-1">{'─'.repeat(40)}</div>
+      <div className="text-zinc-700 px-3 mb-1">{'-'.repeat(tableWidth)}</div>
       {TABLE_ROWS.map((row, i) => {
         const isActive = i === selected
         return (
           <div
             key={row.rank}
-            className={`flex gap-3 px-3 py-px ${isActive ? 'bg-violet-600 text-white font-bold' : 'text-zinc-400'}`}
+            className={`flex gap-2 px-3 py-px ${isActive ? 'bg-cyan-600 text-cyan-200 font-bold' : 'text-zinc-400'}`}
           >
-            <span className="w-6 text-right">{row.rank}</span>
-            <span className="w-20">{row.city}</span>
-            <span className="w-16">{row.country}</span>
-            <span className="w-20 text-right">{row.pop}</span>
+            <span style={{ width: '48px' }} className="text-right">{row.rank}</span>
+            <span style={{ width: '160px' }}>{row.city}</span>
+            <span style={{ width: '96px' }}>{row.country}</span>
+            <span style={{ width: '128px' }} className="text-right">{row.pop}</span>
           </div>
         )
       })}
@@ -703,7 +762,7 @@ export function FilePickerPreview({ compact = false }: { compact?: boolean }): J
                 <span className={`w-8 text-right ${isActive ? 'text-zinc-300' : 'text-zinc-600'}`}>
                   {entry.size}
                 </span>
-                <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-violet-400'}>
+                <span className={isActive ? 'text-blue-400 font-bold' : 'text-blue-500'}>
                   {entry.name}
                 </span>
               </div>
@@ -734,7 +793,7 @@ export function FilePickerPreview({ compact = false }: { compact?: boolean }): J
               <span className={`w-10 text-right ${isActive ? 'text-zinc-300' : 'text-zinc-600'}`}>
                 {entry.size}
               </span>
-              <span className={isActive ? 'text-fuchsia-400 font-bold' : 'text-violet-400'}>
+              <span className={isActive ? 'text-blue-400 font-bold' : 'text-blue-500'}>
                 {entry.name}
               </span>
             </div>
@@ -742,6 +801,52 @@ export function FilePickerPreview({ compact = false }: { compact?: boolean }): J
         })}
       </div>
     </div>
+  )
+}
+
+// ── Counter preview ───────────────────────────────────────────────────────────
+
+export function CounterPreview({ compact = false }: { compact?: boolean }): JSX.Element {
+  const [counter, setCounter] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setCounter(c => c + 1), 100)
+    return () => clearInterval(timer)
+  }, [])
+  return (
+    <span className="text-green-400">{counter} tests passed</span>
+  )
+}
+
+export function CounterExample1Preview(): JSX.Element {
+  const [counter, setCounter] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setCounter(c => c + 1), 100)
+    return () => clearInterval(timer)
+  }, [])
+  return (
+    <span className="text-green-400">{counter} tests passed</span>
+  )
+}
+
+export function CounterExample2Preview(): JSX.Element {
+  const [counter, setCounter] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setCounter(c => c + 1), 1000)
+    return () => clearInterval(timer)
+  }, [])
+  return (
+    <span className="text-green-400">{counter} tests passed</span>
+  )
+}
+
+export function CounterExample3Preview(): JSX.Element {
+  const [counter, setCounter] = useState(0)
+  useEffect(() => {
+    const timer = setInterval(() => setCounter(c => c + 1), 1000)
+    return () => clearInterval(timer)
+  }, [])
+  return (
+    <span className="text-cyan-400">{counter} seconds</span>
   )
 }
 
@@ -851,6 +956,7 @@ export const previewMap: Record<string, PreviewComponent> = {
   'table': TablePreview,
   'file-picker': FilePickerPreview,
   'help': HelpPreview,
+  'counter': CounterPreview,
 }
 
 export const compactPreviewMap: Partial<Record<string, React.FC>> = {
@@ -863,4 +969,9 @@ export const examplePreviewMap: Record<string, React.FC> = {
   'spinner-0': SpinnerExample1Preview,
   'spinner-1': SpinnerExample2Preview,
   'spinner-2': SpinnerExample3Preview,
+  'counter-0': CounterExample1Preview,
+  'counter-1': CounterExample2Preview,
+  'counter-2': CounterExample3Preview,
+  'text-input-0': TextInputExample1Preview,
+  'text-input-1': TextInputExample2Preview,
 }

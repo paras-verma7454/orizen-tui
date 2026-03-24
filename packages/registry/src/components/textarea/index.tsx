@@ -3,28 +3,40 @@ import { useTheme } from 'orizen-tui-core'
 import React, { useState } from 'react'
 import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
-/**
- * Pure input processing logic — extracted for direct unit testing
- */
+export type TextareaKeyHandler = {
+  backspace?: boolean
+  delete?: boolean
+  escape?: boolean
+  return?: boolean
+  shift?: boolean
+  ctrl?: boolean
+  meta?: boolean
+}
+
 export function processTextarea(
   value: string,
   input: string,
-  key: { backspace?: boolean, delete?: boolean, escape?: boolean, return?: boolean, ctrl?: boolean, meta?: boolean },
-): string {
+  key: TextareaKeyHandler,
+): { value: string; submit: boolean } {
   if (key.backspace || key.delete)
-    return value.slice(0, -1)
+    return { value: value.slice(0, -1), submit: false }
   if (key.escape)
-    return ''
-  if (key.return)
-    return `${value}\n`
+    return { value: '', submit: false }
+  if (key.return) {
+    if (key.shift)
+      return { value: `${value}\n`, submit: false }
+    return { value, submit: true }
+  }
   if (!key.ctrl && !key.meta && input.length === 1)
-    return value + input
-  return value
+    return { value: value + input, submit: false }
+  return { value, submit: false }
 }
 
 export interface TextareaProps {
   value: string
   onChange: (value: string) => void
+  /** Callback fired when Enter is pressed (Shift+Enter adds newline instead) */
+  onSubmit: () => void
   /** Placeholder shown when value is empty */
   placeholder?: string
   /** Label shown above the textarea */
@@ -33,6 +45,10 @@ export interface TextareaProps {
   rows?: number
   /** Whether this input is focused and accepting keyboard input */
   focus?: boolean
+  /** Width of the textarea in columns */
+  width?: number
+  /** Text color */
+  color?: string
 }
 
 /**
@@ -48,18 +64,29 @@ export interface TextareaProps {
 export function Textarea({
   value,
   onChange,
+  onSubmit,
   placeholder = '',
   label,
   rows = 3,
   focus = true,
+  width,
+  color,
 }: TextareaProps): JSX.Element {
   const { colors, borders } = useTheme()
   const [cursorVisible] = useState(true)
 
+  const termWidth = process.stdout.columns || 80
+  const effectiveWidth = width ?? termWidth
+
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
   useInput(
     (input, key) => {
-      onChange(processTextarea(value, input, key))
+      const result = processTextarea(value, input, key)
+      if (result.submit) {
+        onSubmit()
+      } else {
+        onChange(result.value)
+      }
     },
     { isActive: focus },
   )
@@ -83,6 +110,7 @@ export function Textarea({
         borderColor={focus ? colors.primary : colors.border}
         paddingX={1}
         flexDirection="column"
+        width={effectiveWidth}
       >
         {isEmpty
           ? (
@@ -94,7 +122,7 @@ export function Textarea({
           : displayLines.map((line, i) => {
               const isLastLine = i === lines.length - 1
               return (
-                <Text key={i}>
+                <Text key={i} color={color}>
                   {line}
                   {isLastLine && focus ? <Text color={colors.primary}>{cursor}</Text> : null}
                 </Text>

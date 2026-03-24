@@ -1,11 +1,9 @@
 {
   "name": "orizen-tui-core",
   "type": "module",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "Theme system and primitives for building terminal user interfaces",
   "sideEffects": false,
-  "main": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -13,6 +11,9 @@
       "default": "./dist/index.mjs"
     }
   },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -37,7 +38,6 @@
   "overrides": {
     "yoga-layout": "yoga-layout-prebuilt"
   },
-  "module": "./dist/index.mjs",
   "publishConfig": {
     "exports": {
       ".": {

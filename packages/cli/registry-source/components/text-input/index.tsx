@@ -3,6 +3,15 @@ import { useTheme } from 'orizen-tui-core'
 import React, { useState } from 'react'
 import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 
+export type TextInputKeyHandler = {
+  backspace?: boolean
+  delete?: boolean
+  escape?: boolean
+  return?: boolean
+  ctrl?: boolean
+  meta?: boolean
+}
+
 /**
  * Pure input processing logic — extracted for direct unit testing
  * (ink-testing-library stdin simulation is unreliable in Ink 5)
@@ -10,20 +19,24 @@ import { getEffectiveBorderStyle } from '../../primitives/borders.js'
 export function processTextInput(
   value: string,
   input: string,
-  key: { backspace?: boolean, delete?: boolean, escape?: boolean, ctrl?: boolean, meta?: boolean },
-): string {
+  key: TextInputKeyHandler,
+): { value: string; submit: boolean } {
   if (key.backspace || key.delete)
-    return value.slice(0, -1)
+    return { value: value.slice(0, -1), submit: false }
   if (key.escape)
-    return ''
+    return { value: '', submit: false }
+  if (key.return)
+    return { value, submit: true }
   if (!key.ctrl && !key.meta && input.length === 1)
-    return value + input
-  return value
+    return { value: value + input, submit: false }
+  return { value, submit: false }
 }
 
 export interface TextInputProps {
   value: string
   onChange: (value: string) => void
+  /** Callback fired when Enter is pressed */
+  onSubmit: () => void
   /** Placeholder shown when value is empty */
   placeholder?: string
   /** Character to render instead of actual value (e.g. '*' for passwords) */
@@ -32,6 +45,10 @@ export interface TextInputProps {
   label?: string
   /** Whether this input is focused and accepting keyboard input */
   focus?: boolean
+  /** Width of the input box in columns */
+  width?: number
+  /** Text color */
+  color?: string
 }
 
 /**
@@ -47,31 +64,29 @@ export interface TextInputProps {
 export function TextInput({
   value,
   onChange,
+  onSubmit,
   placeholder = '',
   mask,
   label,
   focus = true,
+  width,
+  color,
 }: TextInputProps): JSX.Element {
   const { colors, borders } = useTheme()
   const [cursorVisible, _setCursorVisible] = useState(true)
+
+  const termWidth = process.stdout.columns || 80
+  const effectiveWidth = width ?? termWidth
 
   // input-isactive-focus: only receive input events when focused
   // c8 ignore start — useInput callbacks can't be exercised via ink-testing-library in Ink 5
   useInput(
     (input, key) => {
-      if (key.backspace || key.delete) {
-        // Immutable update — coding-style: never mutate, always create new
-        onChange(value.slice(0, -1))
-        return
-      }
-      if (key.escape) {
-        // input-escape-routes: always provide an escape route
-        onChange('')
-        return
-      }
-      // Skip control keys (arrows, tab, etc.) — only printable chars
-      if (!key.ctrl && !key.meta && input.length === 1) {
-        onChange(value + input)
+      const result = processTextInput(value, input, key)
+      if (result.submit) {
+        onSubmit()
+      } else {
+        onChange(result.value)
       }
     },
     { isActive: focus },
@@ -93,6 +108,7 @@ export function TextInput({
         borderStyle={getEffectiveBorderStyle(borders.style)}
         borderColor={focus ? colors.primary : colors.border}
         paddingX={1}
+        width={effectiveWidth}
       >
         {showPlaceholder
           ? (
@@ -102,7 +118,7 @@ export function TextInput({
               </Text>
             )
           : (
-              <Text>
+              <Text color={color}>
                 {displayValue}
                 {focus ? <Text color={colors.primary}>{cursor}</Text> : null}
               </Text>

@@ -33,7 +33,7 @@ Components land at:
 
 ```
 your-project/
-└── components/ui/orizen/
+└── src/components/ui/orizen/
     ├── spinner.tsx
     ├── badge.tsx
     ├── progress.tsx
@@ -51,7 +51,7 @@ your-project/
 
 | Flag | What it does |
 |---|---|
-| `--path <dir>` | Change target directory (default: `components/ui`) |
+| `--path <dir>` | Change target directory (default: `src/components/ui`) |
 | `--cwd <dir>` | Run as if from a different directory |
 | `--dry-run` | Preview what would be copied, without writing files |
 | `--no-install` | Skip automatic dependency installation |
@@ -64,15 +64,43 @@ npx orizen-tui add spinner --path src/components --overwrite
 
 ---
 
+## Init Command — Quick Start
+
+Create a new project with Orizen TUI pre-configured:
+
+```bash
+npx orizen-tui@latest init my-app
+cd my-app
+```
+
+This creates:
+
+```
+my-app/
+├── src/
+│   └── index.tsx      # Starter app with Spinner, Badge, Progress
+├── package.json
+├── tsconfig.json
+└── node_modules/
+```
+
+Then run:
+
+```bash
+bun run src/index.tsx   # or: npm run start
+```
+
+---
+
 ## Using Components
 
 Import from the copied path and wrap with `ThemeProvider`:
 
 ```tsx
-import React from 'react'
 import { render } from 'ink'
 import { ThemeProvider } from 'orizen-tui-core'
-import { Spinner } from './components/ui/orizen/spinner'
+import React from 'react'
+import { Spinner } from './src/components/ui/orizen/spinner'
 
 render(
   <ThemeProvider>
@@ -99,15 +127,39 @@ render(
 ```tsx
 <Select
   items={[{ label: 'Yes', value: 'yes' }, { label: 'No', value: 'no' }]}
-  onSelect={(item) => console.log(item.value)}
+  onSelect={item => console.log(item.value)}
   label="Continue?"
 />
 ```
 
 **TextInput**
 ```tsx
-<TextInput value={val} onChange={setVal} placeholder="Type here" label="Name" />
+<TextInput
+  value={val}
+  onChange={setVal}
+  onSubmit={() => console.log(val)}  // Required - Enter to submit
+  placeholder="Type here"
+  label="Name"
+  width={40}     // Optional - defaults to full terminal width
+  color="cyan"   // Optional - Ink color
+/>
 ```
+Keys: Enter to submit · Escape to clear
+
+**Textarea**
+```tsx
+<Textarea
+  value={val}
+  onChange={setVal}
+  onSubmit={() => console.log(val)}  // Required - Enter to submit
+  rows={4}
+  placeholder="Type here..."
+  label="Description"
+  width={50}    // Optional - defaults to full terminal width
+  color="green"  // Optional - Ink color
+/>
+```
+Keys: Enter to submit · Shift+Enter for new line
 
 **Badge**
 ```tsx
@@ -146,10 +198,18 @@ Keys: ↑↓ navigate · Space toggle · Escape deselect all
 <ConfirmInput
   message="Are you sure?"
   defaultAnswer="yes"
-  onConfirm={(yes) => console.log(yes)}
+  onConfirm={yes => console.log(yes)}
 />
 ```
 Keys: y/Y confirm · n/N deny · Enter = defaultAnswer · Escape = no
+
+**Counter**
+```tsx
+<Counter />                              // Default: green, 100ms interval
+<Counter label="files processed" />       // Custom label
+<Counter intervalMs={1000} color="cyan" />  // Custom interval & color
+```
+Auto-increments at the specified interval.
 
 ---
 
@@ -160,9 +220,10 @@ Pass a partial theme to override defaults:
 ```tsx
 <ThemeProvider theme={{
   colors: { primary: 'magenta', success: 'green', error: 'red' },
-  borders: { style: 'round' },  // 'round' | 'single' | 'double' | 'bold' | 'classic'
-  spinner: 'dots',              // 'dots' | 'line' | 'arc' | 'bounce'
-}}>
+  borders: { style: 'round' }, // 'round' | 'single' | 'double' | 'bold' | 'classic'
+  spinner: 'dots', // 'dots' | 'line' | 'arc' | 'bounce'
+}}
+>
   {children}
 </ThemeProvider>
 ```
@@ -171,6 +232,7 @@ Read tokens inside any component:
 
 ```tsx
 import { useTheme } from 'orizen-tui-core'
+
 const { colors, borders, spacing } = useTheme()
 ```
 
@@ -194,9 +256,9 @@ Tab / Shift+Tab cycles focus.
 
 ---
 
-## Available Components (18)
+## Available Components (19)
 
-`badge` · `checkbox` · `confirm-input` · `file-picker` · `help` · `list` ·
+`badge` · `checkbox` · `confirm-input` · `counter` · `file-picker` · `help` · `list` ·
 `multi-select` · `number-input` · `paginator` · `progress` · `select` ·
 `spinner` · `stopwatch` · `table` · `text-input` · `textarea` · `timer` · `viewport`
 

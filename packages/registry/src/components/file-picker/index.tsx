@@ -22,6 +22,8 @@ export interface FilePickerProps {
   onCancel?: () => void
   /** Number of visible entries */
   height?: number
+  /** Width of the file picker in columns */
+  width?: number
   /**
    * Dependency-injected directory reader — defaults to node:fs/promises.readdir.
    * Provide a mock in tests to avoid real filesystem access.
@@ -34,6 +36,8 @@ export interface FilePickerProps {
   joinPath?: (base: string, name: string) => string
   /** Whether focused for keyboard input */
   focus?: boolean
+  /** Text color */
+  color?: string
 }
 
 /**
@@ -46,9 +50,11 @@ export function FilePicker({
   onSelect,
   onCancel,
   height = 10,
+  width,
   readDir,
   joinPath,
   focus = true,
+  color,
 }: FilePickerProps): JSX.Element {
   const { colors } = useTheme()
   const [currentDir, setCurrentDir] = useState(initialDir)
@@ -56,6 +62,9 @@ export function FilePicker({
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
   const [error, setError] = useState<string | null>(null)
+
+  const termWidth = process.stdout.columns || 80
+  const effectiveWidth = width ?? termWidth
 
   const doJoin = useCallback(
     (base: string, name: string) => joinPath ? joinPath(base, name) : `${base}/${name}`.replace(MULTI_SLASH_REGEX, '/'),
@@ -139,7 +148,7 @@ export function FilePicker({
   const visible = entries.slice(scrollOffset, scrollOffset + height)
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" width={effectiveWidth}>
       <Text color={colors.muted}>{currentDir}</Text>
       {visible.length === 0
         ? <Text color={colors.muted}>Empty directory</Text>
@@ -151,7 +160,7 @@ export function FilePicker({
                 <Text color={isActive ? colors.primary : colors.muted}>
                   {isActive ? '❯' : ' '}
                 </Text>
-                <Text color={entry.isDirectory ? colors.info : undefined}>
+                <Text color={entry.isDirectory ? colors.info : color}>
                   {entry.isDirectory ? '/' : ' '}
                   {entry.name}
                 </Text>

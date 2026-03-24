@@ -301,7 +301,11 @@ export default function LandingPage(): JSX.Element {
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">Start a new project</h2>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              Use the <code className="text-cyan-400">init</code> command to scaffold a complete project with TypeScript, dependencies, and starter components ready to go.
+              Use the
+              {' '}
+              <code className="text-cyan-400">init</code>
+              {' '}
+              command to scaffold a complete project with TypeScript, dependencies, and starter components ready to go.
             </p>
             <div className="flex flex-col gap-3 pt-2">
               <div className="flex items-center gap-3 text-sm">

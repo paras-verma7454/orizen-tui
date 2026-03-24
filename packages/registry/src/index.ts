@@ -1,6 +1,7 @@
 export * from './components/badge/index.js'
 export * from './components/checkbox/index.js'
 export * from './components/confirm-input/index.js'
+export * from './components/counter/index.js'
 export * from './components/file-picker/index.js'
 export * from './components/help/index.js'
 export * from './components/list/index.js'

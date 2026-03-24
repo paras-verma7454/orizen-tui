@@ -64,7 +64,8 @@ const TS_CONFIG = `{
 }
 `
 
-const DEFAULT_PACKAGE_JSON = (name: string) => `{
+function DEFAULT_PACKAGE_JSON(name: string) {
+  return `{
   "name": "${name}",
   "version": "1.0.0",
   "type": "module",
@@ -90,8 +91,10 @@ const DEFAULT_PACKAGE_JSON = (name: string) => `{
   ]
 }
 `
+}
 
-const README_TEMPLATE = (projectName: string) => `# ${projectName}
+function README_TEMPLATE(projectName: string) {
+  return `# ${projectName}
 
 A terminal UI app built with [orizen-tui](https://github.com/paras-verma7454/orizen-tui).
 
@@ -125,6 +128,7 @@ npx orizen-tui add <component-name>
 
 Available components: spinner, badge, progress, text-input, textarea, select, checkbox, list, table, timer, stopwatch, paginator, viewport, file-picker, confirm-input, number-input, multi-select, help
 `
+}
 
 function detectPackageManager(cwd: string): 'bun' | 'pnpm' | 'yarn' | 'npm' {
   if (existsSync(resolve(cwd, 'bun.lock')) || existsSync(resolve(cwd, 'bun.lockb'))) {
@@ -175,9 +179,7 @@ export async function executeInitCommand(
     console.log(`${pc.cyan('Installing dependencies with')} ${packageManager}...`)
 
     try {
-      await execa(packageManager === 'npm' ? 'npm' : packageManager, 
-        packageManager === 'npm' ? ['install'] : ['install'], 
-        { cwd: projectDir, stdio: 'inherit' })
+      await execa(packageManager === 'npm' ? 'npm' : packageManager, packageManager === 'npm' ? ['install'] : ['install'], { cwd: projectDir, stdio: 'inherit' })
       console.log(`${pc.green('✔')} Dependencies installed`)
     }
     catch {
@@ -194,7 +196,7 @@ export async function executeInitCommand(
     yarn: ['yarn', 'dlx', 'orizen-tui'],
   }
 
-  const dlxCmd = dlxCommands[packageManager ?? 'npm'] ?? dlxCommands['npm']
+  const dlxCmd = dlxCommands[packageManager ?? 'npm'] ?? dlxCommands.npm
 
   try {
     await execa(dlxCmd[0], [...dlxCmd.slice(1), 'add', ...DEFAULT_COMPONENTS, '--cwd', projectDir, '--no-install'], {

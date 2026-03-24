@@ -40,7 +40,7 @@ function Demo() {
   return (
     <Box flexDirection="column" gap={1}>
       <Box>
-        <Text bold>Groceries</Text>
+        <Text color="green">Groceries</Text>
         <Text dimColor> 72 items</Text>
       </Box>
       <List
@@ -58,9 +58,11 @@ render(<Demo />)`,
   props: [
     { name: 'items', type: 'ListItem[]', default: '—', description: 'Items to display' },
     { name: 'height', type: 'number', default: '8', description: 'Number of visible items' },
+    { name: 'width', type: 'number', default: 'undefined', description: 'Width of the list in columns' },
     { name: 'filter', type: 'string', default: '""', description: 'Case-insensitive filter string' },
     { name: 'onSelect', type: '(item: ListItem) => void', default: 'undefined', description: 'Called when Enter is pressed on an item' },
     { name: 'isLoading', type: 'boolean', default: 'false', description: 'Show loading spinner instead of items' },
     { name: 'focus', type: 'boolean', default: 'true', description: 'Whether to accept keyboard input' },
+    { name: 'color', type: 'string', default: 'undefined', description: 'Text color' },
   ],
 }

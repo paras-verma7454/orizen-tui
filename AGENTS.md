@@ -74,9 +74,9 @@ bun run --filter './packages/web' dev
 
 If adding a new component, update both runtime (`index.tsx`) and metadata (`meta.ts`), then run `bun run generate:docs`.
 
-## Available Registry Components (18)
+## Available Registry Components (19)
 
-`badge`, `checkbox`, `confirm-input`, `file-picker`, `help`, `list`, `multi-select`, `number-input`, `paginator`, `progress`, `select`, `spinner`, `stopwatch`, `table`, `text-input`, `textarea`, `timer`, `viewport`
+`badge`, `checkbox`, `confirm-input`, `counter`, `file-picker`, `help`, `list`, `multi-select`, `number-input`, `paginator`, `progress`, `select`, `spinner`, `stopwatch`, `table`, `text-input`, `textarea`, `timer`, `viewport`
 
 ## Core Package (`packages/core/src`)
 
@@ -92,12 +92,12 @@ Implemented in `packages/cli/src/commands/add.ts`.
 
 - Command: `orizen-tui add <slug...>`
 - Defaults:
-  - target path: `components/ui`
-  - copy destination: `components/ui/orizen/<slug>.tsx`
-  - primitives copied on-demand to: `components/ui/orizen/primitives/{borders,symbols}.ts`
+  - target path: `src/components/ui`
+  - copy destination: `src/components/ui/orizen/<slug>.tsx`
+  - primitives copied on-demand to: `src/components/ui/orizen/primitives/{borders,symbols}.ts`
 - Also generates/updates:
-  - `components/ui/orizen/components.json` - manifest of installed components
-  - `components/ui/orizen/index.ts` - barrel re-export for all installed components
+  - `src/components/ui/orizen/components.json` - manifest of installed components
+  - `src/components/ui/orizen/index.ts` - barrel re-export for all installed components
 - Flags:
   - `--path <dir>`
   - `--cwd <dir>`

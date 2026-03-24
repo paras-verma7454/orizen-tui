@@ -31,7 +31,7 @@ const columns = [
   { key: 'rank', label: 'Rank', width: 6 },
   { key: 'city', label: 'City', width: 20 },
   { key: 'country', label: 'Country', width: 12 },
-  { key: 'pop', label: 'Population', width: 16, align: 'right' },
+  { key: 'pop', label: 'Population', width: 16, align: 'right' as const },
 ]
 
 const rows = [

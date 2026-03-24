@@ -13,6 +13,8 @@ export interface ListProps {
   items: ListItem[]
   /** Number of visible items */
   height?: number
+  /** Width of the list in columns */
+  width?: number
   /** Filter string — shows only items whose label contains this (case-insensitive) */
   filter?: string
   /** Callback fired when Enter is pressed on an item */
@@ -21,6 +23,8 @@ export interface ListProps {
   isLoading?: boolean
   /** Whether focused for keyboard input */
   focus?: boolean
+  /** Text color */
+  color?: string
 }
 
 /**
@@ -29,15 +33,20 @@ export interface ListProps {
 export function List({
   items,
   height = 8,
+  width,
   filter = '',
   onSelect,
   isLoading = false,
   focus = true,
+  color,
 }: ListProps): JSX.Element {
   const { colors, spinner } = useTheme()
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
   const [loadingFrame, setLoadingFrame] = useState(0)
+
+  const termWidth = process.stdout.columns || 80
+  const effectiveWidth = width ?? termWidth
 
   const filtered = useMemo(() => {
     if (!filter)
@@ -98,7 +107,7 @@ export function List({
   const visible = filtered.slice(scrollOffset, scrollOffset + height)
 
   return (
-    <Box flexDirection="column">
+    <Box flexDirection="column" width={effectiveWidth}>
       {filtered.length === 0
         ? <Text color={colors.muted}>No items found</Text>
         : visible.map((item, i) => {
@@ -109,7 +118,7 @@ export function List({
                 <Text color={isActive ? colors.primary : colors.muted}>
                   {isActive ? '❯' : ' '}
                 </Text>
-                <Text color={isActive ? colors.primary : undefined} bold={isActive}>
+                <Text color={isActive ? colors.primary : color} bold={isActive}>
                   {item.label}
                 </Text>
               </Box>

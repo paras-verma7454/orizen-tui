@@ -1,9 +1,10 @@
 'use client'
 
+import type { PackageManager } from '@/hooks/usePackageManager'
 import { Terminal } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { usePackageManager } from '@/hooks/usePackageManager'
 import { CopyButton } from './copy-button'
-import { usePackageManager, type PackageManager } from '@/hooks/usePackageManager'
 
 const MANAGERS: PackageManager[] = ['npm', 'pnpm', 'yarn', 'bun']
 

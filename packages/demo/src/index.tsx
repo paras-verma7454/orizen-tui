@@ -157,6 +157,7 @@ function FocusedInput(): JSX.Element {
       label={isFocused ? '❯ Component name:' : '  Component name:'}
       value={value}
       onChange={setValue}
+      onSubmit={() => {}}
       placeholder="e.g. button…"
       focus={isFocused}
     />
@@ -233,6 +234,7 @@ function FocusedTextarea(): JSX.Element {
       label={isFocused ? '❯ Notes:' : '  Notes:'}
       value={value}
       onChange={setValue}
+      onSubmit={() => {}}
       placeholder="Type something…"
       rows={3}
       focus={isFocused}

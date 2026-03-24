@@ -138,6 +138,47 @@ export const componentDocs: ComponentDocsMeta[] = [
     ]
   },
   {
+    "slug": "counter",
+    "name": "Counter",
+    "description": "Animated counter that auto-increments at a specified interval.",
+    "category": "feedback",
+    "usage": "import { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter />)",
+    "examples": [
+      {
+        "title": "Basic Usage",
+        "code": "import React from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter />)"
+      },
+      {
+        "title": "Custom Interval",
+        "code": "import React from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter intervalMs={1000} />)"
+      },
+      {
+        "title": "Custom Color",
+        "code": "import React from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter color=\"cyan\" label=\"seconds\" intervalMs={1000} />)"
+      }
+    ],
+    "props": [
+      {
+        "name": "intervalMs",
+        "type": "number",
+        "default": "100",
+        "description": "Interval in ms between increments"
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "default": "\"tests passed\"",
+        "description": "Label shown after the counter value"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "\"green\"",
+        "description": "Text color"
+      }
+    ]
+  },
+  {
     "slug": "file-picker",
     "name": "FilePicker",
     "description": "Directory navigator with extension filtering and keyboard navigation.",
@@ -181,6 +222,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "description": "Number of visible directory entries"
       },
       {
+        "name": "width",
+        "type": "number",
+        "default": "undefined",
+        "description": "Width of the file picker in columns"
+      },
+      {
         "name": "readDir",
         "type": "(dir: string) => Promise<FileEntry[]>",
         "default": "undefined",
@@ -197,6 +244,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "boolean",
         "default": "true",
         "description": "Whether to accept keyboard input"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "undefined",
+        "description": "Text color"
       }
     ]
   },
@@ -236,7 +289,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "examples": [
       {
         "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React from 'react'\nimport { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Pocky', value: 'pocky' },\n  { label: 'Ginger', value: 'ginger' },\n  { label: 'Plantains', value: 'plantains' },\n  { label: 'Honey Dew', value: 'honey-dew' },\n  { label: 'Pineapple', value: 'pineapple' },\n]\n\nfunction Demo() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Box>\n        <Text bold>Groceries</Text>\n        <Text dimColor> 72 items</Text>\n      </Box>\n      <List\n        items={items}\n        height={5}\n        onSelect={(item) => console.log('Selected:', item.label)}\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
+        "code": "import { Box, Text, render } from 'ink'\nimport React from 'react'\nimport { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Pocky', value: 'pocky' },\n  { label: 'Ginger', value: 'ginger' },\n  { label: 'Plantains', value: 'plantains' },\n  { label: 'Honey Dew', value: 'honey-dew' },\n  { label: 'Pineapple', value: 'pineapple' },\n]\n\nfunction Demo() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Box>\n        <Text color=\"green\">Groceries</Text>\n        <Text dimColor> 72 items</Text>\n      </Box>\n      <List\n        items={items}\n        height={5}\n        onSelect={(item) => console.log('Selected:', item.label)}\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
       }
     ],
     "props": [
@@ -251,6 +304,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "number",
         "default": "8",
         "description": "Number of visible items"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "undefined",
+        "description": "Width of the list in columns"
       },
       {
         "name": "filter",
@@ -275,6 +334,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "boolean",
         "default": "true",
         "description": "Whether to accept keyboard input"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "undefined",
+        "description": "Text color"
       }
     ]
   },
@@ -604,7 +669,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "examples": [
       {
         "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState, useEffect } from 'react'\nimport { Table } from '@/components/ui/orizen/table'\n\nconst columns = [\n  { key: 'rank', label: 'Rank', width: 6 },\n  { key: 'city', label: 'City', width: 20 },\n  { key: 'country', label: 'Country', width: 12 },\n  { key: 'pop', label: 'Population', width: 16, align: 'right' },\n]\n\nconst rows = [\n  { rank: '6', city: 'Mexico City', country: 'Mexico', pop: '22,085,140' },\n  { rank: '7', city: 'Cairo', country: 'Egypt', pop: '21,750,020' },\n  { rank: '8', city: 'Beijing', country: 'China', pop: '21,333,332' },\n  { rank: '9', city: 'Mumbai', country: 'India', pop: '20,961,472' },\n  { rank: '10', city: 'Osaka', country: 'Japan', pop: '19,059,856' },\n  { rank: '11', city: 'Chongqing', country: 'China', pop: '16,874,740' },\n  { rank: '12', city: 'Karachi', country: 'Pakistan', pop: '16,839,950' },\n]\n\nfunction Demo() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Table\n        columns={columns}\n        data={rows}\n        height={5}\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
+        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState, useEffect } from 'react'\nimport { Table } from '@/components/ui/orizen/table'\n\nconst columns = [\n  { key: 'rank', label: 'Rank', width: 6 },\n  { key: 'city', label: 'City', width: 20 },\n  { key: 'country', label: 'Country', width: 12 },\n  { key: 'pop', label: 'Population', width: 16, align: 'right' as const },\n]\n\nconst rows = [\n  { rank: '6', city: 'Mexico City', country: 'Mexico', pop: '22,085,140' },\n  { rank: '7', city: 'Cairo', country: 'Egypt', pop: '21,750,020' },\n  { rank: '8', city: 'Beijing', country: 'China', pop: '21,333,332' },\n  { rank: '9', city: 'Mumbai', country: 'India', pop: '20,961,472' },\n  { rank: '10', city: 'Osaka', country: 'Japan', pop: '19,059,856' },\n  { rank: '11', city: 'Chongqing', country: 'China', pop: '16,874,740' },\n  { rank: '12', city: 'Karachi', country: 'Pakistan', pop: '16,839,950' },\n]\n\nfunction Demo() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Table\n        columns={columns}\n        data={rows}\n        height={5}\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
       }
     ],
     "props": [
@@ -637,13 +702,13 @@ export const componentDocs: ComponentDocsMeta[] = [
   {
     "slug": "text-input",
     "name": "TextInput",
-    "description": "Single-line keyboard-driven text input with focus management.",
+    "description": "Single-line keyboard-driven text input with focus management. Press Enter to submit.",
     "category": "input",
-    "usage": "import { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nconst [value, setValue] = useState('')\n\n<TextInput\n  label=\"Component name:\"\n  value={value}\n  onChange={setValue}\n  placeholder=\"e.g. button...\"\n/>",
+    "usage": "import { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nconst [value, setValue] = useState('')\n\n<TextInput\n  label=\"Component name:\"\n  value={value}\n  onChange={setValue}\n  placeholder=\"e.g. button...\"\n  onSubmit={(val) => console.log(val)}\n/>",
     "examples": [
       {
         "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Component name:</Text>\n      <TextInput\n        value={value}\n        onChange={setValue}\n        placeholder=\"e.g. button...\"\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
+        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n  const [submitted, setSubmitted] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Enter name:</Text>\n      <TextInput\n        value={value}\n        onChange={setValue}\n        placeholder=\"Type and press Enter...\"\n        onSubmit={() => {\n          setSubmitted(value)\n          setValue('')\n        }}\n      />\n      {submitted && <Text color=\"green\">Submitted: {submitted}</Text>}\n    </Box>\n  )\n}\n\nrender(<Demo />)"
       }
     ],
     "props": [
@@ -658,6 +723,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "(value: string) => void",
         "default": "-",
         "description": "Called on every keypress"
+      },
+      {
+        "name": "onSubmit",
+        "type": "() => void",
+        "default": "-",
+        "description": "Called when Enter is pressed"
       },
       {
         "name": "placeholder",
@@ -682,19 +753,31 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "boolean",
         "default": "true",
         "description": "Whether input accepts keyboard events"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "undefined",
+        "description": "Width of the input box in columns"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "undefined",
+        "description": "Text color"
       }
     ]
   },
   {
     "slug": "textarea",
     "name": "Textarea",
-    "description": "Multi-line text input with cursor management and configurable row height.",
+    "description": "Multi-line text input with cursor management and configurable row height. Press Enter to submit, Shift+Enter for new line.",
     "category": "input",
-    "usage": "import { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nconst [value, setValue] = useState('')\n\n<Textarea\n  label=\"Description:\"\n  value={value}\n  onChange={setValue}\n  rows={4}\n  placeholder=\"Enter description...\"\n/>",
+    "usage": "import { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nconst [value, setValue] = useState('')\n\n<Textarea\n  label=\"Description:\"\n  value={value}\n  onChange={setValue}\n  rows={4}\n  placeholder=\"Enter description...\"\n  onSubmit={(val) => console.log(val)}\n/>",
     "examples": [
       {
         "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Description:</Text>\n      <Textarea\n        value={value}\n        onChange={setValue}\n        rows={2}\n        placeholder=\"Building a terminal UI\"\n      />\n    </Box>\n  )\n}\n\nrender(<Demo />)"
+        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n  const [submitted, setSubmitted] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Message:</Text>\n      <Textarea\n        value={value}\n        onChange={setValue}\n        rows={3}\n        placeholder=\"Type here... (Enter to submit, Shift+Enter for new line)\"\n        onSubmit={() => {\n          setSubmitted(value)\n          setValue('')\n        }}\n      />\n      {submitted && <Text color=\"green\">Submitted: {submitted}</Text>}\n    </Box>\n  )\n}\n\nrender(<Demo />)"
       }
     ],
     "props": [
@@ -709,6 +792,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "(value: string) => void",
         "default": "-",
         "description": "Called on every keypress"
+      },
+      {
+        "name": "onSubmit",
+        "type": "() => void",
+        "default": "-",
+        "description": "Called when Enter is pressed (Shift+Enter adds newline)"
       },
       {
         "name": "rows",
@@ -733,6 +822,18 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "boolean",
         "default": "true",
         "description": "Whether input accepts keyboard events"
+      },
+      {
+        "name": "width",
+        "type": "number",
+        "default": "undefined",
+        "description": "Width of the textarea in columns"
+      },
+      {
+        "name": "color",
+        "type": "string",
+        "default": "undefined",
+        "description": "Text color"
       }
     ]
   },

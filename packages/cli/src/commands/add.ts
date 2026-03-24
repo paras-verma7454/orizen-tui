@@ -242,7 +242,7 @@ export async function executeAddCommand(
   },
 ): Promise<AddExecutionResult> {
   const cwd = resolve(options.cwd ?? process.cwd())
-  const targetPath = resolve(cwd, options.path || 'components/ui')
+  const targetPath = resolve(cwd, options.path || 'src/components/ui')
   const dryRun = Boolean(options.dryRun)
   const overwrite = Boolean(options.overwrite)
   const install = options.install ?? true
@@ -492,7 +492,7 @@ export function createAddCommand(): Command {
   return new Command('add')
     .description('Add Orizen TUI components as source files (shadcn-style).')
     .argument('<slug...>', 'component slugs to add')
-    .option('--path <dir>', 'output directory', 'components/ui')
+    .option('--path <dir>', 'output directory', 'src/components/ui')
     .option('--cwd <dir>', 'project root to run in')
     .option('--dry-run', 'print planned changes without writing files')
     .option('--no-install', 'skip dependency installation')
