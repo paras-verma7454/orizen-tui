@@ -23,7 +23,8 @@ export function processTextarea(
   if (key.escape)
     return { value: '', submit: false }
   if (key.return) {
-    if (key.shift)
+    // Ctrl+Enter for newline (Shift+Enter is unreliable in Ink)
+    if (key.ctrl)
       return { value: `${value}\n`, submit: false }
     return { value, submit: true }
   }
@@ -39,7 +40,7 @@ export interface TextareaProps {
   onChange?: (value: string) => void
   /** Initial value for uncontrolled mode */
   defaultValue?: string
-  /** Callback fired when Enter is pressed (Shift+Enter adds newline instead) */
+  /** Callback fired when Enter is pressed (Ctrl+Enter adds newline instead) */
   onSubmit?: () => void
   /** Placeholder shown when value is empty */
   placeholder?: string
@@ -116,7 +117,7 @@ export function Textarea({
   const cursor = focus && cursorVisible ? '█' : ''
   const isEmpty = value.length === 0
 
-  // Pad lines to fill visible rows
+  // Always display exactly `rows` lines visually
   const displayLines: string[] = []
   for (let i = 0; i < rows; i++) {
     displayLines.push(lines[i] ?? '')
@@ -134,17 +135,27 @@ export function Textarea({
       >
         {isEmpty
           ? (
-              <Text color={colors.muted}>
-                {placeholder}
-                {focus ? cursor : ''}
-              </Text>
+              <>
+                {displayLines.slice(0, -1).map((_, i) => (
+                  <Text key={i} color={colors.muted}>{' '}</Text>
+                ))}
+                <Text color={colors.muted}>
+                  {placeholder}
+                  {focus ? cursor : ''}
+                </Text>
+              </>
             )
           : displayLines.map((line, i) => {
-              const isLastLine = i === lines.length - 1
+              const isLastLine = i === rows - 1
+              const hasMoreContent = i < lines.length
               return (
                 <Text key={i} color={color}>
                   {line}
-                  {isLastLine && focus ? <Text color={colors.primary}>{cursor}</Text> : null}
+                  {isLastLine && focus && hasMoreContent
+                    ? <Text color={colors.primary}>{cursor}</Text>
+                    : isLastLine && focus
+                      ? <Text color={colors.primary}>{cursor}</Text>
+                      : null}
                 </Text>
               )
             })}

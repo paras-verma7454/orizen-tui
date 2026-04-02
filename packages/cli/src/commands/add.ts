@@ -27,7 +27,7 @@ export interface AddCommandOptions {
 }
 
 export interface PlannedFile {
-  type: 'component' | 'primitive' | 'manifest' | 'barrel'
+  type: 'component' | 'primitive' | 'manifest'
   slug: string
   sourcePath: string
   outputPath: string
@@ -82,14 +82,7 @@ function buildComponentsManifestContent(slugs: string[]): string {
   return `${JSON.stringify(manifest, null, 2)}\n`
 }
 
-function buildBarrelContent(slugs: string[]): string {
-  const uniqueSorted = [...new Set(slugs)].sort()
-  const lines = uniqueSorted.map((slug) => {
-    const symbol = toComponentSymbol(slug)
-    return `export { ${symbol} } from './${slug}'`
-  })
-  return `${lines.join('\n')}\n`
-}
+
 
 export function rewriteRegistryImports(source: string): string {
   return source.replace(PRIMITIVE_IMPORT_RE, (_full, primitive: PrimitiveName) => {
@@ -236,7 +229,7 @@ function suggestSlugs(slug: string, available: string[]): string[] {
 }
 
 async function promptForExistingFiles(files: PlannedFile[], targetPath: string): Promise<void> {
-  const existingFiles = files.filter(f => !f.shouldWrite && f.type !== 'manifest' && f.type !== 'barrel')
+  const existingFiles = files.filter(f => !f.shouldWrite && f.type !== 'manifest')
   if (existingFiles.length === 0)
     return
 
@@ -428,23 +421,11 @@ export async function executeAddCommand(
     shouldWrite: manifestShouldWrite,
   })
 
-  const barrelPath = join(targetPath, 'orizen', 'index.ts')
-  const barrelContent = buildBarrelContent(mergedSlugs)
-  const barrelShouldWrite = overwrite || !existsSync(barrelPath) || (await readFile(barrelPath, 'utf8').catch(() => '')) !== barrelContent
-  files.push({
-    type: 'barrel',
-    slug: 'index',
-    sourcePath: '[generated]',
-    outputPath: barrelPath,
-    content: barrelContent,
-    shouldWrite: barrelShouldWrite,
-  })
-
   if (!dryRun) {
     for (const file of files) {
       if (!file.shouldWrite)
         continue
-      if (file.type !== 'manifest' && file.type !== 'barrel')
+      if (file.type !== 'manifest')
         continue
 
       await mkdir(dirname(file.outputPath), { recursive: true })

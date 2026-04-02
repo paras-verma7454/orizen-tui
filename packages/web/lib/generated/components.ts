@@ -146,34 +146,46 @@ export const componentDocs: ComponentDocsMeta[] = [
   {
     "slug": "counter",
     "name": "Counter",
-    "description": "Animated counter that auto-increments at a specified interval.",
+    "description": "Display component for numeric values. User provides the increment logic.",
     "category": "feedback",
-    "usage": "import { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter />)",
+    "usage": "import { Counter } from '@/components/ui/orizen/counter'\n\nconst [count, setCount] = useState(0)\nrender(<Counter value={count} onChange={setCount} />)",
     "examples": [
       {
         "title": "Basic Usage",
-        "code": "import React from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter />)"
+        "code": "import React, { useState, useEffect } from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nconst [count, setCount] = useState(0)\n\nuseEffect(() => {\n  const timer = setInterval(() => setCount(c => c + 1), 100)\n  return () => clearInterval(timer)\n}, [])\n\nrender(<Counter value={count} onChange={setCount} />)"
       },
       {
-        "title": "Custom Interval",
-        "code": "import React from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter intervalMs={1000} />)"
+        "title": "Custom Label",
+        "code": "import React, { useState, useEffect } from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nconst [count, setCount] = useState(0)\n\nuseEffect(() => {\n  const timer = setInterval(() => setCount(c => c + 1), 1000)\n  return () => clearInterval(timer)\n}, [])\n\nrender(<Counter value={count} onChange={setCount} label=\"seconds\" />)"
       },
       {
         "title": "Custom Color",
-        "code": "import React from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nrender(<Counter color=\"cyan\" label=\"seconds\" intervalMs={1000} />)"
+        "code": "import React, { useState, useEffect } from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nconst [count, setCount] = useState(0)\n\nuseEffect(() => {\n  const timer = setInterval(() => setCount(c => c + 1), 1000)\n  return () => clearInterval(timer)\n}, [])\n\nrender(<Counter value={count} onChange={setCount} color=\"cyan\" label=\"seconds\" />)"
       }
     ],
     "props": [
       {
-        "name": "intervalMs",
+        "name": "value",
         "type": "number",
-        "default": "100",
-        "description": "Interval in ms between increments"
+        "default": "-",
+        "description": "Current value (controlled mode)"
+      },
+      {
+        "name": "onChange",
+        "type": "(value: number) => void",
+        "default": "-",
+        "description": "Callback fired when value changes"
+      },
+      {
+        "name": "defaultValue",
+        "type": "number",
+        "default": "0",
+        "description": "Initial value for uncontrolled mode"
       },
       {
         "name": "label",
         "type": "string",
-        "default": "\"tests passed\"",
+        "default": "\"count\"",
         "description": "Label shown after the counter value"
       },
       {
@@ -181,6 +193,12 @@ export const componentDocs: ComponentDocsMeta[] = [
         "type": "string",
         "default": "\"green\"",
         "description": "Text color"
+      },
+      {
+        "name": "focus",
+        "type": "boolean",
+        "default": "false",
+        "description": "Focus state (makes text bold)"
       }
     ]
   },
@@ -801,13 +819,13 @@ export const componentDocs: ComponentDocsMeta[] = [
   {
     "slug": "textarea",
     "name": "Textarea",
-    "description": "Multi-line text input with cursor management and configurable row height. Press Enter to submit, Shift+Enter for new line.",
+    "description": "Multi-line text input with cursor management and configurable row height. Press Enter to submit, Ctrl+Enter for new line.",
     "category": "input",
     "usage": "import { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nconst [value, setValue] = useState('')\n\n<Textarea\n  label=\"Description:\"\n  value={value}\n  onChange={setValue}\n  rows={4}\n  placeholder=\"Enter description...\"\n  onSubmit={(val) => console.log(val)}\n/>",
     "examples": [
       {
         "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n  const [submitted, setSubmitted] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Message:</Text>\n      <Textarea\n        value={value}\n        onChange={setValue}\n        rows={3}\n        placeholder=\"Type here... (Enter to submit, Shift+Enter for new line)\"\n        onSubmit={() => {\n          setSubmitted(value)\n          setValue('')\n        }}\n      />\n      {submitted && <Text color=\"green\">Submitted: {submitted}</Text>}\n    </Box>\n  )\n}\n\nrender(<Demo />)"
+        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n  const [submitted, setSubmitted] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Message:</Text>\n      <Textarea\n        value={value}\n        onChange={setValue}\n        rows={3}\n        placeholder=\"Type here... (Enter to submit, Ctrl+Enter for new line)\"\n        onSubmit={() => {\n          setSubmitted(value)\n          setValue('')\n        }}\n      />\n      {submitted && <Text color=\"green\">Submitted: {submitted}</Text>}\n    </Box>\n  )\n}\n\nrender(<Demo />)"
       }
     ],
     "props": [
@@ -833,7 +851,7 @@ export const componentDocs: ComponentDocsMeta[] = [
         "name": "onSubmit",
         "type": "() => void",
         "default": "-",
-        "description": "Called when Enter is pressed (Shift+Enter adds newline)"
+        "description": "Called when Enter is pressed (Ctrl+Enter adds newline)"
       },
       {
         "name": "rows",

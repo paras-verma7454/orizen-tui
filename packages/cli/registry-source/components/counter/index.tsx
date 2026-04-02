@@ -1,34 +1,48 @@
 import { Text } from 'ink'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 export interface CounterProps {
-  /** Interval in ms between increments (default 100) */
-  intervalMs?: number
+  /** Current value (controlled mode) */
+  value?: number
+  /** Callback fired when value changes */
+  onChange?: (value: number) => void
+  /** Initial value for uncontrolled mode */
+  defaultValue?: number
   /** Label shown after the counter value */
   label?: string
   /** Text color (default green) */
   color?: string
+  /** Focus state */
+  focus?: boolean
 }
 
 /**
- * Animated counter that auto-increments at a specified interval.
+ * Display component for numeric values.
+ * User provides the increment logic (e.g., useEffect with setInterval, keyboard input, etc.)
  */
 export function Counter({
-  intervalMs = 100,
-  label = 'tests passed',
+  value: controlledValue,
+  onChange,
+  defaultValue = 0,
+  label = 'count',
   color = 'green',
+  focus = false,
 }: CounterProps): JSX.Element {
-  const [counter, setCounter] = useState(0)
+  const [internalValue, setInternalValue] = useState(defaultValue)
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCounter(previousCounter => previousCounter + 1)
-    }, intervalMs)
+  const isControlled = controlledValue !== undefined
+  const displayValue = isControlled ? controlledValue : internalValue
 
-    return () => {
-      clearInterval(timer)
+  const handleChange = (newValue: number) => {
+    if (!isControlled) {
+      setInternalValue(newValue)
     }
-  }, [intervalMs])
+    onChange?.(newValue)
+  }
 
-  return <Text color={color}>{counter} {label}</Text>
+  return (
+    <Text color={focus ? color : undefined} bold={focus}>
+      {displayValue} {label}
+    </Text>
+  )
 }

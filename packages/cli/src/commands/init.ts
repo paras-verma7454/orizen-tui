@@ -23,9 +23,9 @@ const DEFAULT_COMPONENTS = ['spinner', 'badge', 'progress']
 const STARTER_APP_TEMPLATE = `import { Box, render, Text } from 'ink'
 import { ThemeProvider } from 'orizen-tui-core'
 import React from 'react'
-import { Spinner } from '../components/ui/orizen/spinner'
-import { Badge } from '../components/ui/orizen/badge'
-import { Progress } from '../components/ui/orizen/progress'
+import { Spinner } from '@/components/ui/orizen/spinner'
+import { Badge } from '@/components/ui/orizen/badge'
+import { Progress } from '@/components/ui/orizen/progress'
 
 function App() {
   return (
@@ -57,7 +57,12 @@ const TS_CONFIG = `{
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

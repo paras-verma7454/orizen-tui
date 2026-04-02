@@ -97,7 +97,6 @@ Implemented in `packages/cli/src/commands/add.ts`.
   - primitives copied on-demand to: `src/components/ui/orizen/primitives/{borders,symbols}.ts`
 - Also generates/updates:
   - `src/components/ui/orizen/components.json` - manifest of installed components
-  - `src/components/ui/orizen/index.ts` - barrel re-export for all installed components
 - Flags:
   - `--path <dir>`
   - `--cwd <dir>`

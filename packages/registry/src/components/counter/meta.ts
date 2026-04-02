@@ -3,40 +3,65 @@ import type { ComponentDocsMeta } from '../../docs/types.js'
 export const meta: ComponentDocsMeta = {
   slug: 'counter',
   name: 'Counter',
-  description: 'Animated counter that auto-increments at a specified interval.',
+  description: 'Display component for numeric values. User provides the increment logic.',
   category: 'feedback',
   usage: `import { Counter } from '@/components/ui/orizen/counter'
 
-render(<Counter />)`,
+const [count, setCount] = useState(0)
+render(<Counter value={count} onChange={setCount} />)`,
   examples: [
     {
       title: 'Basic Usage',
-      code: `import React from 'react'
+      code: `import React, { useState, useEffect } from 'react'
 import { render } from 'ink'
 import { Counter } from '@/components/ui/orizen/counter'
 
-render(<Counter />)`,
+const [count, setCount] = useState(0)
+
+useEffect(() => {
+  const timer = setInterval(() => setCount(c => c + 1), 100)
+  return () => clearInterval(timer)
+}, [])
+
+render(<Counter value={count} onChange={setCount} />)`,
     },
     {
-      title: 'Custom Interval',
-      code: `import React from 'react'
+      title: 'Custom Label',
+      code: `import React, { useState, useEffect } from 'react'
 import { render } from 'ink'
 import { Counter } from '@/components/ui/orizen/counter'
 
-render(<Counter intervalMs={1000} />)`,
+const [count, setCount] = useState(0)
+
+useEffect(() => {
+  const timer = setInterval(() => setCount(c => c + 1), 1000)
+  return () => clearInterval(timer)
+}, [])
+
+render(<Counter value={count} onChange={setCount} label="seconds" />)`,
     },
     {
       title: 'Custom Color',
-      code: `import React from 'react'
+      code: `import React, { useState, useEffect } from 'react'
 import { render } from 'ink'
 import { Counter } from '@/components/ui/orizen/counter'
 
-render(<Counter color="cyan" label="seconds" intervalMs={1000} />)`,
+const [count, setCount] = useState(0)
+
+useEffect(() => {
+  const timer = setInterval(() => setCount(c => c + 1), 1000)
+  return () => clearInterval(timer)
+}, [])
+
+render(<Counter value={count} onChange={setCount} color="cyan" label="seconds" />)`,
     },
   ],
   props: [
-    { name: 'intervalMs', type: 'number', default: '100', description: 'Interval in ms between increments' },
-    { name: 'label', type: 'string', default: '"tests passed"', description: 'Label shown after the counter value' },
+    { name: 'value', type: 'number', default: '-', description: 'Current value (controlled mode)' },
+    { name: 'onChange', type: '(value: number) => void', default: '-', description: 'Callback fired when value changes' },
+    { name: 'defaultValue', type: 'number', default: '0', description: 'Initial value for uncontrolled mode' },
+    { name: 'label', type: 'string', default: '"count"', description: 'Label shown after the counter value' },
     { name: 'color', type: 'string', default: '"green"', description: 'Text color' },
+    { name: 'focus', type: 'boolean', default: 'false', description: 'Focus state (makes text bold)' },
   ],
 }

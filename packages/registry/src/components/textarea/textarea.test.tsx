@@ -31,8 +31,8 @@ describe('processTextarea', () => {
     expect(result.submit).toBe(true)
   })
 
-  it('Shift+Enter appends newline', () => {
-    const result = processTextarea('line1', '', { return: true, shift: true })
+  it('Ctrl+Enter appends newline', () => {
+    const result = processTextarea('line1', '', { return: true, ctrl: true })
     expect(result.value).toBe('line1\n')
     expect(result.submit).toBe(false)
   })
