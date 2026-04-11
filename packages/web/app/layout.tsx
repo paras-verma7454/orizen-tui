@@ -36,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
   return (
     <html lang="en" className={GeistMono.variable} suppressHydrationWarning>
       <head>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="e34591db-02da-481f-995b-4d69d63ee0b7"></script>
         <script
           // Set theme before hydration to avoid flash.
           dangerouslySetInnerHTML={{
