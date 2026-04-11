@@ -5,23 +5,34 @@ export const meta: ComponentDocsMeta = {
   name: 'MultiSelect',
   description: 'Arrow-key list with space-to-toggle multi-choice selection.',
   category: 'input',
-  usage: `import { useState } from 'react'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
 import { MultiSelect } from '@/components/ui/orizen/multi-select'
 
-const [chosen, setChosen] = useState<string[]>([])
+const items = [
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Solid', value: 'solid' },
+]
 
-<MultiSelect
-  label="Pick frameworks:"
-  items={[
-    { label: 'React', value: 'react' },
-    { label: 'Vue', value: 'vue' },
-    { label: 'Svelte', value: 'svelte' },
-    { label: 'Solid', value: 'solid' },
-  ]}
-  value={chosen}
-  onChange={setChosen}
-  onSubmit={(values) => console.log(values)}
-/>`,
+function App() {
+  const [selected, setSelected] = useState<string[]>([])
+
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Pick frameworks: <Text dimColor>(space to toggle)</Text></Text>
+      <MultiSelect
+        items={items}
+        value={selected}
+        onChange={setSelected}
+        onSubmit={(values) => console.log('Selected:', values)}
+      />
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

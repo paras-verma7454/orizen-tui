@@ -74,9 +74,9 @@ bun run --filter './packages/web' dev
 
 If adding a new component, update both runtime (`index.tsx`) and metadata (`meta.ts`), then run `bun run generate:docs`.
 
-## Available Registry Components (19)
+## Available Registry Components (16)
 
-`badge`, `checkbox`, `confirm-input`, `counter`, `file-picker`, `help`, `list`, `multi-select`, `number-input`, `paginator`, `progress`, `select`, `spinner`, `stopwatch`, `table`, `text-input`, `textarea`, `timer`, `viewport`
+`badge`, `checkbox`, `confirm-input`, `counter`, `file-picker`, `help`, `list`, `multi-select`, `paginator`, `progress`, `select`, `spinner`, `stopwatch`, `table`, `timer`, `viewport`
 
 ## Core Package (`packages/core/src`)
 

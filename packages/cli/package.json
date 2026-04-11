@@ -1,7 +1,7 @@
 {
   "name": "orizen-tui",
   "type": "module",
-  "version": "0.1.13",
+  "version": "0.2.0",
   "description": "CLI tool for adding terminal UI components to Node.js projects",
   "bin": {
     "orizen-tui": "dist/index.mjs"

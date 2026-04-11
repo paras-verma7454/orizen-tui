@@ -5,11 +5,30 @@ export const meta: ComponentDocsMeta = {
   name: 'Progress',
   description: 'Horizontal progress bar with determinate and indeterminate modes.',
   category: 'feedback',
-  usage: `import { Progress } from '@/components/ui/orizen/progress'
+  usage: `import React, { useState, useEffect } from 'react'
+import { render, Box } from 'ink'
+import { Progress } from '@/components/ui/orizen/progress'
 
-<Progress value={75} label="Uploading:" />
-<Progress value={100} label="Done:" />
-<Progress /> // indeterminate`,
+function App() {
+  const [value, setValue] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setValue(v => (v >= 100 ? 0 : v + 2))
+    }, 80)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Progress value={value} label="Uploading:" width={30} />
+      <Progress value={65} label="Static:" width={30} />
+      <Progress value={100} label="Complete:" width={30} />
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

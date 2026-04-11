@@ -22,7 +22,15 @@
       "Bash(grep -v \"^$\")",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(curl -s \"https://api.github.com/repos/charmbracelet/bubbles/contents\")",
-      "Bash(curl -s \"https://raw.githubusercontent.com/charmbracelet/bubbles/main/README.md\")"
+      "Bash(curl -s \"https://raw.githubusercontent.com/charmbracelet/bubbles/main/README.md\")",
+      "Read(//d/code\tui/packages/registry/src/components/timer/**)",
+      "Read(//d/code\tui/packages/registry/src/components/stopwatch/**)",
+      "Bash(timeout 5 bun src/index.tsx)",
+      "Bash(timeout 3 bun src/index.tsx)",
+      "Bash(sed:*)",
+      "Bash(node -e \"import\\('./src/components/help/meta.ts'\\).then\\(m => console.log\\('OK'\\)\\).catch\\(e => console.error\\(e\\)\\)\")",
+      "Bash(grep -l \"render\\(<App />\\)$\" */meta.ts)",
+      "Bash(npm whoami:*)"
     ]
   }
 }

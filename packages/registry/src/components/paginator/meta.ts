@@ -5,16 +5,22 @@ export const meta: ComponentDocsMeta = {
   name: 'Paginator',
   description: 'Dot-style or numeric page navigation indicator.',
   category: 'display',
-  usage: `import { Paginator } from '@/components/ui/orizen/paginator'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
+import { Paginator } from '@/components/ui/orizen/paginator'
 
-// Dot style (default)
-<Paginator total={5} current={2} />
+function App() {
+  const [page, setPage] = useState(2)
 
-// Numeric style
-<Paginator total={10} current={3} variant="numeric" />
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Paginator total={5} current={page} onChange={setPage} />
+      <Text dimColor>Page {page} of 5</Text>
+    </Box>
+  )
+}
 
-// Custom dots
-<Paginator total={4} current={1} activeDot="◆" inactiveDot="◇" />`,
+render(<App />)`,
   examples: [
     {
       title: 'Variants',

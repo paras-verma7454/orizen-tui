@@ -5,13 +5,22 @@ export const meta: ComponentDocsMeta = {
   name: 'Stopwatch',
   description: 'Count-up elapsed time tracker with pause support.',
   category: 'feedback',
-  usage: `import { Stopwatch } from '@/components/ui/orizen/stopwatch'
+  usage: `import React, { useState } from 'react'
+import { render, Box } from 'ink'
+import { Stopwatch } from '@/components/ui/orizen/stopwatch'
 
-// Running stopwatch
-<Stopwatch />
+function App() {
+  const [running, setRunning] = useState(true)
 
-// Paused stopwatch with label
-<Stopwatch running={false} label="Elapsed:" />`,
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Stopwatch running={running} label="Elapsed:" />
+      <Stopwatch running={false} label="Paused:" />
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Variants',

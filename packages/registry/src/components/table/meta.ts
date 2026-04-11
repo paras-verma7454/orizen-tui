@@ -5,12 +5,14 @@ export const meta: ComponentDocsMeta = {
   name: 'Table',
   description: 'Navigable data table with column alignment and scroll.',
   category: 'display',
-  usage: `import { Table } from '@/components/ui/orizen/table'
+  usage: `import React from 'react'
+import { render, Box } from 'ink'
+import { Table } from '@/components/ui/orizen/table'
 
 const columns = [
-  { key: 'name', label: 'Name' },
-  { key: 'version', label: 'Version', align: 'right' },
-  { key: 'license', label: 'License' },
+  { key: 'name', label: 'Name', width: 12 },
+  { key: 'version', label: 'Version', width: 10 },
+  { key: 'license', label: 'License', width: 12 },
 ]
 
 const data = [
@@ -19,7 +21,15 @@ const data = [
   { name: 'typescript', version: '5.4.5', license: 'Apache-2.0' },
 ]
 
-<Table columns={columns} data={data} height={5} />`,
+function App() {
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Table columns={columns} data={data} height={5} />
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

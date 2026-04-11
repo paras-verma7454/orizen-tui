@@ -5,17 +5,24 @@ export const meta: ComponentDocsMeta = {
   name: 'Timer',
   description: 'Countdown timer with configurable duration and expiry callback.',
   category: 'feedback',
-  usage: `import { Timer } from '@/components/ui/orizen/timer'
+  usage: `import React from 'react'
+import { render, Box, Text } from 'ink'
+import { Timer } from '@/components/ui/orizen/timer'
 
-// Basic countdown from 60 seconds
-<Timer durationMs={60000} />
+function App() {
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Timer durationMs={60000} label="Time remaining:" />
+      <Timer
+        durationMs={30000}
+        label="Auto-save in:"
+        onExpire={() => console.log('Time is up!')}
+      />
+    </Box>
+  )
+}
 
-// With label and expiry callback
-<Timer
-  durationMs={30000}
-  label="Time remaining:"
-  onExpire={() => console.log('Time is up!')}
-/>`,
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

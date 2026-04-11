@@ -5,18 +5,30 @@ export const meta: ComponentDocsMeta = {
   name: 'Select',
   description: 'Arrow-key navigable single-choice list with full keyboard support.',
   category: 'input',
-  usage: `import { Select } from '@/components/ui/orizen/select'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
+import { Select } from '@/components/ui/orizen/select'
 
-<Select
-  label="Pick a framework:"
-  items={[
-    { label: 'React', value: 'react' },
-    { label: 'Vue', value: 'vue' },
-  ]}
-  onSelect={(item) => {
-    // item.value => "react" | "vue"
-  }}
-/>`,
+const items = [
+  { label: 'React', value: 'react' },
+  { label: 'Vue', value: 'vue' },
+  { label: 'Svelte', value: 'svelte' },
+  { label: 'Solid', value: 'solid' },
+]
+
+function App() {
+  const [selected, setSelected] = useState('')
+
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Pick a framework:</Text>
+      <Select items={items} onSelect={(item) => setSelected(item.value)} />
+      {selected && <Text color="green">Selected: {selected}</Text>}
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

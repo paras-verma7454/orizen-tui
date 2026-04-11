@@ -5,20 +5,27 @@ export const meta: ComponentDocsMeta = {
   name: 'Help',
   description: 'Auto-generated keybinding help panel for terminal UIs.',
   category: 'display',
-  usage: `import { Help } from '@/components/ui/orizen/help'
+  usage: `import React from 'react'
+import { render, Box, Text } from 'ink'
+import { Help } from '@/components/ui/orizen/help'
 
 const bindings = [
   { key: '↑↓', description: 'Navigate' },
   { key: 'Enter', description: 'Select' },
   { key: 'Esc', description: 'Cancel' },
-  { name: 'q', description: 'Quit' },
+  { key: 'q', description: 'Quit' },
 ]
 
-// Horizontal layout (default)
-<Help bindings={bindings} />
+function App() {
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Keyboard Shortcuts</Text>
+      <Help bindings={bindings} />
+    </Box>
+  )
+}
 
-// Vertical layout
-<Help bindings={bindings} direction="column" />`,
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

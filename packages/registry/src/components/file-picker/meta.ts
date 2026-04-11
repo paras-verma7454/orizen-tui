@@ -5,18 +5,26 @@ export const meta: ComponentDocsMeta = {
   name: 'FilePicker',
   description: 'Directory navigator with extension filtering and keyboard navigation.',
   category: 'input',
-  usage: `import { FilePicker } from '@/components/ui/orizen/file-picker'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
+import { FilePicker } from '@/components/ui/orizen/file-picker'
 
-// Basic file picker starting in current directory
-<FilePicker onSelect={(entry) => console.log(entry.path)} />
+function App() {
+  const [selected, setSelected] = useState<string | null>(null)
 
-// Filtered to TypeScript files only
-<FilePicker
-  initialDir="/src"
-  extensions={['.ts', '.tsx']}
-  onSelect={(entry) => console.log(entry.path)}
-  onCancel={() => process.exit(0)}
-/>`,
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Text dimColor>Pick a file:</Text>
+      <FilePicker
+        height={5}
+        onSelect={(entry) => setSelected(entry.path)}
+      />
+      {selected && <Text color="cyan">Selected: {selected}</Text>}
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

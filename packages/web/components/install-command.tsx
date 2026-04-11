@@ -62,7 +62,7 @@ export function InstallCommand({ slug }: InstallCommandProps): JSX.Element {
         </div>
         <CopyButton text={cmd} />
       </div>
-      <div className="px-3.5 py-3 text-sm leading-relaxed text-zinc-300 select-all overflow-x-auto whitespace-pre sm:whitespace-normal sm:break-words">
+      <div className="px-3.5 py-3 text-sm leading-relaxed text-zinc-300 overflow-x-auto whitespace-pre sm:whitespace-normal sm:break-words">
         {cmd}
       </div>
     </div>

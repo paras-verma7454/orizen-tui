@@ -65,9 +65,9 @@ export interface FocusManagerProps {
  * their focus state from context. Only the focused component's useInput fires.
  *
  * Usage:
- *   <FocusManager defaultId="search">
- *     <TextInput ... focus={isFocused} />   ← via useFocus('search')
+ *   <FocusManager defaultId="menu">
  *     <Select ... focus={isFocused} />      ← via useFocus('menu')
+ *     <Checkbox ... focus={isFocused} />    ← via useFocus('checkbox')
  *   </FocusManager>
  */
 export function FocusManager({ children, defaultId, cycleFocus = true }: FocusManagerProps): JSX.Element {

@@ -32,7 +32,7 @@ npx orizen-tui add spinner badge progress
 After running:
 
 ```bash
-npx orizen-tui add spinner badge progress text-input
+npx orizen-tui add spinner badge progress select
 ```
 
 You can import and use copied components from your app:
@@ -44,11 +44,15 @@ import React, { useEffect, useState } from 'react'
 import { Badge } from './components/ui/orizen/badge'
 import { Progress } from './components/ui/orizen/progress'
 import { Spinner } from './components/ui/orizen/spinner'
-import { TextInput } from './components/ui/orizen/text-input'
+import { Select } from './components/ui/orizen/select'
+
+const items = [
+  { label: 'Option 1', value: '1' },
+  { label: 'Option 2', value: '2' },
+]
 
 function App() {
   const [value, setValue] = useState(0)
-  const [name, setName] = useState('')
 
   useEffect(() => {
     const t = setInterval(() => setValue(v => Math.min(100, v + 5)), 120)
@@ -61,7 +65,7 @@ function App() {
         <Spinner label="Loading components..." />
         <Badge variant="success">READY</Badge>
         <Progress label="Build" value={value} />
-        <TextInput label="Project name" value={name} onChange={setName} placeholder="my-tui-app" />
+        <Select label="Choose" items={items} onSelect={(item) => console.log(item.value)} />
       </Box>
     </ThemeProvider>
   )
@@ -77,7 +81,7 @@ Single component quick examples:
   <Spinner label="Installing..." preset="dots" />
   <Badge variant="warning">BETA</Badge>
   <Progress value={42} max={100} label="Upload" />
-  <TextInput value={text} onChange={setText} placeholder="Type here..." />
+  <Select label="Choose" items={items} onSelect={(item) => console.log(item.value)} />
 </>
 ```
 

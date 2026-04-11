@@ -5,22 +5,34 @@ export const meta: ComponentDocsMeta = {
   name: 'List',
   description: 'Filterable, paginated scrollable list with an integrated loading spinner.',
   category: 'display',
-  usage: `import { List } from '@/components/ui/orizen/list'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
+import { List } from '@/components/ui/orizen/list'
 
 const items = [
   { label: 'Apple', value: 'apple' },
   { label: 'Banana', value: 'banana' },
   { label: 'Cherry', value: 'cherry' },
+  { label: 'Date', value: 'date' },
 ]
 
-// Basic list
-<List items={items} onSelect={(item) => console.log(item.value)} />
+function App() {
+  const [selected, setSelected] = useState('')
 
-// With filter and custom height
-<List items={items} filter="an" height={5} />
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Fruits</Text>
+      <List
+        items={items}
+        height={4}
+        onSelect={(item) => setSelected(item.value)}
+      />
+      {selected && <Text color="green">Selected: {selected}</Text>}
+    </Box>
+  )
+}
 
-// Loading state
-<List items={[]} isLoading />`,
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

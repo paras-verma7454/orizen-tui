@@ -52,7 +52,8 @@ export default function SetupPage(): JSX.Element {
                     </p>
                     <CodeBlock
                       code={`npx orizen-tui@latest init my-tui-app
-cd my-tui-app`}
+cd my-tui-app
+npm run dev`}
                       lang="bash"
                       filename="terminal"
                     />
@@ -68,7 +69,8 @@ cd my-tui-app`}
                     </p>
                     <CodeBlock
                       code={`pnpm dlx orizen-tui@latest init my-tui-app
-cd my-tui-app`}
+cd my-tui-app
+pnpm dev`}
                       lang="bash"
                       filename="terminal"
                     />
@@ -84,7 +86,8 @@ cd my-tui-app`}
                     </p>
                     <CodeBlock
                       code={`bunx orizen-tui@latest init my-tui-app
-cd my-tui-app`}
+cd my-tui-app
+bun dev`}
                       lang="bash"
                       filename="terminal"
                     />

@@ -1,6 +1,6 @@
 import { Text } from 'ink'
 import { useTheme } from 'orizen-tui-core'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 /**
  * Format milliseconds as MM:SS or H:MM:SS — extracted for unit testing.
@@ -30,28 +30,36 @@ export interface TimerProps {
 export function Timer({ durationMs, label, onExpire }: TimerProps): JSX.Element {
   const { colors } = useTheme()
   const [remaining, setRemaining] = useState(durationMs)
+  const onExpireRef = useRef(onExpire)
 
+  // Keep callback ref up to date without triggering re-renders
+  useEffect(() => {
+    onExpireRef.current = onExpire
+  }, [onExpire])
+
+  // Reset remaining time when durationMs changes
   useEffect(() => {
     setRemaining(durationMs)
   }, [durationMs])
 
+  // Countdown effect - uses a ref to avoid dependency issues
   useEffect(() => {
     if (remaining <= 0) {
-      onExpire?.()
+      onExpireRef.current?.()
       return
     }
     const timer = setInterval(() => {
       setRemaining((r) => {
         const next = r - 1000
         if (next <= 0) {
-          onExpire?.()
+          onExpireRef.current?.()
           return 0
         }
         return next
       })
     }, 1000)
     return () => clearInterval(timer)
-  }, [remaining <= 0])
+  }, [remaining <= 0]) // Only re-run when crossing zero threshold
 
   const color = remaining <= 10000 ? colors.warning : colors.primary
 

@@ -1,21 +1,17 @@
 import process from 'node:process'
 import {
-  Badge,
   Checkbox,
   ConfirmInput,
   FilePicker,
   Help,
   List,
   MultiSelect,
-  NumberInput,
   Paginator,
   Progress,
   Select,
   Spinner,
   Stopwatch,
   Table,
-  Textarea,
-  TextInput,
   Timer,
   Viewport,
 } from '@orizen-tui/registry'
@@ -72,12 +68,9 @@ const TABLE_DATA = [
   { name: 'Badge', type: 'Display', status: 'stable' },
   { name: 'Progress', type: 'Display', status: 'stable' },
   { name: 'Spinner', type: 'Animated', status: 'stable' },
-  { name: 'TextInput', type: 'Input', status: 'stable' },
   { name: 'Select', type: 'Input', status: 'stable' },
   { name: 'Checkbox', type: 'Input', status: 'stable' },
   { name: 'MultiSelect', type: 'Input', status: 'stable' },
-  { name: 'NumberInput', type: 'Input', status: 'stable' },
-  { name: 'Textarea', type: 'Input', status: 'stable' },
   { name: 'Timer', type: 'Animated', status: 'stable' },
   { name: 'Stopwatch', type: 'Animated', status: 'stable' },
   { name: 'Paginator', type: 'Display', status: 'stable' },
@@ -146,24 +139,6 @@ function FocusedSelect({ onThemeChange }: { onThemeChange: (color: string) => vo
   )
 }
 
-// ── Text input ────────────────────────────────────────────────────────────────
-
-function FocusedInput(): JSX.Element {
-  const { isFocused } = useFocus('input')
-  const [value, setValue] = useState('')
-
-  return (
-    <TextInput
-      label={isFocused ? '❯ Component name:' : '  Component name:'}
-      value={value}
-      onChange={setValue}
-      onSubmit={() => {}}
-      placeholder="e.g. button…"
-      focus={isFocused}
-    />
-  )
-}
-
 // ── Checkbox ──────────────────────────────────────────────────────────────────
 
 function FocusedCheckbox(): JSX.Element {
@@ -201,44 +176,6 @@ function FocusedMultiSelect(): JSX.Element {
         focus={isFocused}
       />
     </Box>
-  )
-}
-
-// ── NumberInput ───────────────────────────────────────────────────────────────
-
-function FocusedNumberInput(): JSX.Element {
-  const { isFocused } = useFocus('number')
-  const [value, setValue] = useState(42)
-
-  return (
-    <NumberInput
-      label={isFocused ? '❯ Port number:' : '  Port number:'}
-      value={value}
-      onChange={setValue}
-      min={0}
-      max={9999}
-      step={1}
-      focus={isFocused}
-    />
-  )
-}
-
-// ── Textarea ──────────────────────────────────────────────────────────────────
-
-function FocusedTextarea(): JSX.Element {
-  const { isFocused } = useFocus('textarea')
-  const [value, setValue] = useState('')
-
-  return (
-    <Textarea
-      label={isFocused ? '❯ Notes:' : '  Notes:'}
-      value={value}
-      onChange={setValue}
-      onSubmit={() => {}}
-      placeholder="Type something…"
-      rows={3}
-      focus={isFocused}
-    />
   )
 }
 
@@ -367,13 +304,13 @@ function QuitHandler(): null {
 function App({ onThemeChange }: { onThemeChange: (c: string) => void }): JSX.Element {
   const cols = Math.min(process.stdout.columns || 80, 80)
   const { isRawModeSupported } = useStdin()
-  const [paginatorPage, setPaginatorPage] = useState(1)
   const div = <Text dimColor>{'─'.repeat(cols)}</Text>
 
-  useEffect(() => {
-    const t = setInterval(() => setPaginatorPage(p => (p % 5) + 1), 1200)
-    return () => clearInterval(t)
-  }, [])
+  // Paginator animation - disabled since Paginator is commented out
+  // useEffect(() => {
+  //   const t = setInterval(() => setPaginatorPage(p => (p % 5) + 1), 1200)
+  //   return () => clearInterval(t)
+  // }, [])
 
   return (
     <Box flexDirection="column" paddingX={1}>
@@ -386,50 +323,14 @@ function App({ onThemeChange }: { onThemeChange: (c: string) => void }): JSX.Ele
         <Text dimColor>·  q to quit</Text>
       </Box>
 
-      {div}
-
-      {/* Spinners */}
-      <Text dimColor>── Spinner</Text>
-      <Box gap={4} paddingLeft={2}>
-        {SPINNER_VARIANTS.map(s => (
-          <Spinner key={s.label} preset={s.preset} label={s.label} />
-        ))}
-      </Box>
-
-      {div}
-
-      {/* Badges */}
-      <Text dimColor>── Badge</Text>
-      <Box gap={2} paddingLeft={2}>
-        {BADGE_VARIANTS.map(v => <Badge key={v} variant={v}>{v}</Badge>)}
-      </Box>
-
-      {div}
-
-      {/* Progress */}
-      <Text dimColor>── Progress</Text>
-      <Box paddingLeft={2}>
-        <AnimatedProgress />
-      </Box>
-
-      {div}
-
-      {/* Paginator */}
-      <Text dimColor>── Paginator</Text>
-      <Box gap={6} paddingLeft={2}>
-        <Paginator total={5} current={paginatorPage} variant="dots" />
-        <Paginator total={5} current={paginatorPage} variant="numeric" />
-      </Box>
-
-      {div}
 
       {/* Timer & Stopwatch */}
-      <Text dimColor>── Timer · Stopwatch</Text>
+      {/* <Text dimColor>── Timer · Stopwatch</Text>
       <Box gap={6} paddingLeft={2}>
         <Timer durationMs={30000} label="Countdown:" />
         <Stopwatch running label="Elapsed:" />
         <Stopwatch running={false} label="Paused:" />
-      </Box>
+      </Box> */}
 
       {div}
 
@@ -448,31 +349,28 @@ function App({ onThemeChange }: { onThemeChange: (c: string) => void }): JSX.Ele
 
           <Box gap={6}>
             <FocusedSelect onThemeChange={onThemeChange} />
-            <FocusedInput />
-            <FocusedNumberInput />
           </Box>
 
-          {div}
+          {/* {div}
 
           <Box gap={4} alignItems="flex-start">
             <FocusedCheckbox />
             <FocusedMultiSelect />
             <FocusedConfirm />
+          </Box> */}
+
+          {div}
+
+          <Box >
+            {/* <FocusedViewport /> */}
           </Box>
 
           {div}
 
-          <Box gap={4} alignItems="flex-start">
-            <FocusedTextarea />
-            <FocusedViewport />
-          </Box>
-
-          {div}
-
-          <Box gap={4} alignItems="flex-start">
+          {/* <Box gap={4} alignItems="flex-start">
             <FocusedList />
             <FocusedTable />
-          </Box>
+          </Box> */}
 
           {div}
 

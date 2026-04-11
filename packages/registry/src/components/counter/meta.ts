@@ -5,10 +5,22 @@ export const meta: ComponentDocsMeta = {
   name: 'Counter',
   description: 'Display component for numeric values. User provides the increment logic.',
   category: 'feedback',
-  usage: `import { Counter } from '@/components/ui/orizen/counter'
+  usage: `import React, { useState, useEffect } from 'react'
+import { render } from 'ink'
+import { Counter } from '@/components/ui/orizen/counter'
 
-const [count, setCount] = useState(0)
-render(<Counter value={count} onChange={setCount} />)`,
+function App() {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => setCount(c => c + 1), 100)
+    return () => clearInterval(timer)
+  }, [])
+
+  return <Counter value={count} onChange={setCount} />
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Basic Usage',

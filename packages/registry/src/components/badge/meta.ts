@@ -5,11 +5,23 @@ export const meta: ComponentDocsMeta = {
   name: 'Badge',
   description: 'Inline colored label with semantic variants driven by the theme.',
   category: 'display',
-  usage: `import { Badge } from '@/components/ui/orizen/badge'
+  usage: `import React from 'react'
+import { render, Box } from 'ink'
+import { Badge } from '@/components/ui/orizen/badge'
 
-<Badge variant="default">v1.0.0</Badge>
-<Badge variant="success">Deployed</Badge>
-<Badge variant="error">Failed</Badge>`,
+function App() {
+  return (
+    <Box gap={2}>
+      <Badge variant="default">v1.0.0</Badge>
+      <Badge variant="success">Deployed</Badge>
+      <Badge variant="warning">Beta</Badge>
+      <Badge variant="error">Failed</Badge>
+      <Badge variant="info">Info</Badge>
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Variants',

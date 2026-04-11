@@ -132,35 +132,6 @@ render(
 />
 ```
 
-**TextInput**
-```tsx
-<TextInput
-  value={val}
-  onChange={setVal}
-  onSubmit={() => console.log(val)}  // Required - Enter to submit
-  placeholder="Type here"
-  label="Name"
-  width={40}     // Optional - defaults to full terminal width
-  color="cyan"   // Optional - Ink color
-/>
-```
-Keys: Enter to submit · Escape to clear
-
-**Textarea**
-```tsx
-<Textarea
-  value={val}
-  onChange={setVal}
-  onSubmit={() => console.log(val)}  // Required - Enter to submit
-  rows={4}
-  placeholder="Type here..."
-  label="Description"
-  width={50}    // Optional - defaults to full terminal width
-  color="green"  // Optional - Ink color
-/>
-```
-Keys: Enter to submit · Shift+Enter for new line
-
 **Badge**
 ```tsx
 <Badge variant="success">SUCCESS</Badge>
@@ -245,22 +216,22 @@ Pass `focus` to interactive components so only one receives input at a time:
 ```tsx
 import { useFocus } from 'ink'
 
-const { isFocused: nameF } = useFocus({ id: 'name' })
-const { isFocused: passF } = useFocus({ id: 'pass' })
+const { isFocused: selectF } = useFocus({ id: 'select' })
+const { isFocused: checkboxF } = useFocus({ id: 'checkbox' })
 
-<TextInput value={name} onChange={setName} label="Username" focus={nameF} />
-<TextInput value={pass} onChange={setPass} label="Password" mask="*" focus={passF} />
+<Select items={items} onSelect={handleSelect} focus={selectF} />
+<Checkbox items={items} value={checked} onChange={setChecked} focus={checkboxF} />
 ```
 
 Tab / Shift+Tab cycles focus.
 
 ---
 
-## Available Components (19)
+## Available Components (16)
 
 `badge` · `checkbox` · `confirm-input` · `counter` · `file-picker` · `help` · `list` ·
-`multi-select` · `number-input` · `paginator` · `progress` · `select` ·
-`spinner` · `stopwatch` · `table` · `text-input` · `textarea` · `timer` · `viewport`
+`multi-select` · `paginator` · `progress` · `select` ·
+`spinner` · `stopwatch` · `table` · `timer` · `viewport`
 
 Browse live previews: **[orizen-tui.vercel.app](https://orizen-tui.vercel.app)** · Source: **[github.com/paras-verma7454/orizen-tui](https://github.com/paras-verma7454/orizen-tui)**
 

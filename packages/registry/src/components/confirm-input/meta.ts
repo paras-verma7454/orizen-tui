@@ -5,15 +5,30 @@ export const meta: ComponentDocsMeta = {
   name: 'ConfirmInput',
   description: 'Inline y/n confirmation prompt with configurable default answer.',
   category: 'input',
-  usage: `import { ConfirmInput } from '@/components/ui/orizen/confirm-input'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
+import { ConfirmInput } from '@/components/ui/orizen/confirm-input'
 
-<ConfirmInput
-  message="Overwrite existing file?"
-  defaultAnswer="yes"
-  onConfirm={(answer) => {
-    if (answer) overwriteFile()
-  }}
-/>`,
+function App() {
+  const [confirmed, setConfirmed] = useState<boolean | null>(null)
+
+  return (
+    <Box flexDirection="column" gap={1}>
+      <ConfirmInput
+        message="Overwrite existing file?"
+        defaultAnswer="yes"
+        onConfirm={setConfirmed}
+      />
+      {confirmed !== null && (
+        <Text color={confirmed ? 'green' : 'red'}>
+          {confirmed ? 'Confirmed!' : 'Cancelled'}
+        </Text>
+      )}
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

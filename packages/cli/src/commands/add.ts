@@ -99,6 +99,26 @@ export function findRequiredPrimitives(source: string): PrimitiveName[] {
   return [...primitives].sort()
 }
 
+function detectPackageManagerFromEnv(): PackageManager | null {
+  const execPath = process.env.npm_execpath ?? ''
+  const userAgent = process.env.npm_config_user_agent ?? ''
+
+  if (execPath.includes('bun') || userAgent.includes('bun')) {
+    return 'bun'
+  }
+  if (execPath.includes('pnpm') || userAgent.includes('pnpm')) {
+    return 'pnpm'
+  }
+  if (execPath.includes('yarn') || userAgent.includes('yarn')) {
+    return 'yarn'
+  }
+  if (process.execPath.includes('bun')) {
+    return 'bun'
+  }
+
+  return null
+}
+
 export function detectPackageManager(cwd: string, fileExists: (path: string) => boolean = existsSync): PackageManager {
   if (fileExists(join(cwd, 'bun.lock')) || fileExists(join(cwd, 'bun.lockb')))
     return 'bun'
@@ -106,6 +126,12 @@ export function detectPackageManager(cwd: string, fileExists: (path: string) => 
     return 'pnpm'
   if (fileExists(join(cwd, 'yarn.lock')))
     return 'yarn'
+
+  const fromEnv = detectPackageManagerFromEnv()
+  if (fromEnv) {
+    return fromEnv
+  }
+
   return 'npm'
 }
 

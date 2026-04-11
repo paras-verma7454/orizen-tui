@@ -59,7 +59,6 @@ const TS_CONFIG = `{
     "isolatedModules": true,
     "noEmit": true,
     "types": ["node"],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
@@ -131,8 +130,28 @@ bun run dev
 npx orizen-tui add <component-name>
 \`\`\`
 
-Available components: spinner, badge, progress, text-input, textarea, select, checkbox, list, table, timer, stopwatch, paginator, viewport, file-picker, confirm-input, number-input, multi-select, help
+Available components: spinner, badge, progress, select, checkbox, list, table, timer, stopwatch, paginator, viewport, file-picker, confirm-input, multi-select, help
 `
+}
+
+function detectPackageManagerFromEnv(): 'bun' | 'pnpm' | 'yarn' | 'npm' | null {
+  const execPath = process.env.npm_execpath ?? ''
+  const userAgent = process.env.npm_config_user_agent ?? ''
+
+  if (execPath.includes('bun') || userAgent.includes('bun')) {
+    return 'bun'
+  }
+  if (execPath.includes('pnpm') || userAgent.includes('pnpm')) {
+    return 'pnpm'
+  }
+  if (execPath.includes('yarn') || userAgent.includes('yarn')) {
+    return 'yarn'
+  }
+  if (process.execPath.includes('bun')) {
+    return 'bun'
+  }
+
+  return null
 }
 
 function detectPackageManager(cwd: string): 'bun' | 'pnpm' | 'yarn' | 'npm' {
@@ -145,6 +164,12 @@ function detectPackageManager(cwd: string): 'bun' | 'pnpm' | 'yarn' | 'npm' {
   if (existsSync(resolve(cwd, 'yarn.lock'))) {
     return 'yarn'
   }
+
+  const fromEnv = detectPackageManagerFromEnv()
+  if (fromEnv) {
+    return fromEnv
+  }
+
   return 'npm'
 }
 
@@ -229,7 +254,8 @@ export async function executeInitCommand(
   console.log('')
   console.log('To run your app:')
   console.log(`  ${pc.cyan('cd')} ${projectName}`)
-  console.log(`  ${pc.cyan('npm run dev')}`)
+  const runCmd = packageManager === 'npm' ? 'npm run dev' : `${packageManager} dev`
+  console.log(`  ${pc.cyan(runCmd)}`)
   console.log('')
 
   return {

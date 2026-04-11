@@ -31,7 +31,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Badge",
     "description": "Inline colored label with semantic variants driven by the theme.",
     "category": "display",
-    "usage": "import { Badge } from '@/components/ui/orizen/badge'\n\n<Badge variant=\"default\">v1.0.0</Badge>\n<Badge variant=\"success\">Deployed</Badge>\n<Badge variant=\"error\">Failed</Badge>",
+    "usage": "import React from 'react'\nimport { render, Box } from 'ink'\nimport { Badge } from '@/components/ui/orizen/badge'\n\nfunction App() {\n  return (\n    <Box gap={2}>\n      <Badge variant=\"default\">v1.0.0</Badge>\n      <Badge variant=\"success\">Deployed</Badge>\n      <Badge variant=\"warning\">Beta</Badge>\n      <Badge variant=\"error\">Failed</Badge>\n      <Badge variant=\"info\">Info</Badge>\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Variants",
@@ -58,7 +58,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Checkbox",
     "description": "Arrow-key navigable list of toggleable boolean items.",
     "category": "input",
-    "usage": "import { useState } from 'react'\nimport { Checkbox } from '@/components/ui/orizen/checkbox'\n\nconst [selected, setSelected] = useState<string[]>(['typescript'])\n\n<Checkbox\n  label=\"Select features:\"\n  items={[\n    { label: 'TypeScript', value: 'typescript' },\n    { label: 'ESLint', value: 'eslint' },\n    { label: 'Prettier', value: 'prettier' },\n  ]}\n  value={selected}\n  onChange={setSelected}\n/>",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { Checkbox } from '@/components/ui/orizen/checkbox'\n\nconst items = [\n  { label: 'TypeScript', value: 'ts' },\n  { label: 'ESLint', value: 'eslint' },\n  { label: 'Prettier', value: 'prettier' },\n]\n\nfunction App() {\n  const [selected, setSelected] = useState<string[]>(['ts'])\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text bold>Select features:</Text>\n      <Checkbox\n        items={items}\n        value={selected}\n        onChange={setSelected}\n      />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -109,7 +109,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "ConfirmInput",
     "description": "Inline y/n confirmation prompt with configurable default answer.",
     "category": "input",
-    "usage": "import { ConfirmInput } from '@/components/ui/orizen/confirm-input'\n\n<ConfirmInput\n  message=\"Overwrite existing file?\"\n  defaultAnswer=\"yes\"\n  onConfirm={(answer) => {\n    if (answer) overwriteFile()\n  }}\n/>",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { ConfirmInput } from '@/components/ui/orizen/confirm-input'\n\nfunction App() {\n  const [confirmed, setConfirmed] = useState<boolean | null>(null)\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <ConfirmInput\n        message=\"Overwrite existing file?\"\n        defaultAnswer=\"yes\"\n        onConfirm={setConfirmed}\n      />\n      {confirmed !== null && (\n        <Text color={confirmed ? 'green' : 'red'}>\n          {confirmed ? 'Confirmed!' : 'Cancelled'}\n        </Text>\n      )}\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -148,7 +148,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Counter",
     "description": "Display component for numeric values. User provides the increment logic.",
     "category": "feedback",
-    "usage": "import { Counter } from '@/components/ui/orizen/counter'\n\nconst [count, setCount] = useState(0)\nrender(<Counter value={count} onChange={setCount} />)",
+    "usage": "import React, { useState, useEffect } from 'react'\nimport { render } from 'ink'\nimport { Counter } from '@/components/ui/orizen/counter'\n\nfunction App() {\n  const [count, setCount] = useState(0)\n\n  useEffect(() => {\n    const timer = setInterval(() => setCount(c => c + 1), 100)\n    return () => clearInterval(timer)\n  }, [])\n\n  return <Counter value={count} onChange={setCount} />\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Basic Usage",
@@ -207,7 +207,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "FilePicker",
     "description": "Directory navigator with extension filtering and keyboard navigation.",
     "category": "input",
-    "usage": "import { FilePicker } from '@/components/ui/orizen/file-picker'\n\n// Basic file picker starting in current directory\n<FilePicker onSelect={(entry) => console.log(entry.path)} />\n\n// Filtered to TypeScript files only\n<FilePicker\n  initialDir=\"/src\"\n  extensions={['.ts', '.tsx']}\n  onSelect={(entry) => console.log(entry.path)}\n  onCancel={() => process.exit(0)}\n/>",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { FilePicker } from '@/components/ui/orizen/file-picker'\n\nfunction App() {\n  const [selected, setSelected] = useState<string | null>(null)\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Pick a file:</Text>\n      <FilePicker\n        height={5}\n        onSelect={(entry) => setSelected(entry.path)}\n      />\n      {selected && <Text color=\"cyan\">Selected: {selected}</Text>}\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -282,7 +282,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Help",
     "description": "Auto-generated keybinding help panel for terminal UIs.",
     "category": "display",
-    "usage": "import { Help } from '@/components/ui/orizen/help'\n\nconst bindings = [\n  { key: '↑↓', description: 'Navigate' },\n  { key: 'Enter', description: 'Select' },\n  { key: 'Esc', description: 'Cancel' },\n  { name: 'q', description: 'Quit' },\n]\n\n// Horizontal layout (default)\n<Help bindings={bindings} />\n\n// Vertical layout\n<Help bindings={bindings} direction=\"column\" />",
+    "usage": "import React from 'react'\nimport { render, Box, Text } from 'ink'\nimport { Help } from '@/components/ui/orizen/help'\n\nconst bindings = [\n  { key: '↑↓', description: 'Navigate' },\n  { key: 'Enter', description: 'Select' },\n  { key: 'Esc', description: 'Cancel' },\n  { key: 'q', description: 'Quit' },\n]\n\nfunction App() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text bold>Keyboard Shortcuts</Text>\n      <Help bindings={bindings} />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -309,7 +309,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "List",
     "description": "Filterable, paginated scrollable list with an integrated loading spinner.",
     "category": "display",
-    "usage": "import { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Apple', value: 'apple' },\n  { label: 'Banana', value: 'banana' },\n  { label: 'Cherry', value: 'cherry' },\n]\n\n// Basic list\n<List items={items} onSelect={(item) => console.log(item.value)} />\n\n// With filter and custom height\n<List items={items} filter=\"an\" height={5} />\n\n// Loading state\n<List items={[]} isLoading />",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { List } from '@/components/ui/orizen/list'\n\nconst items = [\n  { label: 'Apple', value: 'apple' },\n  { label: 'Banana', value: 'banana' },\n  { label: 'Cherry', value: 'cherry' },\n  { label: 'Date', value: 'date' },\n]\n\nfunction App() {\n  const [selected, setSelected] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text bold>Fruits</Text>\n      <List\n        items={items}\n        height={4}\n        onSelect={(item) => setSelected(item.value)}\n      />\n      {selected && <Text color=\"green\">Selected: {selected}</Text>}\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -372,7 +372,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "MultiSelect",
     "description": "Arrow-key list with space-to-toggle multi-choice selection.",
     "category": "input",
-    "usage": "import { useState } from 'react'\nimport { MultiSelect } from '@/components/ui/orizen/multi-select'\n\nconst [chosen, setChosen] = useState<string[]>([])\n\n<MultiSelect\n  label=\"Pick frameworks:\"\n  items={[\n    { label: 'React', value: 'react' },\n    { label: 'Vue', value: 'vue' },\n    { label: 'Svelte', value: 'svelte' },\n    { label: 'Solid', value: 'solid' },\n  ]}\n  value={chosen}\n  onChange={setChosen}\n  onSubmit={(values) => console.log(values)}\n/>",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { MultiSelect } from '@/components/ui/orizen/multi-select'\n\nconst items = [\n  { label: 'React', value: 'react' },\n  { label: 'Vue', value: 'vue' },\n  { label: 'Svelte', value: 'svelte' },\n  { label: 'Solid', value: 'solid' },\n]\n\nfunction App() {\n  const [selected, setSelected] = useState<string[]>([])\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text bold>Pick frameworks: <Text dimColor>(space to toggle)</Text></Text>\n      <MultiSelect\n        items={items}\n        value={selected}\n        onChange={setSelected}\n        onSubmit={(values) => console.log('Selected:', values)}\n      />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -425,74 +425,11 @@ export const componentDocs: ComponentDocsMeta[] = [
     ]
   },
   {
-    "slug": "number-input",
-    "name": "NumberInput",
-    "description": "Numeric input with up/down arrow key increment and configurable step.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { NumberInput } from '@/components/ui/orizen/number-input'\n\nconst [port, setPort] = useState(3000)\n\n<NumberInput\n  label=\"Port:\"\n  value={port}\n  onChange={setPort}\n  min={1024}\n  max={65535}\n  step={1}\n/>",
-    "examples": [
-      {
-        "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { NumberInput } from '@/components/ui/orizen/number-input'\n\nfunction Demo() {\n  const [port, setPort] = useState(3000)\n  const [workers, setWorkers] = useState(4)\n\n  return (\n    <Box flexDirection=\"column\" gap={3}>\n      <Box flexDirection=\"column\" gap={1}>\n        <Text dimColor>Port:</Text>\n        <NumberInput\n          value={port}\n          onChange={setPort}\n          min={3000}\n          max={3005}\n          step={1}\n        />\n      </Box>\n\n      <Box flexDirection=\"column\" gap={1}>\n        <Text dimColor>Workers:</Text>\n        <NumberInput\n          value={workers}\n          onChange={setWorkers}\n          min={1}\n          max={8}\n          step={1}\n        />\n      </Box>\n    </Box>\n  )\n}\n\nrender(<Demo />)"
-      }
-    ],
-    "props": [
-      {
-        "name": "value",
-        "type": "number",
-        "default": "-",
-        "description": "Current numeric value (controlled)"
-      },
-      {
-        "name": "onChange",
-        "type": "(value: number) => void",
-        "default": "-",
-        "description": "Called when value changes (controlled)"
-      },
-      {
-        "name": "defaultValue",
-        "type": "number",
-        "default": "0",
-        "description": "Initial value (uncontrolled)"
-      },
-      {
-        "name": "min",
-        "type": "number",
-        "default": "-Infinity",
-        "description": "Minimum allowed value"
-      },
-      {
-        "name": "max",
-        "type": "number",
-        "default": "Infinity",
-        "description": "Maximum allowed value"
-      },
-      {
-        "name": "step",
-        "type": "number",
-        "default": "1",
-        "description": "Increment/decrement amount per keypress"
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label above the input"
-      },
-      {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      }
-    ]
-  },
-  {
     "slug": "paginator",
     "name": "Paginator",
     "description": "Dot-style or numeric page navigation indicator.",
     "category": "display",
-    "usage": "import { Paginator } from '@/components/ui/orizen/paginator'\n\n// Dot style (default)\n<Paginator total={5} current={2} />\n\n// Numeric style\n<Paginator total={10} current={3} variant=\"numeric\" />\n\n// Custom dots\n<Paginator total={4} current={1} activeDot=\"◆\" inactiveDot=\"◇\" />",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { Paginator } from '@/components/ui/orizen/paginator'\n\nfunction App() {\n  const [page, setPage] = useState(2)\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Paginator total={5} current={page} onChange={setPage} />\n      <Text dimColor>Page {page} of 5</Text>\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Variants",
@@ -537,7 +474,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Progress",
     "description": "Horizontal progress bar with determinate and indeterminate modes.",
     "category": "feedback",
-    "usage": "import { Progress } from '@/components/ui/orizen/progress'\n\n<Progress value={75} label=\"Uploading:\" />\n<Progress value={100} label=\"Done:\" />\n<Progress /> // indeterminate",
+    "usage": "import React, { useState, useEffect } from 'react'\nimport { render, Box } from 'ink'\nimport { Progress } from '@/components/ui/orizen/progress'\n\nfunction App() {\n  const [value, setValue] = useState(0)\n\n  useEffect(() => {\n    const timer = setInterval(() => {\n      setValue(v => (v >= 100 ? 0 : v + 2))\n    }, 80)\n    return () => clearInterval(timer)\n  }, [])\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Progress value={value} label=\"Uploading:\" width={30} />\n      <Progress value={65} label=\"Static:\" width={30} />\n      <Progress value={100} label=\"Complete:\" width={30} />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -582,7 +519,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Select",
     "description": "Arrow-key navigable single-choice list with full keyboard support.",
     "category": "input",
-    "usage": "import { Select } from '@/components/ui/orizen/select'\n\n<Select\n  label=\"Pick a framework:\"\n  items={[\n    { label: 'React', value: 'react' },\n    { label: 'Vue', value: 'vue' },\n  ]}\n  onSelect={(item) => {\n    // item.value => \"react\" | \"vue\"\n  }}\n/>",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box, Text } from 'ink'\nimport { Select } from '@/components/ui/orizen/select'\n\nconst items = [\n  { label: 'React', value: 'react' },\n  { label: 'Vue', value: 'vue' },\n  { label: 'Svelte', value: 'svelte' },\n  { label: 'Solid', value: 'solid' },\n]\n\nfunction App() {\n  const [selected, setSelected] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text bold>Pick a framework:</Text>\n      <Select items={items} onSelect={(item) => setSelected(item.value)} />\n      {selected && <Text color=\"green\">Selected: {selected}</Text>}\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -633,7 +570,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Spinner",
     "description": "Animated terminal spinner with named presets and customizable frames.",
     "category": "feedback",
-    "usage": "import { Spinner } from '@/components/ui/orizen/spinner'\n\n// Named presets\n<Spinner preset=\"dots\" label=\"Loading...\" />\n<Spinner preset=\"circle\" label=\"Processing\" />\n<Spinner preset=\"bar\" label=\"Building\" />\n\n// Custom frames (advanced)\n<Spinner frames={['-', '\\\\', '|', '/']} label=\"Processing\" />",
+    "usage": "import React from 'react'\nimport { render, Box } from 'ink'\nimport { Spinner } from '@/components/ui/orizen/spinner'\n\nfunction App() {\n  return (\n    <Box gap={4}>\n      <Spinner preset=\"dots\" label=\"Loading...\" />\n      <Spinner preset=\"circle\" label=\"Processing\" />\n      <Spinner preset=\"bar\" label=\"Building\" />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Presets",
@@ -680,7 +617,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Stopwatch",
     "description": "Count-up elapsed time tracker with pause support.",
     "category": "feedback",
-    "usage": "import { Stopwatch } from '@/components/ui/orizen/stopwatch'\n\n// Running stopwatch\n<Stopwatch />\n\n// Paused stopwatch with label\n<Stopwatch running={false} label=\"Elapsed:\" />",
+    "usage": "import React, { useState } from 'react'\nimport { render, Box } from 'ink'\nimport { Stopwatch } from '@/components/ui/orizen/stopwatch'\n\nfunction App() {\n  const [running, setRunning] = useState(true)\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Stopwatch running={running} label=\"Elapsed:\" />\n      <Stopwatch running={false} label=\"Paused:\" />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Variants",
@@ -707,7 +644,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Table",
     "description": "Navigable data table with column alignment and scroll.",
     "category": "display",
-    "usage": "import { Table } from '@/components/ui/orizen/table'\n\nconst columns = [\n  { key: 'name', label: 'Name' },\n  { key: 'version', label: 'Version', align: 'right' },\n  { key: 'license', label: 'License' },\n]\n\nconst data = [\n  { name: 'react', version: '18.3.0', license: 'MIT' },\n  { name: 'ink', version: '5.0.1', license: 'MIT' },\n  { name: 'typescript', version: '5.4.5', license: 'Apache-2.0' },\n]\n\n<Table columns={columns} data={data} height={5} />",
+    "usage": "import React from 'react'\nimport { render, Box } from 'ink'\nimport { Table } from '@/components/ui/orizen/table'\n\nconst columns = [\n  { key: 'name', label: 'Name', width: 12 },\n  { key: 'version', label: 'Version', width: 10 },\n  { key: 'license', label: 'License', width: 12 },\n]\n\nconst data = [\n  { name: 'react', version: '18.3.0', license: 'MIT' },\n  { name: 'ink', version: '5.0.1', license: 'MIT' },\n  { name: 'typescript', version: '5.4.5', license: 'Apache-2.0' },\n]\n\nfunction App() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Table columns={columns} data={data} height={5} />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -742,161 +679,11 @@ export const componentDocs: ComponentDocsMeta[] = [
     ]
   },
   {
-    "slug": "text-input",
-    "name": "TextInput",
-    "description": "Single-line keyboard-driven text input with focus management. Press Enter to submit.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nconst [value, setValue] = useState('')\n\n<TextInput\n  label=\"Component name:\"\n  value={value}\n  onChange={setValue}\n  placeholder=\"e.g. button...\"\n  onSubmit={(val) => console.log(val)}\n/>",
-    "examples": [
-      {
-        "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { TextInput } from '@/components/ui/orizen/text-input'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n  const [submitted, setSubmitted] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Enter name:</Text>\n      <TextInput\n        value={value}\n        onChange={setValue}\n        placeholder=\"Type and press Enter...\"\n        onSubmit={() => {\n          setSubmitted(value)\n          setValue('')\n        }}\n      />\n      {submitted && <Text color=\"green\">Submitted: {submitted}</Text>}\n    </Box>\n  )\n}\n\nrender(<Demo />)"
-      }
-    ],
-    "props": [
-      {
-        "name": "value",
-        "type": "string",
-        "default": "-",
-        "description": "Current input value (controlled)"
-      },
-      {
-        "name": "onChange",
-        "type": "(value: string) => void",
-        "default": "-",
-        "description": "Called when value changes (controlled)"
-      },
-      {
-        "name": "defaultValue",
-        "type": "string",
-        "default": "''",
-        "description": "Initial value (uncontrolled)"
-      },
-      {
-        "name": "onSubmit",
-        "type": "() => void",
-        "default": "-",
-        "description": "Called when Enter is pressed"
-      },
-      {
-        "name": "placeholder",
-        "type": "string",
-        "default": "''",
-        "description": "Shown when value is empty"
-      },
-      {
-        "name": "mask",
-        "type": "string",
-        "default": "undefined",
-        "description": "Mask character (e.g. '*' for passwords)"
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label above the input"
-      },
-      {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      },
-      {
-        "name": "width",
-        "type": "number",
-        "default": "undefined",
-        "description": "Width of the input box in columns"
-      },
-      {
-        "name": "color",
-        "type": "string",
-        "default": "undefined",
-        "description": "Text color"
-      }
-    ]
-  },
-  {
-    "slug": "textarea",
-    "name": "Textarea",
-    "description": "Multi-line text input with cursor management and configurable row height. Press Enter to submit, Ctrl+Enter for new line.",
-    "category": "input",
-    "usage": "import { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nconst [value, setValue] = useState('')\n\n<Textarea\n  label=\"Description:\"\n  value={value}\n  onChange={setValue}\n  rows={4}\n  placeholder=\"Enter description...\"\n  onSubmit={(val) => console.log(val)}\n/>",
-    "examples": [
-      {
-        "title": "Usage",
-        "code": "import { Box, Text, render } from 'ink'\nimport React, { useState } from 'react'\nimport { Textarea } from '@/components/ui/orizen/textarea'\n\nfunction Demo() {\n  const [value, setValue] = useState('')\n  const [submitted, setSubmitted] = useState('')\n\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Text dimColor>Message:</Text>\n      <Textarea\n        value={value}\n        onChange={setValue}\n        rows={3}\n        placeholder=\"Type here... (Enter to submit, Ctrl+Enter for new line)\"\n        onSubmit={() => {\n          setSubmitted(value)\n          setValue('')\n        }}\n      />\n      {submitted && <Text color=\"green\">Submitted: {submitted}</Text>}\n    </Box>\n  )\n}\n\nrender(<Demo />)"
-      }
-    ],
-    "props": [
-      {
-        "name": "value",
-        "type": "string",
-        "default": "-",
-        "description": "Current text value (controlled)"
-      },
-      {
-        "name": "onChange",
-        "type": "(value: string) => void",
-        "default": "-",
-        "description": "Called when value changes (controlled)"
-      },
-      {
-        "name": "defaultValue",
-        "type": "string",
-        "default": "''",
-        "description": "Initial value (uncontrolled)"
-      },
-      {
-        "name": "onSubmit",
-        "type": "() => void",
-        "default": "-",
-        "description": "Called when Enter is pressed (Ctrl+Enter adds newline)"
-      },
-      {
-        "name": "rows",
-        "type": "number",
-        "default": "3",
-        "description": "Visible row height"
-      },
-      {
-        "name": "placeholder",
-        "type": "string",
-        "default": "''",
-        "description": "Shown when value is empty"
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "default": "undefined",
-        "description": "Label above the textarea"
-      },
-      {
-        "name": "focus",
-        "type": "boolean",
-        "default": "true",
-        "description": "Whether input accepts keyboard events"
-      },
-      {
-        "name": "width",
-        "type": "number",
-        "default": "undefined",
-        "description": "Width of the textarea in columns"
-      },
-      {
-        "name": "color",
-        "type": "string",
-        "default": "undefined",
-        "description": "Text color"
-      }
-    ]
-  },
-  {
     "slug": "timer",
     "name": "Timer",
     "description": "Countdown timer with configurable duration and expiry callback.",
     "category": "feedback",
-    "usage": "import { Timer } from '@/components/ui/orizen/timer'\n\n// Basic countdown from 60 seconds\n<Timer durationMs={60000} />\n\n// With label and expiry callback\n<Timer\n  durationMs={30000}\n  label=\"Time remaining:\"\n  onExpire={() => console.log('Time is up!')}\n/>",
+    "usage": "import React from 'react'\nimport { render, Box, Text } from 'ink'\nimport { Timer } from '@/components/ui/orizen/timer'\n\nfunction App() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Timer durationMs={60000} label=\"Time remaining:\" />\n      <Timer\n        durationMs={30000}\n        label=\"Auto-save in:\"\n        onExpire={() => console.log('Time is up!')}\n      />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",
@@ -929,7 +716,7 @@ export const componentDocs: ComponentDocsMeta[] = [
     "name": "Viewport",
     "description": "Scrollable content area with overflow indicators and keyboard navigation.",
     "category": "display",
-    "usage": "import { Viewport } from '@/components/ui/orizen/viewport'\n\nconst lines = Array.from({ length: 50 }, (_, i) => `Line ${i + 1}`)\n\n// Basic scrollable viewport\n<Viewport lines={lines} height={10} />\n\n// Fixed width, no indicators\n<Viewport lines={lines} height={8} width={60} showScrollIndicator={false} />",
+    "usage": "import React from 'react'\nimport { render, Box } from 'ink'\nimport { Viewport } from '@/components/ui/orizen/viewport'\n\nconst lines = [\n  'Line 1: Welcome to the viewport',\n  'Line 2: Scroll with ↑↓ arrows',\n  'Line 3: Page Up/Page Down to jump',\n  'Line 4: More content here',\n  'Line 5: Even more content',\n  'Line 6: Keep scrolling',\n  'Line 7: Almost there',\n  'Line 8: Last line',\n]\n\nfunction App() {\n  return (\n    <Box flexDirection=\"column\" gap={1}>\n      <Viewport lines={lines} height={5} />\n    </Box>\n  )\n}\n\nrender(<App />)",
     "examples": [
       {
         "title": "Usage",

@@ -5,21 +5,32 @@ export const meta: ComponentDocsMeta = {
   name: 'Checkbox',
   description: 'Arrow-key navigable list of toggleable boolean items.',
   category: 'input',
-  usage: `import { useState } from 'react'
+  usage: `import React, { useState } from 'react'
+import { render, Box, Text } from 'ink'
 import { Checkbox } from '@/components/ui/orizen/checkbox'
 
-const [selected, setSelected] = useState<string[]>(['typescript'])
+const items = [
+  { label: 'TypeScript', value: 'ts' },
+  { label: 'ESLint', value: 'eslint' },
+  { label: 'Prettier', value: 'prettier' },
+]
 
-<Checkbox
-  label="Select features:"
-  items={[
-    { label: 'TypeScript', value: 'typescript' },
-    { label: 'ESLint', value: 'eslint' },
-    { label: 'Prettier', value: 'prettier' },
-  ]}
-  value={selected}
-  onChange={setSelected}
-/>`,
+function App() {
+  const [selected, setSelected] = useState<string[]>(['ts'])
+
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Text bold>Select features:</Text>
+      <Checkbox
+        items={items}
+        value={selected}
+        onChange={setSelected}
+      />
+    </Box>
+  )
+}
+
+render(<App />)`,
   examples: [
     {
       title: 'Usage',

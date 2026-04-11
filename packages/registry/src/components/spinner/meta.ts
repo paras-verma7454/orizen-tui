@@ -5,15 +5,21 @@ export const meta: ComponentDocsMeta = {
   name: 'Spinner',
   description: 'Animated terminal spinner with named presets and customizable frames.',
   category: 'feedback',
-  usage: `import { Spinner } from '@/components/ui/orizen/spinner'
+  usage: `import React from 'react'
+import { render, Box } from 'ink'
+import { Spinner } from '@/components/ui/orizen/spinner'
 
-// Named presets
-<Spinner preset="dots" label="Loading..." />
-<Spinner preset="circle" label="Processing" />
-<Spinner preset="bar" label="Building" />
+function App() {
+  return (
+    <Box gap={4}>
+      <Spinner preset="dots" label="Loading..." />
+      <Spinner preset="circle" label="Processing" />
+      <Spinner preset="bar" label="Building" />
+    </Box>
+  )
+}
 
-// Custom frames (advanced)
-<Spinner frames={['-', '\\\\', '|', '/']} label="Processing" />`,
+render(<App />)`,
   examples: [
     {
       title: 'Presets',

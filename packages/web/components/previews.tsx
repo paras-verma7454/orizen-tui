@@ -131,51 +131,6 @@ export function ProgressPreviewCompact(): JSX.Element {
   )
 }
 
-// ── TextInput preview ─────────────────────────────────────────────────────────
-
-const CURSOR_FRAMES = ['█', ' ']
-
-// eslint-disable-next-line unused-imports/no-unused-vars
-export function TextInputPreview({ compact = false }: { compact?: boolean }): JSX.Element {
-  const cursor = useFrames(CURSOR_FRAMES, 530)
-  return (
-    <div className="space-y-1">
-      <span className="text-zinc-500 text-xs">Component name:</span>
-      <div className="border border-cyan-500/70 rounded px-2 py-1 flex items-center gap-0.5 w-fit min-w-44">
-        <span className="text-zinc-500">e.g. button…</span>
-        <span className="text-cyan-400">{cursor}</span>
-      </div>
-    </div>
-  )
-}
-
-export function TextInputExample1Preview(): JSX.Element {
-  const cursor = useFrames(CURSOR_FRAMES, 530)
-  return (
-    <div className="space-y-1">
-      <span className="text-zinc-500 text-xs">Component name:</span>
-      <div className="border border-cyan-500/70 rounded px-2 py-1 flex items-center gap-0.5 w-fit min-w-44">
-        <span className="text-zinc-500">e.g. button…</span>
-        <span className="text-cyan-400">{cursor}</span>
-      </div>
-    </div>
-  )
-}
-
-export function TextInputExample2Preview(): JSX.Element {
-  const cursor = useFrames(CURSOR_FRAMES, 530)
-  return (
-    <div className="space-y-1">
-      <span className="text-zinc-500 text-xs">Enter name:</span>
-      <div className="border border-cyan-500/70 rounded px-2 py-1 flex items-center gap-0.5 w-fit min-w-44">
-        <span className="text-zinc-500">Type and press Enter…</span>
-        <span className="text-cyan-400">{cursor}</span>
-      </div>
-      <span className="text-green-400 text-xs">Submitted: hello</span>
-    </div>
-  )
-}
-
 // ── Select preview ────────────────────────────────────────────────────────────
 
 const SELECT_ITEMS = ['React', 'Vue', 'Svelte', 'Solid']
@@ -197,27 +152,6 @@ export function SelectPreview({ compact = false }: { compact?: boolean }): JSX.E
           <span className={i === active ? 'text-cyan-400 font-bold' : 'text-zinc-500'}>{label}</span>
         </div>
       ))}
-    </div>
-  )
-}
-
-// ── Textarea preview ──────────────────────────────────────────────────────────
-
-// eslint-disable-next-line unused-imports/no-unused-vars
-export function TextareaPreview({ compact = false }: { compact?: boolean }): JSX.Element {
-  const cursor = useFrames(['█', ' '], 530)
-  const lines = ['Building a terminal UI', 'with React and Ink…']
-  return (
-    <div className="space-y-1">
-      <span className="text-zinc-500 text-xs">Description:</span>
-      <div className="border border-cyan-500/70 rounded px-2 py-1.5 min-w-56 space-y-px">
-        {lines.map((line, i) => (
-          <div key={i} className="text-zinc-300 text-sm">
-            {line}
-            {i === lines.length - 1 && <span className="text-cyan-400">{cursor}</span>}
-          </div>
-        ))}
-      </div>
     </div>
   )
 }
@@ -321,45 +255,6 @@ export function ConfirmInputPreview({ compact = false }: { compact?: boolean }):
     </div>
   )
 }
-
-// ── NumberInput preview ───────────────────────────────────────────────────────
-
-// eslint-disable-next-line unused-imports/no-unused-vars
-export function NumberInputPreview({ compact = false }: { compact?: boolean }): JSX.Element {
-  const [port, setPort] = useState(3000)
-  const [workers, setWorkers] = useState(4)
-  useEffect(() => {
-    const portTimer = setInterval(() => setPort(p => p >= 3005 ? 3000 : p + 1), 600)
-    const workersTimer = setInterval(() => setWorkers(w => w >= 8 ? 1 : w + 1), 900)
-    return () => {
-      clearInterval(portTimer)
-      clearInterval(workersTimer)
-    }
-  }, [])
-  return (
-    <div className="space-y-2">
-      <div className="space-y-1">
-        <span className="text-zinc-500 text-xs">Port:</span>
-        <div className="flex items-center gap-2">
-          <div className="border border-cyan-500/70 rounded px-2 py-1 inline-flex items-center gap-2 min-w-20">
-            <span className="text-zinc-300 inline-block w-10 text-center">{port}</span>
-          </div>
-          <span className="text-zinc-600 text-xs">↑↓</span>
-        </div>
-      </div>
-      <div className="space-y-1">
-        <span className="text-zinc-500 text-xs">Workers:</span>
-        <div className="flex items-center gap-2">
-          <div className="border border-zinc-700 rounded px-2 py-1 inline-flex items-center gap-2 min-w-20">
-            <span className="text-zinc-300 inline-block w-10 text-center">{workers}</span>
-          </div>
-          <span className="text-zinc-600 text-xs">↑↓</span>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ── Paginator preview ─────────────────────────────────────────────────────────
 
 // eslint-disable-next-line unused-imports/no-unused-vars
@@ -941,13 +836,10 @@ export const previewMap: Record<string, PreviewComponent> = {
   'spinner': SpinnerPreview,
   'badge': BadgePreview,
   'progress': ProgressPreview,
-  'text-input': TextInputPreview,
   'select': SelectPreview,
-  'textarea': TextareaPreview,
   'checkbox': CheckboxPreview,
   'multi-select': MultiSelectPreview,
   'confirm-input': ConfirmInputPreview,
-  'number-input': NumberInputPreview,
   'paginator': PaginatorPreview,
   'timer': TimerPreview,
   'stopwatch': StopwatchPreview,
@@ -972,6 +864,4 @@ export const examplePreviewMap: Record<string, React.FC> = {
   'counter-0': CounterExample1Preview,
   'counter-1': CounterExample2Preview,
   'counter-2': CounterExample3Preview,
-  'text-input-0': TextInputExample1Preview,
-  'text-input-1': TextInputExample2Preview,
 }

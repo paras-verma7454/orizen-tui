@@ -5,15 +5,30 @@ export const meta: ComponentDocsMeta = {
   name: 'Viewport',
   description: 'Scrollable content area with overflow indicators and keyboard navigation.',
   category: 'display',
-  usage: `import { Viewport } from '@/components/ui/orizen/viewport'
+  usage: `import React from 'react'
+import { render, Box } from 'ink'
+import { Viewport } from '@/components/ui/orizen/viewport'
 
-const lines = Array.from({ length: 50 }, (_, i) => \`Line \${i + 1}\`)
+const lines = [
+  'Line 1: Welcome to the viewport',
+  'Line 2: Scroll with ↑↓ arrows',
+  'Line 3: Page Up/Page Down to jump',
+  'Line 4: More content here',
+  'Line 5: Even more content',
+  'Line 6: Keep scrolling',
+  'Line 7: Almost there',
+  'Line 8: Last line',
+]
 
-// Basic scrollable viewport
-<Viewport lines={lines} height={10} />
+function App() {
+  return (
+    <Box flexDirection="column" gap={1}>
+      <Viewport lines={lines} height={5} />
+    </Box>
+  )
+}
 
-// Fixed width, no indicators
-<Viewport lines={lines} height={8} width={60} showScrollIndicator={false} />`,
+render(<App />)`,
   examples: [
     {
       title: 'Usage',
