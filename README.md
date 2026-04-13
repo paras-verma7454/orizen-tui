@@ -2,6 +2,9 @@
 
 Open-source **terminal UI components** for Node.js CLI applications. Build beautiful terminal interfaces with a shadcn-style copy workflow.
 
+<img width="1916" height="874" alt="Screenshot 2026-03-23 224436" src="https://github.com/user-attachments/assets/2d8b7aca-63b3-405f-92eb-8cb174601d34" />
+
+
 ## What is Orizen TUI?
 
 A component library for terminal applications. Copy components into your Node.js CLI project and own every line.
